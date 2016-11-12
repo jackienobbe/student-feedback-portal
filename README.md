@@ -1,8 +1,6 @@
 # student-feedback-portal
 
 TODO FOR 13/11/16
-
-TODO FOR 13/11/16
  SQL
   * Results Tables
     * Choice Table
