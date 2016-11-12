@@ -55,13 +55,13 @@ function create_student($studID, $studPassword, $studFName, $studLName, $current
   }
 }
 
-/* READ PRODUCT
- * read_product(): reads a product from product table given its product code
+/* READ STUDENT
+ * read_student(): reads a dtudent profile from student and user tables
  * returns 0 if product successfully deleted
  *         -1 if product does not exist
  *         error code if other db/sql error
  */
-function read_product($pcode, &$descript, &$date, &$qoh, &$min, &$price, &$discount, &$vcode, &$error_msg)
+function read_student($userId, &$userFName, &$userLName, &$currentYear, &$major, &$error_msg)
 {
   // Connect to database server
   include_once 'db_connect.php';
@@ -70,13 +70,13 @@ function read_product($pcode, &$descript, &$date, &$qoh, &$min, &$price, &$disco
   {
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT Description, Indate, QuantityOnHand, MinQuantityOnHand,
-                   Price, DiscountRate, VendorCode
-            FROM Product
-            WHERE ProductCode = :pcode;";
+    $sql = "SELECT userID, userFName, userLName, currentYear,
+                   major
+            FROM User NATURAL JOIN Student
+            WHERE userID = :userID;";
 
     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-    $sth->bindParam(':pcode', $pcode);
+    $sth->bindParam(':userID', $userID);
     // Execute the prepared query.
     $sth->execute();
     $array = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -86,19 +86,16 @@ function read_product($pcode, &$descript, &$date, &$qoh, &$min, &$price, &$disco
     if (count($array) == 0)
     {
       // no product found
-      $error_msg = "A product with this code does not exist.";
+      $error_msg = "You don't exist.";
       return -1;
     }
     else
     {
       $record = $array[0];
-      $descript = $record['Description'];
-      $date = $record['Indate'];
-      $qoh =  $record['QuantityOnHand'];
-      $min =  $record['MinQuantityOnHand'];
-      $price = $record['Price'];
-      $discount = $record['DiscountRate'];
-      $vcode = $record['VendorCode'];
+      $userFName = $record['userFName'];
+      $userLName = $record['userLName'];
+      $currentYear =  $record['currentYear'];
+      $major =  $record['major'];
       return 0;
     }
   }
@@ -110,15 +107,13 @@ function read_product($pcode, &$descript, &$date, &$qoh, &$min, &$price, &$disco
   }
 }
 
-/* UPDATE PRODUCT
- * upd_product(): updates a product
- * returns 0 if product successfully updated
+/* READ STUDENT
+ * read_student(): reads a dtudent profile from student and user tables
+ * returns 0 if product successfully deleted
  *         -1 if product does not exist
- *         1062 if product with new code already exists
- *          1452 if entered vendor does not exist
  *         error code if other db/sql error
  */
-function upd_product($pcode, $descript, $date, $qoh, $min, $price, $discount, $vcode, $old_pcode, &$error_msg)
+function read_prof($profID, &$profFName, &$profLName, &$error_msg)
 {
   // Connect to database server
   include_once 'db_connect.php';
@@ -126,53 +121,39 @@ function upd_product($pcode, $descript, $date, $qoh, $min, $price, $discount, $v
   try
   {
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "UPDATE Product
-            SET ProductCode = :pcode,
-                Description = :descript,
-                Indate = :date,
-                QuantityOnHand = :qoh,
-                MinQuantityOnHand = :min,
-                Price = :price,
-                DiscountRate = :discount,
-                VendorCode = :vcode
-            WHERE ProductCode = :old_pcode;";
 
-    $sth = $dbh->prepare($sql);
-    $sth->bindParam(':pcode', $pcode);
-    $sth->bindParam(':descript', $descript);
-    $sth->bindParam(':date', $date);
-    $sth->bindParam(':qoh', $qoh);
-    $sth->bindParam(':min', $min);
-    $sth->bindParam(':price', $price);
-    $sth->bindParam(':discount', $discount);
-    if(empty($vcode))
-      $sth->bindValue(':vcode', null);
-    else
-      $sth->bindParam(':vcode', $vcode);
-    $sth->bindParam(':old_pcode', $old_pcode);
+    $sql = "SELECT professorID, professorFName, professorLName
+            FROM Professor NATURAL JOIN ProfessorToDepartment
+            WHERE professorID = :professorID;";
+
+    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    $sth->bindParam(':professorID', $professorID);
+    // Execute the prepared query.
     $sth->execute();
+    $array = $sth->fetchAll(PDO::FETCH_ASSOC);
     $dbh = null;
-    if ($sth->rowCount() > 0)
-      return 0;  // product successfully updated
+
+    // Check whether the submitted product already exists
+    if (count($array) == 0)
+    {
+      // no product found
+      $error_msg = "This professor doesn't exist.";
+      return -1;
+    }
     else
     {
-      $error_msg = "A product with this code does not exist.";
-      return -1;
+      $record = $array[0];
+      $professorFName = $record['professorFName'];
+      $professorLName = $record['professorLName'];
+      $department =  $record['department'];
+      return 0;
     }
   }
   catch(PDOException $e)
   {
     $dbh = null;
-    if ($e->errorInfo[1] == 1062)
-      $error_msg = "A product with this code already exists.";
-    else if ($e->errorInfo[1] == 1452)
-      $error_msg = "A vendor with this code does not exist.";
-    else
-    {
-      header("Location: error.php?err=" . $e->getMessage());
-      exit();
-    }
-    return $e->errorInfo[1];
+    header("Location: error.php?err=" . $e->getMessage());
+    exit();
   }
 }
 

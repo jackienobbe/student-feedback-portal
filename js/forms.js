@@ -2,24 +2,19 @@
 // forms.js
 //
 
-function checkform(form, pcode, descript, date, qoh, min, price, discount)
+function checkform_new_student(form, userID, userFName, userFName, major, currentYear)
 {
     // Check each field has a value
-    if (pcode.value == ''	||
-        descript.value == ''	||
-        date.value == ''	||
-        qoh.value == ''		||
-        min.value == ''		||
-        price.value == ''	||
-        discount.value == '') {
-
-        alert('You must provide all the requested details except may be vendor. Please try again');
-        return false;
-    }
-
-    // TODO: Check the date
-
-
+    if (userID.value == ''	||
+        userFName.value == ''	||
+        userLName.value == ''	||
+        major.value == ''		||
+        currentYear.value == '')
+        {
+          alert('All fields are required. Please try again');
+          return false;
+        }
+            
     // Finally submit the form.
     form.submit();
     return true;
