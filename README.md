@@ -2,13 +2,20 @@
 
 TODO FOR 13/11/16
 
-SQL
+TODO FOR 13/11/16
+ SQL
   * Results Tables
-  * Person Table (redo student and professor)
+    * Choice Table
+    * Text-Professor
+    * Text-Course
+  * User Table (redo student and professor)
+    * Pretty much done
   * Triggers
+    * On Answer tables to Results tables
   * Stored procedures
+    * Think of good ones
   * More data? 
-  * Backup DB Automatically
+  * Backup DB Automatically (extra)
   
 
 WEB
