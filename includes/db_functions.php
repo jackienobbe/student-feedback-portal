@@ -111,7 +111,7 @@ function read_student($userID, &$userFName, &$userLName, &$currentYear, &$major,
 /* READ STUDENT'S COURSES
  *
  */
-function get_curr_student_courses($userID, $courseID, $sectionNum, $semester, $courseName)
+function get_curr_student_courses($userID, &$courseID, &$sectionNum, &$semester, &$courseName, &$error_msg)
 {
   // Connect to database server
   include_once 'db_connect.php';
@@ -159,7 +159,7 @@ function get_curr_student_courses($userID, $courseID, $sectionNum, $semester, $c
 /* READ STUDENT'S COURSES
  *
  */
-function get_prev_student_courses($userID, $courseID, $sectionNum, $semester, $courseName)
+function get_prev_student_courses($userID, &$courseID, &$sectionNum, &$semester, &$courseName, &$error_msg)
 {
   // Connect to database server
   include_once 'db_connect.php';
@@ -207,7 +207,7 @@ function get_prev_student_courses($userID, $courseID, $sectionNum, $semester, $c
 /* ENROLL STUDENT
  *
  */
-function enroll_student($userID, $courseID, $sectionNum, $semester)
+function enroll_student($userID, $courseID, $sectionNum, $semester, &$error_msg)
 {
   // Connect to database server
   include_once 'db_connect.php';
@@ -302,7 +302,7 @@ function read_prof($profID, &$profFName, &$profLName, &$error_msg)
 /* READ PROF'S COURSES
  *
  */
-function get_prof_courses($userID, $courseID, $sectionNum, $semester, $courseName)
+function get_prof_courses($userID, &$courseID, &$sectionNum, &$semester, &$courseName, &$error_msg)
 {
   // Connect to database server
   include_once 'db_connect.php';
@@ -346,9 +346,10 @@ function get_prof_courses($userID, $courseID, $sectionNum, $semester, $courseNam
     exit();
   }
 }
+
 /* READ ALL COURSE'S PROFESSORS
 */
-function get_course_profs($courseID, &$professorFName, &$professorLName, &$semester)
+function get_course_profs($courseID, &$professorFName, &$professorLName, &$semester, &$error_msg)
 {
   // Connect to database server
   include_once 'db_connect.php';
