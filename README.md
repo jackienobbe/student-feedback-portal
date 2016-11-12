@@ -17,6 +17,9 @@ TODO FOR 13/11/16
   * Make Account
   * Home page
   * Student Profile
+    * Info
+    * Currently Enrolled
+    * Previous Courses Taken
   * Edit courses for this semester
   * View ratings
   * submit feedback
