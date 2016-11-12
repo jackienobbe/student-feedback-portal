@@ -1,6 +1,6 @@
 <?php
-$host = "127.0.0.1";
-$user = "SFP";
-$password = "SFP";
-$dbname = "studentFeedbackPortal";
+$host = "localhost";
+$user = "CharrafiI";
+$password = "Imane59609";
+$dbname = "studentfeedbackportal";
 $dbh = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);

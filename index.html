@@ -4,15 +4,20 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title> student feedback portal || home</title>
+  <title> CraneCharrafiNobbe: main page </title>
 </head>
 <body>
   <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
-    <h2> Student Feedback Portal</h2>
+    <h2> Welcome to the Student Feedback Portal!</h2>
     <ul>
-      <li><a href = "view_prof.php">View Professor</a></li>
-      <br/>
-      <li><a href = "add_invoice.php">Add Invoice</a></li>
+	  <li><a href = "login.php"> Login </a></li> 
+	  <li><a href = "logout.php">Logout</a></li> 
+      <li><a href = "view_student.php">View student</a></li>
+	  <li><a href = "view_prof.php">View professor</a></li>
+	  <li><a href = "view_course.php">View course</a></li>
+	  <li><a href = "search_course.php">Search course</a></li>
+      <li><a href = "create_account.php">Create an New account</a></li>
+
     </ul>
   </form>
 </body>

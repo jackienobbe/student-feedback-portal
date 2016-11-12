@@ -7,7 +7,7 @@ if (isset($_POST["userID"]))
   $userID = $_POST["userID"];
   $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
   // Read product from database given its code
-  $rc = read_student($userID, $userFName, $userLName, $currentYear, $major, $error_msg);
+  $rc = read_prof($userID, $userFName, $userLName, $currentYear, $major, $error_msg);
   if ($rc != 0)
     // error
     header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
@@ -24,7 +24,7 @@ else  // type is GET
   }
   else if (isset($_GET["userID"]))
     $userID = $_GET["userID"];
-else
+  else
     // Coming from outside url with product code not provided
-    header("Location:get_student_num.php");
+    header("Location:get_invoice_num.php");
 }
