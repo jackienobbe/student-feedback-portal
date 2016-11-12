@@ -111,7 +111,7 @@ function read_student($userID, &$userFName, &$userLName, &$currentYear, &$major,
 /* READ STUDENT'S COURSES
  *
  */
-function get_curr_student_courses($userID)
+function get_curr_student_courses($userID, $courseID, $sectionNum, $semester, $courseName)
 {
   // Connect to database server
   include_once 'db_connect.php';
@@ -122,7 +122,7 @@ function get_curr_student_courses($userID)
 
     $sql = "SELECT courseID, sectionNum, semester, courseName
             FROM Enroll NATURAL JOIN Course
-            WHERE userID = :userID;";
+            WHERE userID = :userID && semester = :currSemester";
 
     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':userID', $userID);
@@ -136,6 +136,54 @@ function get_curr_student_courses($userID)
     {
       // no product found
       $error_msg = "You are not enrolled in any classes.";
+      return -1;
+    }
+    else
+    {
+      $record = $array[0];
+      $courseID = $record['courseID'];
+      $sectionNum = $record['sectionNum'];
+      $semester =  $record['semester'];
+      $courseName = $record['courseName'];
+      return 0;
+    }
+  }
+  catch(PDOException $e)
+  {
+    $dbh = null;
+    header("Location: error.php?err=" . $e->getMessage());
+    exit();
+  }
+}
+
+/* READ STUDENT'S COURSES
+ *
+ */
+function get_prev_student_courses($userID, $courseID, $sectionNum, $semester, $courseName)
+{
+  // Connect to database server
+  include_once 'db_connect.php';
+
+  try
+  {
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql = "SELECT courseID, sectionNum, semester, courseName
+            FROM Enroll NATURAL JOIN Course
+            WHERE userID = :userID && semester != :currSemester";
+
+    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    $sth->bindParam(':userID', $userID);
+    // Execute the prepared query.
+    $sth->execute();
+    $array = $sth->fetchAll(PDO::FETCH_ASSOC);
+    $dbh = null;
+
+    // Check whether the submitted product already exists
+    if (count($array) == 0)
+    {
+      // no product found
+      $error_msg = "You have not previously enrolled in any classes.";
       return -1;
     }
     else
@@ -216,7 +264,7 @@ function read_prof($profID, &$profFName, &$profLName, &$error_msg)
   {
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT professorID, professorFName, professorLName
+    $sql = "SELECT professorID, professorFName, professorLName, department
             FROM Professor NATURAL JOIN ProfessorToDepartment
             WHERE professorID = :professorID;";
 
@@ -251,13 +299,10 @@ function read_prof($profID, &$profFName, &$profLName, &$error_msg)
   }
 }
 
-/* DELETE PRODUCT
- * del_product(): deletes a product from product table
- * returns 0 if product successfully deleted
- *          -1 if product does not exist
- *         error code if other db/sql error
+/* READ PROF'S COURSES
+ *
  */
-function del_product($pcode, &$error_msg)
+function get_prof_courses($userID, $courseID, $sectionNum, $semester, $courseName)
 {
   // Connect to database server
   include_once 'db_connect.php';
@@ -266,31 +311,83 @@ function del_product($pcode, &$error_msg)
   {
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "DELETE FROM Product
-            WHERE ProductCode = :pcode;";
+    $sql = "SELECT courseID, sectionNum, semester, courseName
+            FROM Section NATURAL JOIN Course
+            WHERE professorID = :professorID; ";
 
-    $sth = $dbh->prepare($sql);
-    $sth->bindParam(':pcode', $pcode);
+    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    $sth->bindParam(':professorID', $professorID);
+    // Execute the prepared query.
     $sth->execute();
+    $array = $sth->fetchAll(PDO::FETCH_ASSOC);
     $dbh = null;
-    if ($sth->rowCount() > 0)
-      return 0;  // product successfully deleted
+
+    // Check whether the submitted product already exists
+    if (count($array) == 0)
+    {
+      // no product found
+      $error_msg = "This professor has not taught any classes.";
+      return -1;
+    }
     else
     {
-      $error_msg = "A product with this code does not exist.";
-      return -1;
+      $record = $array[0];
+      $courseID = $record['courseID'];
+      $sectionNum = $record['sectionNum'];
+      $semester =  $record['semester'];
+      $courseName = $record['courseName'];
+      return 0;
     }
   }
   catch(PDOException $e)
   {
     $dbh = null;
-    if ($e->errorInfo[1] == 1451)
-      $error_msg = "A product with this code is linked to some database item; cannot be deleted.";
+    header("Location: error.php?err=" . $e->getMessage());
+    exit();
+  }
+}
+/* READ ALL COURSE'S PROFESSORS
+*/
+function get_course_profs($courseID, &$professorFName, &$professorLName, &$semester)
+{
+  // Connect to database server
+  include_once 'db_connect.php';
+
+  try
+  {
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql = "SELECT professorFName, professorLName, semester
+            FROM Section NATURAL JOIN Professor
+            WHERE courseID = :courseID; ";
+
+    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    $sth->bindParam(':courseID', $courseID);
+    // Execute the prepared query.
+    $sth->execute();
+    $array = $sth->fetchAll(PDO::FETCH_ASSOC);
+    $dbh = null;
+
+    // Check whether the submitted product already exists
+    if (count($array) == 0)
+    {
+      // no product found
+      $error_msg = "This class has not been taught by a professor in our database.";
+      return -1;
+    }
     else
     {
-      header("Location: error.php?err=" . $e->getMessage());
-      exit();
+      $record = $array[0];
+      $professorFName = $record['professorFName'];
+      $professorLName = $record['professorLName'];
+      $semester =  $record['semester'];
+      return 0;
     }
-    return $e->errorInfo[1];
+  }
+  catch(PDOException $e)
+  {
+    $dbh = null;
+    header("Location: error.php?err=" . $e->getMessage());
+    exit();
   }
 }
