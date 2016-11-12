@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS UserType;
 
 
-
+-- Student, Admistator
 CREATE TABLE UserType(
 	userTypeID int PRIMARY KEY,
     description varchar(20) NOT NULL
@@ -39,13 +39,10 @@ CREATE TABLE Student (
 );
 
 CREATE TABLE Professor (
-	userID int PRIMARY KEY,
-	yearOfHire int,
-    FOREIGN KEY (userID) REFERENCES User (userID)
-		ON UPDATE CASCADE ON DELETE CASCADE
+	professorID int PRIMARY KEY,
+	professorFName varchar(25) NOT NULL,
+    professorLName varchar(25) NOT NULL
 );
-
--- Administrator 
 
 CREATE TABLE Department (
 	departmentID varchar (5) PRIMARY KEY,
@@ -125,7 +122,7 @@ CREATE TABLE Question_Answer (
     FOREIGN KEY (questionID) REFERENCES Question (questionID)
 		ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (offeredAnswerID) REFERENCES OfferedAnswer (offeredAnswerID)
-		ON UPDATE CASCADE ON DELETE NO ACTION
+		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Answer_Choice (
@@ -134,9 +131,9 @@ CREATE TABLE Answer_Choice (
 	offeredAnswerID int NOT NULL,
 	PRIMARY KEY (studentId, questionID),
     FOREIGN KEY (offeredAnswerID) REFERENCES OfferedAnswer (offeredAnswerID)
-		ON UPDATE CASCADE ON DELETE NO ACTION,
+		ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (questionID) REFERENCES Question (questionID)
-		ON UPDATE CASCADE ON DELETE NO ACTION,
+		ON UPDATE CASCADE ON DELETE CASCADE,
 	 FOREIGN KEY (studentID) REFERENCES Student (studentID)
 		 ON UPDATE CASCADE ON DELETE NO ACTION
 );
@@ -144,11 +141,17 @@ CREATE TABLE Answer_Choice (
 CREATE TABLE Result_Choice(
 	questionID int,
     offeredAnswerID int,
-    percent -- decimal? int?
-    -- Foreign key on answer choice
+    percent decimal(3,2) NOT NULL,
+    PRIMARY KEY (questionID, offeredAnswerID),
+    FOREIGN KEY (questionID, offeredAnswerID) REFERENCES Answer_Choice (questionID, offeredAnswerID)
+		ON UPDATE CASCADE ON DELETE NO ACTION
 );
 
 CREATE TABLE Result_Text(
+	studentID int,
 	questionID int,
-    
+    voteCount int,
+    PRIMARY KEY (studentID, questionID),
+    FOREIGN KEY (studentID, questionID) REFERENCES Answer_Text (studentID, questionID)
+		ON UPDATE CASCADE ON DELETE NO ACTION
 );
