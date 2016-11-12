@@ -1,9 +1,7 @@
 # student-feedback-portal
 
-
 TODO FOR 13/11/16
-
-*SQL
+ SQL
   * Results Tables
   * Person Table (redo student and professor)
   * Triggers
@@ -11,8 +9,7 @@ TODO FOR 13/11/16
   * More data? 
   * Backup DB Automatically
   
-  
-*WEB
+ WEB
   * Log in Page
   * Make Account
   * Home page
