@@ -12,7 +12,7 @@
  *         1062 if student already exists
  *         error code if other db/sql error
  */
-function create_student($studID, $studPassword, $studFName, $studLName, $currentYear, $major, &$error_msg)
+function create_student($userID, $userPassword, $userFName, $userLName, $currentYear, $major, &$error_msg)
 {
   // Connect to database server
   include_once 'db_connect.php';
@@ -23,16 +23,17 @@ function create_student($studID, $studPassword, $studFName, $studLName, $current
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // Insert the new product into the the Product table
     $sql = "INSERT INTO Student
-              (studentID, studentPassword, studentFName, studentLName, currentYear, major)
+              (userID, userPassword, userFName, userLName, currentYear, major)
             VALUES
-              (:studID, :studPassword, :studFName, :studLName, :currentYear, :major);";
+              (:userID, :userPassword, :userFName, :userLName, :currentYear, :major);";
 
     $sth = $dbh->prepare($sql);
-    $sth->bindParam(':studID', $studentID);
-    $sth->bindParam(':studPassword', $descript);
-    $sth->bindParam(':studFName', $studFName);
-    $sth->bindParam(':studLName', $studLName);
+    $sth->bindParam(':userID', $userID);
+    $sth->bindParam(':userPassword', $userPassword);
+    $sth->bindParam(':userFName', $userFName);
+    $sth->bindParam(':userLName', $userLName);
     $sth->bindParam(':currentYear', $currentYear);
+    $sth->bindParam(':major', $major);
 
     $sth->execute();
     $dbh = null;
@@ -61,7 +62,7 @@ function create_student($studID, $studPassword, $studFName, $studLName, $current
  *         -1 if product does not exist
  *         error code if other db/sql error
  */
-function read_student($userId, &$userFName, &$userLName, &$currentYear, &$major, &$error_msg)
+function read_student($userID, &$userFName, &$userLName, &$currentYear, &$major, &$error_msg)
 {
   // Connect to database server
   include_once 'db_connect.php';
@@ -107,8 +108,101 @@ function read_student($userId, &$userFName, &$userLName, &$currentYear, &$major,
   }
 }
 
-/* READ STUDENT
- * read_student(): reads a dtudent profile from student and user tables
+/* READ STUDENT'S COURSES
+ *
+ */
+function get_curr_student_courses($userID)
+{
+  // Connect to database server
+  include_once 'db_connect.php';
+
+  try
+  {
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql = "SELECT courseID, sectionNum, semester, courseName
+            FROM Enroll NATURAL JOIN Course
+            WHERE userID = :userID;";
+
+    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    $sth->bindParam(':userID', $userID);
+    // Execute the prepared query.
+    $sth->execute();
+    $array = $sth->fetchAll(PDO::FETCH_ASSOC);
+    $dbh = null;
+
+    // Check whether the submitted product already exists
+    if (count($array) == 0)
+    {
+      // no product found
+      $error_msg = "You are not enrolled in any classes.";
+      return -1;
+    }
+    else
+    {
+      $record = $array[0];
+      $courseID = $record['courseID'];
+      $sectionNum = $record['sectionNum'];
+      $semester =  $record['semester'];
+      $courseName = $record['courseName'];
+      return 0;
+    }
+  }
+  catch(PDOException $e)
+  {
+    $dbh = null;
+    header("Location: error.php?err=" . $e->getMessage());
+    exit();
+  }
+}
+
+/* ENROLL STUDENT
+ *
+ */
+function enroll_student($userID, $courseID, $sectionNum, $semester)
+{
+  // Connect to database server
+  include_once 'db_connect.php';
+
+  try
+  {
+    // Set the PDO error mode to exception
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Insert the new product into the the Product table
+    $sql = "INSERT INTO Enroll
+              (userID, courseID, sectionNum, semester)
+            VALUES
+              (:userID, :courseID, :sectionNum, :semester);";
+
+    $sth = $dbh->prepare($sql);
+    $sth->bindParam(':userID', $userID);
+    $sth->bindParam(':courseID', $courseID);
+    $sth->bindParam(':sectionNum', $sectionNum);
+    $sth->bindParam(':semester', $semester);
+
+    $sth->execute();
+    $dbh = null;
+    if ($sth->rowCount() > 0)
+      return 0;  // student successfully enrolled
+    else
+      return -1;  // student not enrolled; this case may not be possible
+  }
+  catch(PDOException $e)
+  {
+    $dbh = null;
+    if ($e->errorInfo[1] == 1062)
+      $error_msg = "A student is already enrolled in this course and section.";
+    else
+    {
+      header("Location: error.php?err=" . $e->getMessage());
+      exit();
+    }
+    return $e->errorInfo[1];
+  }
+}
+
+/* READ PROFESSOR
+ * read_prof(): reads a professor profile from professor table
  * returns 0 if product successfully deleted
  *         -1 if product does not exist
  *         error code if other db/sql error

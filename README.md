@@ -12,15 +12,14 @@ TODO FOR 13/11/16
     * On Answer tables to Results tables
   * Stored procedures
     * Think of good ones
-  * More data? 
+  * More data?
   * Backup DB Automatically (extra)
-  
+
 
 WEB
   * Log in Page
   * Make Account
     * New student (create_student())
-    * New professor (create_prof())
   * Home page
   * Student Profile
     * Info (view_student())

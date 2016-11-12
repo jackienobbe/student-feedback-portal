@@ -32,7 +32,7 @@ CREATE TABLE User (
 
 CREATE TABLE Student (
 	userID int PRIMARY KEY,
-	currentYear int, 
+	currentYear int,
 	major	varchar(50) NOT NULL,
     FOREIGN KEY (userID) REFERENCES User (userID)
 		ON UPDATE CASCADE ON DELETE CASCADE
@@ -61,9 +61,9 @@ CREATE TABLE ProfessorToDepartment(
 
 CREATE TABLE Course (
 	courseID varchar (10) PRIMARY KEY,
-    courseName varchar (60) NOT NULL,
+  courseName varchar (60) NOT NULL,
 	departmentID varchar (5) NOT NULL,
-	FOREIGN KEY (departmentID) REFERENCES Department (departmentID) 
+	FOREIGN KEY (departmentID) REFERENCES Department (departmentID)
 		ON UPDATE CASCADE ON DELETE NO ACTION
 );
 
@@ -88,7 +88,7 @@ CREATE TABLE Enroll (
 	PRIMARY KEY (studentID, courseID, semester),
 	FOREIGN KEY (studentID) REFERENCES Student (studentID)
 		ON UPDATE CASCADE ON DELETE NO ACTION,
-	FOREIGN KEY (sectionNum) REFERENCES Section (sectionNum) 
+	FOREIGN KEY (sectionNum) REFERENCES Section (sectionNum)
 		ON UPDATE CASCADE ON DELETE NO ACTION
 );
 

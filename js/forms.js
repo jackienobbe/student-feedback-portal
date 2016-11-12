@@ -14,7 +14,7 @@ function checkform_new_student(form, userID, userFName, userFName, major, curren
           alert('All fields are required. Please try again');
           return false;
         }
-            
+
     // Finally submit the form.
     form.submit();
     return true;

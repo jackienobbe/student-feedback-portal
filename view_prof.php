@@ -17,7 +17,6 @@
     <table>
       <tr><td>Professor Name: </td><td><?php echo $userFName + $userLName;?></td></tr>
       <tr><td>Department: </td><td><?php echo $department;?></td></tr>
-      <tr><td>Faculty Since: </td><td><?php echo $yearOfHire;?></td></tr>
     </table>
 
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
