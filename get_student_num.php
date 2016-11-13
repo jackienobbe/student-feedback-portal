@@ -14,8 +14,8 @@
 
     <h2>Enter an StudentID:</h2>
     <p><span class="error"><?php echo $error_msg;?></span></p>
-    Invoice Number: <input type="text" name="userID" value="<?php echo $userID;?>" />
-	
+    Student ID: <input type="text" name="userID" value="<?php echo $userID;?>" />
+
     <button type="submit" formaction="view_student.php" formmethod="POST"
 onclick="return checkform2(this.form, this.form.userID);">View</button>
 

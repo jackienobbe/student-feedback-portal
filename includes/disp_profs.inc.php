@@ -26,7 +26,7 @@ try {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $sql = "SELECT professorFName, professorLName, departmentName
           FROM Professor NATURAL JOIN ProfessorToDepartment NATURAL JOIN Department ";
-  if ($ccode != "_all")
+  if ($professorLName != "_all")
   {
     $sql .= " WHERE professorLName = :professorLName";
     $sth = $dbh->prepare($sql);
@@ -35,7 +35,6 @@ try {
   else
   { // all
     $sth = $dbh->prepare($sql);
-    $professorLName = "";
   }
   $sth->execute();
 

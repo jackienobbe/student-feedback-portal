@@ -12,7 +12,7 @@
     <h2>Professors</h2>
     <?php include_once 'includes/search_prof.inc.php';?>
     <p>Professor Last Name: <input type="text" name="professorLName" value="<?php if ($professorLName == '_all') echo ""; else echo $professorLName;?>" />
-    <input type="submit" name="search" value="Search";" />
+    <input type="submit" name="search" value="Search" />
     <input type="submit" name="search" value="All" /></p>
 
     <?php include_once 'includes/disp_profs.inc.php';?>

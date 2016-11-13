@@ -1,7 +1,7 @@
 <?php
 // view_student.inc.php
 $error_msg = "";
-if (isset($_POST["userID"]))
+if (isset($_SESSION["userID"]))
 {
   // Coming from search_prof or get_product_code
   $userID = $_POST["userID"];

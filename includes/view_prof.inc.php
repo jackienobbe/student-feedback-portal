@@ -1,13 +1,14 @@
 <?php
 // view_prof.inc.php
 $error_msg = "";
-if (isset($_POST["professorID"]))
+if (isset($_POST["professorLName"]))
 {
+  echo "<p> Here. </p>";
   // Coming from search_prof
-  $userID = $_POST["professorID"];
+  $professorLName = $_POST["professorLName"];
   $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
   // Read product from database given its code
-  $rc = read_prof($profID, $profFName, $profLName, $departmentName, $error_msg);
+  $rc = read_prof($professorID, $professorFName, $professorLName, $departmentName, $error_msg);
   if ($rc != 0)
     // error
     header("Location:" . $ref . "?professorID=" . $professorID . "&err=" . $error_msg);
@@ -15,15 +16,15 @@ if (isset($_POST["professorID"]))
 }
 else  // type is GET
 {
-  $professorID = $profFName = $profLName = $departmentName = "";
+  $professorID = $professorFName = $professorLName = $departmentName = "";
   if (isset($_GET["err"]))
   {
     // We are here because there was an error in either update or delete
     $error_msg = $_GET["err"];
-    $userID = $_GET["professorID"];
+    $professorID = $_GET["professorID"];
   }
   else if (isset($_GET["professorID"]))
-    $userID = $_GET["professorID"];
+    $professorID = $_GET["professorID"];
 else
     Coming from outside url with product code not provided
    header("Location:get_student_num.php");
