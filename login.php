@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 <!--
-  login.php
+  get_invoice_number.php
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title> Charrafi: View Invoice</title>
+  <title> sfp || login</title>
   <script type="text/JavaScript" src="js/forms.js"></script>
   <style>.error {color: #FF0000;}</style>
 </head>
 <body>
   <form>
     <?php include_once 'includes/db_functions.php';
-          include_once 'includes/view_invoice.inc.php';?>
+          include_once 'includes/get_student_num.inc.php'; ?>
 
-    <h2>View an invoice</h2>
+    <h2>Login</h2>
     <p><span class="error"><?php echo $error_msg;?></span></p>
-    <table>
-      <tr><td>Invoice number: </td><td><?php echo $invnum;?></td></tr>
-      <tr><td>Customer code: </td><td><?php echo $cuscode;?></td></tr>
-      <tr><td>Date: </td><td><?php echo $date;?></td></tr>
-      <tr><td><button type="submit" formaction="upd_invoice.php" formmethod="POST" >Update</button>
-              <button type="submit" formaction="del_invoice.php" formmethod="POST" >Delete</button></td><td></td></tr>
-    </table>
-    <input type="hidden" name="invnum" value="<?php echo $invnum;?>" />
-    <input type="hidden" name="ref" value="<?php echo $ref;?>" />
-    <p>You can now go back to the <a href="index.html">main page</a>.</p>
+    Student Id: <input type="text" name="userID" value="<?php echo $userID;?>" />
+    Password:   <input type="password" name="userPassword" value="<?php echo $userPassword; ?>"
+    <button type="submit" formaction="view_student.php" formmethod="POST"
+      onclick="return checkform_login(this.form, this.form.userID);">Login</button>
+
+    <input type="reset" />
+  <p>Go back to <a href="index.html">main page</a>.</p>
   </form>
 </body>
 </html>

@@ -1,30 +1,30 @@
 <?php
 // view_prof.inc.php
 $error_msg = "";
-if (isset($_POST["userID"]))
+if (isset($_POST["professorID"]))
 {
-  // Coming from search_prof or get_product_code
-  $userID = $_POST["userID"];
+  // Coming from search_prof
+  $userID = $_POST["professorID"];
   $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
   // Read product from database given its code
-  $rc = read_prof($userID, $userFName, $userLName, $department, $yearOfHire, $error_msg);
+  $rc = read_prof($profID, $profFName, $profLName, $departmentName, $error_msg);
   if ($rc != 0)
     // error
-    header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
+    header("Location:" . $ref . "?professorID=" . $professorID . "&err=" . $error_msg);
   // Product read successfully; proceed to display form fields
 }
 else  // type is GET
 {
-  $userID = $userFName = $userLName = $department = $yearOfHire = "";
+  $professorID = $profFName = $profLName = $departmentName = "";
   if (isset($_GET["err"]))
   {
     // We are here because there was an error in either update or delete
     $error_msg = $_GET["err"];
-    $userID = $_GET["userID"];
+    $userID = $_GET["professorID"];
   }
-  else if (isset($_GET["userID"]))
-    $userID = $_GET["userID"];
+  else if (isset($_GET["professorID"]))
+    $userID = $_GET["professorID"];
 else
     Coming from outside url with product code not provided
-   header("Location:get_stduent_num.php");
+   header("Location:get_student_num.php");
 }

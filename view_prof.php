@@ -12,11 +12,11 @@
   <form>
     <?php include_once 'includes/db_functions.php';
           include_once 'includes/view_prof.inc.php';?>
-		  
+
     <h2>Professor Details</h2>
     <table>
-      <tr><td>Professor Name: </td><td><?php echo $userFName + $userLName;?></td></tr>
-      <tr><td>Department Id </td><td><?php echo $departmentID ;?></td></tr>
+      <tr><td>Professor Name: </td><td><?php echo $profFName + $profLLName;?></td></tr>
+      <tr><td>Department: </td><td><?php echo $departmentName ;?></td></tr>
     </table>
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
   </form>

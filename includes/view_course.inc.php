@@ -1,13 +1,13 @@
 <?php
 // view_student.inc.php
 $error_msg = "";
-if (isset($_POST["userID"]))
+if (isset($_POST["courseID"]))
 {
   // Coming from search_prof or get_product_code
-  $userID = $_POST["userID"];
+  $userID = $_POST["courseID"];
   $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
   // Read product from database given its code
-  $rc = read_prof($userID, $userFName, $userLName, $currentYear, $major, $error_msg);
+  $rc = read_course($userID, $userFName, $userLName, $currentYear, $major, $error_msg);
   if ($rc != 0)
     // error
     header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
