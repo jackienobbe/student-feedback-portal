@@ -4,7 +4,7 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>spf || view professor</title>
+  <title>sfp || view professor</title>
   <script type="text/JavaScript" src="js/forms.js"></script>
   <style>.error {color: #FF0000;}</style>
 </head>
@@ -20,6 +20,7 @@
       <tr><td>Professor Name: </td><td><?php echo $professorFName;?></td></tr>
       <tr><td>Department: </td><td><?php echo $departmentName ;?></td></tr>
     </table>
+    <input type="hidden" name="professorID" value="<?php echo $professorID;?>" />
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
     <p> Back to <a href = "index.html">main page</a></p>
   </form>

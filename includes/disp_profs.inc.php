@@ -28,12 +28,13 @@ try {
           FROM Professor NATURAL JOIN ProfessorToDepartment NATURAL JOIN Department ";
   if ($professorLName != "_all")
   {
-    $sql .= " WHERE professorLName = :professorLName";
+    $sql .= " WHERE professorLName = :professorLName;";
     $sth = $dbh->prepare($sql);
     $sth->bindParam(':professorLName', $professorLName);
   }
   else
   { // all
+    $sql .= ";";
     $sth = $dbh->prepare($sql);
   }
   $sth->execute();

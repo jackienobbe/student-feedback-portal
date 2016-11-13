@@ -16,10 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   $userLName = $_POST["userLName"];
   $major = $_POST["major"];
   $currentYear =  $_POST["currentYear"];
+  //echo "<script type='text/javascript'>alert('Made it here.');</script>";
 
   // run sql query
   $rc = create_account($userID, $userPassword, $userFName, $userFName, $major, $currentYear, $error_msg);
-  echo "<script type='text/javascript'>alert('Made it here.');</script>";
+  //echo "<script type='text/javascript'>alert('Yer here.');</script>";
 
   if ($rc == 0)
   {
