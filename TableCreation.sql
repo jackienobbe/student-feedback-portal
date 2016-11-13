@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS Answer_Text_Statistics;
 DROP TABLE IF EXISTS Answer_Choice_Statistics;
 DROP TABLE IF EXISTS Answer_Choice;
 DROP TABLE IF EXISTS Question_Answer;
@@ -89,10 +88,13 @@ CREATE TABLE Enroll (
     courseID varchar (10),
 	semester varchar(20),
 	sectionNum int NOT NULL,
+    surveyID int UNIQUE,
 	PRIMARY KEY (userID, courseID, semester),
 	FOREIGN KEY (userID) REFERENCES Student (userID)
 		ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (sectionNum, courseID, semester) REFERENCES Section (sectionNum, courseID, semester) 
+		ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (surveyID) REFERENCES Survey (surveyID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -102,13 +104,14 @@ CREATE TABLE OfferedAnswer (
 );
 
 CREATE TABLE Survey (
-	surveyID int PRIMARY KEY,
-    userID int,
-    courseID varchar (10),
-	semester varchar(20),
-    FOREIGN KEY (userID, courseID, semester) REFERENCES Enroll(userID, courseID, semester)
-		ON UPDATE CASCADE ON DELETE CASCADE
+	surveyID int PRIMARY KEY
 );
+-- userID int,
+--        courseID varchar (10),
+--         semester varchar(20)
+-- 
+-- FOREIGN KEY (userID, courseID, semester) REFERENCES Enroll(userID, courseID, semester)
+-- 		ON UPDATE CASCADE ON DELETE CASCADE
 
 -- Text, Choice
 CREATE TABLE Answer_Type(
@@ -120,29 +123,23 @@ CREATE TABLE Question (
 	questionID	int,
     surveyID	int,
 	questionText  varchar(128) NOT NULL,
-	answerTypeID	varchar(20) NOT NULL,
+	answerTypeID	int NOT NULL,
     PRIMARY KEY (questionID, surveyID),
     FOREIGN KEY (surveyID) REFERENCES Survey (surveyID) 
 		ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (answerTypeID) REFERENCES Answer_Type (answerTypeID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
--- it doesnt like the answer type foreign key
 
 
 CREATE TABLE Answer_Text (
 	questionID int,
     surveyID	int,
-    answerTypeID varchar(20) NOT NULL,
 	answer varchar(500) NOT NULL,
     voteCount int,
 	PRIMARY KEY (questionID, surveyID),
 	FOREIGN KEY (questionID, surveyID) REFERENCES Question (questionID, surveyID)
-		ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (userID) REFERENCES Student (userID)
-		ON UPDATE CASCADE ON DELETE NO ACTION,
-	FOREIGN KEY (answerTypeID) REFERENCES Answer_Type (answerTypeID)
-		ON UPDATE CASCADE ON DELETE NO ACTION
+		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Question_Answer (
@@ -160,12 +157,10 @@ CREATE TABLE Answer_Choice (
     surveyID	int,
 	offeredAnswerID int NOT NULL,
 	PRIMARY KEY (questionID, surveyID),
-    FOREIGN KEY (offeredAnswerID) REFERENCES OfferedAnswer (offeredAnswerID)
+    FOREIGN KEY (offeredAnswerID) REFERENCES Question_Answer (offeredAnswerID)
 		ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (questionID, surveyID) REFERENCES Question (questionID, surveyID)
-		ON UPDATE CASCADE ON DELETE CASCADE,
-	 FOREIGN KEY (userID) REFERENCES Student (userID)
-		 ON UPDATE CASCADE ON DELETE NO ACTION
+		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Answer_Choice_Statistics(
@@ -176,15 +171,3 @@ CREATE TABLE Answer_Choice_Statistics(
     FOREIGN KEY (questionID, offeredAnswerID) REFERENCES Question_Answer (questionID, offeredAnswerID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
-
--- TODO: Just create another attribute in Answer Text?
-
--- CREATE TABLE Answer_Text_Statistics(
--- 	userID int,
---  	questionID int,
---     voteCount int,
--- 	PRIMARY KEY (userID, questionID),
---     FOREIGN KEY (userID, questionID) REFERENCES Answer_Text (userID, questionID)
--- 		ON UPDATE CASCADE ON DELETE CASCADE
--- );
-
