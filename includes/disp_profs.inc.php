@@ -11,7 +11,7 @@ class ListItems extends RecursiveIteratorIterator {
     return parent::current();
   }
   function beginChildren() {
-    echo "<li> <button name='professorLName' type='submit' formaction='view_prof.php'
+    echo "<li> <button name='professorID' type='submit' formaction='view_prof.php'
           value='" . parent::current() . "' formmethod='POST'>" . parent::current() . "</button>\n";
   }
   function endChildren() {
@@ -24,7 +24,7 @@ include_once 'db_connect.php';
 
 try {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "SELECT professorFName, professorLName, departmentName
+  $sql = "SELECT professorID, professorFName, professorLName, departmentName
           FROM Professor NATURAL JOIN ProfessorToDepartment NATURAL JOIN Department ";
   if ($professorLName != "_all")
   {
@@ -38,7 +38,6 @@ try {
   }
   $sth->execute();
 
-  //echo "<h2> Professors </h2>"
   echo "<ul>\n";
 
   // set the resulting array to associative

@@ -9,16 +9,19 @@
   <style>.error {color: #FF0000;}</style>
 </head>
 <body>
-  <h2>Professor Details</h2>
   <form>
     <?php include_once 'includes/db_functions.php';
           include_once 'includes/view_prof.inc.php';?>
+
+    <h2>Professor Details</h2>
+    <p><span class="error"><?php echo $error_msg;?></span></p>
     <table>
-      <tr><td>Professor Name: </td><td><?php echo $professorFName . " " . $professorLName;?></td></tr>
+      <tr><td>Professor ID: </td><td><?php echo $professorID;?></td></tr>
+      <tr><td>Professor Name: </td><td><?php echo $professorFName;?></td></tr>
       <tr><td>Department: </td><td><?php echo $departmentName ;?></td></tr>
     </table>
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
+    <p> Back to <a href = "index.html">main page</a></p>
   </form>
-  <p> Back to <a href = "index.html">main page</a></p>
 </body>
 </html>

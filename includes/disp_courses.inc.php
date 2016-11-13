@@ -28,7 +28,7 @@ try {
           FROM Course NATURAL JOIN Department";
   if ($courseID != "_all")
   {
-    $sql .= " WHERE professorLName = :professorLName";
+    $sql .= " WHERE courseID = :courseID";
     $sth = $dbh->prepare($sql);
     $sth->bindParam(':courseID', $courseID);
   }
@@ -38,7 +38,6 @@ try {
   }
   $sth->execute();
 
-  //echo "<h2> Professors </h2>"
   echo "<ul>\n";
 
   // set the resulting array to associative

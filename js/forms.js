@@ -28,11 +28,13 @@ function checkform_login(form, userID, userPassword)
   return true;
 }
 
-function checkform_new_student(form, userID, userPassword, major, currentYear)
+function checkform_new_student(form, userID, userPassword, userFName, userLName, major, currentYear)
 {
     // Check each field has a value
     if (userID.value == ''	||
         userPassword.value == '' ||
+        userFName.value == '' ||
+        userLName.value == '' ||
         major.value == ''		||
         currentYear.value == '')
         {

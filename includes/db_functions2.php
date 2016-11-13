@@ -21,7 +21,7 @@ function create_account($userID, $userPassword, $userFName, $userLName, $major, 
   {
     // Set the PDO error mode to exception
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // Insert the new product into the the system and  table
+    // Insert the new product into the the system and table
     $sql = "INSERT INTO System_User (userID, userPassword, userFName, userLName, userTypeID)
             VALUES (:userID, :userPassword, :userFName, :userLName, 'student');
 

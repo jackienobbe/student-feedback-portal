@@ -9,19 +9,22 @@
   <style>.error {color: #FF0000;}</style>
 </head>
 <body>
+  <h2>Course Information</h2>
   <form>
-    <?php include_once 'includes/db_functions.php';
-          include_once 'includes/view_course.inc.php';?>
 
-    <h2>Course Information</h2>
+    <?php include_once 'includes/db_functions2.php';
+          include_once 'includes/view_course.inc.php';?>
+          //this won't show up
+
     <p><span class="error"><?php echo $error_msg;?></span></p>
     <table>
       <tr><td>Course Id: </td><td><?php echo $courseID;?></td></tr>
       <tr><td>Course Name: </td><td><?php echo $courseName;?></td></tr>
       <tr><td>Department: </td><td><?php echo $departmentName;?></td></tr>
     </table>
+    <input type="hidden" name="courseID" value="<?php echo $courseID;?>" />
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
-    <p>You can now go back to the <a href="index.html">main page</a>.</p>
+    <p>Or, go back to the <a href="index.html">main page</a>.</p>
   </form>
 </body>
 </html>
