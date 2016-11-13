@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS Answer_Text_Statistics;
+DROP TABLE IF EXISTS Answer_Choice_Statistics;
 DROP TABLE IF EXISTS Answer_Choice;
 DROP TABLE IF EXISTS Question_Answer;
 DROP TABLE IF EXISTS Answer_Text;
@@ -10,7 +12,7 @@ DROP TABLE IF EXISTS ProfessorToDepartment;
 DROP TABLE IF EXISTS Department;
 DROP TABLE IF EXISTS Professor;
 DROP TABLE IF EXISTS Student;
-DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS System_User;
 DROP TABLE IF EXISTS UserType;
 
 
@@ -20,13 +22,13 @@ CREATE TABLE UserType(
     description varchar(20) NOT NULL
 );
 
-CREATE TABLE User (
+CREATE TABLE System_User (
 	userID int PRIMARY KEY,
     userPassword varchar(30) NOT NULL,
     userFName varchar(25) NOT NULL,
     userLName varchar(25) NOT NULL,
     userTypeID int,
-    FOREIGN KEY (userTypeID) REFERENCES UserType
+    FOREIGN KEY (userTypeID) REFERENCES UserType (userTypeID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -34,7 +36,7 @@ CREATE TABLE Student (
 	userID int PRIMARY KEY,
 	currentYear int,
 	major	varchar(50) NOT NULL,
-    FOREIGN KEY (userID) REFERENCES User (userID)
+    FOREIGN KEY (userID) REFERENCES System_User (userID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -81,12 +83,12 @@ CREATE TABLE Section (
 );
 
 CREATE TABLE Enroll (
-	studentID int,
+	userID int,
     courseID varchar (10),
 	semester varchar(20),
 	sectionNum int NOT NULL,
-	PRIMARY KEY (studentID, courseID, semester),
-	FOREIGN KEY (studentID) REFERENCES Student (studentID)
+	PRIMARY KEY (userID, courseID, semester),
+	FOREIGN KEY (userID) REFERENCES Student (userID)
 		ON UPDATE CASCADE ON DELETE NO ACTION,
 	FOREIGN KEY (sectionNum) REFERENCES Section (sectionNum)
 		ON UPDATE CASCADE ON DELETE NO ACTION
@@ -94,7 +96,7 @@ CREATE TABLE Enroll (
 
 CREATE TABLE OfferedAnswer (
 	offeredAnswerID int PRIMARY KEY,
-    answerText varchar (40) NOT NULL
+  answerText varchar (40) NOT NULL
 );
 
 CREATE TABLE Question (
@@ -105,13 +107,13 @@ CREATE TABLE Question (
 
 
 CREATE TABLE Answer_Text (
-	studentID int,
+	userID int,
 	questionID int,
 	answer varchar(500) NOT NULL,
-	PRIMARY KEY (studentId, questionID),
+	PRIMARY KEY (userID, questionID),
 	FOREIGN KEY (questionID) REFERENCES Question (questionID)
 		ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (studentID) REFERENCES Student (studentID)
+	FOREIGN KEY (userID) REFERENCES Student (userID)
 		ON UPDATE CASCADE ON DELETE NO ACTION
 );
 
@@ -126,32 +128,32 @@ CREATE TABLE Question_Answer (
 );
 
 CREATE TABLE Answer_Choice (
-	studentID int,
+	userID int,
 	questionID int,
 	offeredAnswerID int NOT NULL,
-	PRIMARY KEY (studentId, questionID),
+	PRIMARY KEY (userID, questionID),
     FOREIGN KEY (offeredAnswerID) REFERENCES OfferedAnswer (offeredAnswerID)
 		ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (questionID) REFERENCES Question (questionID)
 		ON UPDATE CASCADE ON DELETE CASCADE,
-	 FOREIGN KEY (studentID) REFERENCES Student (studentID)
+	 FOREIGN KEY (userID) REFERENCES Student (userID)
 		 ON UPDATE CASCADE ON DELETE NO ACTION
 );
 
-CREATE TABLE Result_Choice(
+CREATE TABLE Answer_Choice_Statistics(
 	questionID int,
     offeredAnswerID int,
     percent decimal(3,2) NOT NULL,
     PRIMARY KEY (questionID, offeredAnswerID),
-    FOREIGN KEY (questionID, offeredAnswerID) REFERENCES Answer_Choice (questionID, offeredAnswerID)
-		ON UPDATE CASCADE ON DELETE NO ACTION
+    FOREIGN KEY (questionID, offeredAnswerID) REFERENCES Question_Answer (questionID, offeredAnswerID)
+		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE Result_Text(
-	studentID int,
+CREATE TABLE Answer_Text_Statistics(
+	userID int,
 	questionID int,
     voteCount int,
-    PRIMARY KEY (studentID, questionID),
-    FOREIGN KEY (studentID, questionID) REFERENCES Answer_Text (studentID, questionID)
-		ON UPDATE CASCADE ON DELETE NO ACTION
+    PRIMARY KEY (userID, questionID),
+    FOREIGN KEY (userID, questionID) REFERENCES Answer_Text (userID, questionID)
+		ON UPDATE CASCADE ON DELETE CASCADE
 );
