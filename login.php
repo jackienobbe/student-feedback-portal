@@ -1,30 +1,35 @@
-<!DOCTYPE html>
-<!--
-  login.php
--->
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title> Charrafi: View Invoice</title>
-  <script type="text/JavaScript" src="js/forms.js"></script>
-  <style>.error {color: #FF0000;}</style>
-</head>
-<body>
-  <form>
-    <?php include_once 'includes/db_functions.php';
-          include_once 'includes/view_invoice.inc.php';?>
+<?php
+   include("config.php");
+   session_start();
+   
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form 
+      
+      $userID = $_POST["userID"];
+      $userPassword =$_POST["userPassword"];
+      
+      // Read invoice from database given its code
+  $rc = read_prof($userID, $userFName, $userLName,$departmentID, $error_msg);
 
-    <h2>View an invoice</h2>
-    <p><span class="error"><?php echo $error_msg;?></span></p>
-    <table>
-      <tr><td>Invoice number: </td><td><?php echo $invnum;?></td></tr>
-      <tr><td>Customer code: </td><td><?php echo $cuscode;?></td></tr>
-      <tr><td>Date: </td><td><?php echo $date;?></td></tr>
-      <tr><td><button type="submit" formaction="upd_invoice.php" formmethod="POST" >Update</button>
-              <button type="submit" formaction="del_invoice.php" formmethod="POST" >Delete</button></td><td></td></tr>
-    </table>
-    <input type="hidden" name="invnum" value="<?php echo $invnum;?>" />
-    <input type="hidden" name="ref" value="<?php echo $ref;?>" />
-    <p>You can now go back to the <a href="index.html">main page</a>.</p>
-  </form>
-</body>
-</html>
+  if ($rc != 0)
+    // error
+    header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
+
+  // invoice read successfully; proceed to display form fields
+}
+else  // type is GET
+{
+    $userID = $userFName = $userLName = $departmentID = "";
+ if (isset($_GET["err"]))
+  {
+    // We are here because there was an error in either update or delete
+    $error_msg = $_GET["err"];
+    $userID = $_GET["userID"];
+  }
+  else if (isset($_GET["userID"]))
+    $userID = $_GET["userID"];
+else
+    // Coming from outside url with product code not provided
+    header("Location:get_professor_num.php");
+}
+?>
