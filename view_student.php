@@ -15,7 +15,7 @@
 
     <h2>Student Details</h2>
     <table>
-      <tr><td>Student Name: </td><td><?php echo $userFName + $userLName;?></td></tr>
+      <tr><td>Student Name: </td><td><?php echo $userFName . " " . $userLName;?></td></tr>
       <tr><td>Major: </td><td><?php echo $major;?></td></tr>
 	    <tr><td>Student Id: </td><td><?php echo $userID;?></td></tr>
       <tr><td>Year: </td><td><?php echo $currentYear;?></td></tr>

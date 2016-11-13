@@ -9,7 +9,7 @@
   <style>.error {color: #FF0000;}</style>
 </head>
 <body>
-  <form>
+  <form action="includes/login.inc.php" method="POST">
     <?php include_once 'includes/db_functions.php';
           include_once 'includes/login.inc.php'; ?>
 
@@ -17,10 +17,8 @@
     <p><span class="error"><?php echo $error_msg;?></span></p>
     <p>Student Id: <input type="text" name="userID" value="<?php echo $userID;?>" /></p>
     <p>Password:   <input type="password" name="userPassword" value="<?php echo $userPassword;?>" /></p>
-    <button type="submit" formaction="view_student.php" formmethod="POST"
+    <button type="submit"  formmethod="POST"
       onclick="return checkform_login(this.form, this.form.userID, this.form.userPassword);">Login</button>
-
-    <input type="reset" />
   <p>Go back to <a href="index.html">main page</a>.</p>
   </form>
 </body>

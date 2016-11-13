@@ -1,7 +1,18 @@
 //
 // forms.js
 //
+function checkform_userID(form, userID)
+{
+  // Check each field has a value
+  if (userID.value == ''){
+        alert('All fields are required. Please try again');
+        return false;
+      }
 
+  // Finally submit the form.
+  form.submit();
+  return true;
+}
 function checkform_login(form, userID, userPassword)
 {
   // Check each field has a value

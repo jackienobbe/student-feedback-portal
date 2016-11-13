@@ -1,11 +1,12 @@
 <?php
 // view_student.inc.php
 $error_msg = "";
-if (isset($_SESSION["userID"]))
+if (isset($_POST["userID"]))
 {
   // Coming from search_prof or get_product_code
   $userID = $_POST["userID"];
   $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
+
   // Read product from database given its code
   $rc = read_student($userID, $userFName, $userLName, $currentYear, $major, $error_msg);
   if ($rc != 0)

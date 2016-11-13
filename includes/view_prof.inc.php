@@ -3,7 +3,6 @@
 $error_msg = "";
 if (isset($_POST["professorLName"]))
 {
-  echo "<p> Here. </p>";
   // Coming from search_prof
   $professorLName = $_POST["professorLName"];
   $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);

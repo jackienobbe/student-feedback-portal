@@ -5,17 +5,13 @@
 
 $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
 $error_msg = "";
-$invnum = "";
+$courseID = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
   // Get data from form
   if ($_POST["search"] == "Search")
-    $invnum = $_POST["invnum"];
+    $courseID = $_POST["courseID"];
   else
-    $invnum = "_all";
+    $courseID = "_all";
 }
-else if ($ref == "/MyStore/upd_invoice.php")
-    echo "<script type='text/javascript'>alert('invoice successfully updated!');</script>";
-else if ($ref == "/MyStore/del_invoice.php")
-    echo "<script type='text/javascript'>alert('invoice successfully deleted!');</script>";

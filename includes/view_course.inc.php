@@ -1,30 +1,30 @@
 <?php
-// view_student.inc.php
+// view_course.inc.php
 $error_msg = "";
 if (isset($_POST["courseID"]))
 {
   // Coming from search_prof or get_product_code
-  $userID = $_POST["courseID"];
+  $courseID = $_POST["courseID"];
   $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
   // Read product from database given its code
-  $rc = read_course($userID, $userFName, $userLName, $currentYear, $major, $error_msg);
+  $rc = read_course($courseID, $courseName, $departmentName, $error_msg);
   if ($rc != 0)
     // error
-    header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
+    header("Location:" . $ref . "?courseID=" . $courseID . "&err=" . $error_msg);
   // Product read successfully; proceed to display form fields
 }
 else  // type is GET
 {
-  $userID = $userFName = $userLName = $currentYear = $major = "";
+  $courseID = $courseName = $departmentName = "";
   if (isset($_GET["err"]))
   {
     // We are here because there was an error in either update or delete
     $error_msg = $_GET["err"];
-    $userID = $_GET["userID"];
+    $courseID = $_GET["courseID"];
   }
-  else if (isset($_GET["userID"]))
-    $userID = $_GET["userID"];
+  else if (isset($_GET["courseID"]))
+    $userID = $_GET["courseID"];
   else
     // Coming from outside url with product code not provided
-    header("Location:get_invoice_num.php");
+    header("Location:get_course_num.php");
 }
