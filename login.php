@@ -15,8 +15,8 @@
 
     <h2>Login</h2>
     <p><span class="error"><?php echo $error_msg;?></span></p>
-    Student Id: <input type="text" name="userID" value="<?php echo $userID;?>" />
-    Password:   <input type="password" name="userPassword" value="<?php echo $userPassword; ?>"
+    <p>Student Id: <input type="text" name="userID" value="<?php echo $userID;?>" /></p>
+    <p>Password:   <input type="password" name="userPassword" value="<?php echo $userPassword;?>" /></p>
     <button type="submit" formaction="view_student.php" formmethod="POST"
       onclick="return checkform_login(this.form, this.form.userID);">Login</button>
 

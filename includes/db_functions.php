@@ -12,7 +12,7 @@
  *         1062 if student already exists
  *         error code if other db/sql error
  */
-function create_student($userID, $userPassword, $userFName, $userLName, $currentYear, $major, &$error_msg)
+function create_account($userID, $userPassword, $major, $currentYear, &$error_msg)
 {
   // Connect to database server
   include_once 'db_connect.php';
@@ -23,15 +23,15 @@ function create_student($userID, $userPassword, $userFName, $userLName, $current
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // Insert the new product into the the Product table
     $sql = "INSERT INTO Student
-              (userID, userPassword, userFName, userLName, currentYear, major)
+              (userID, userPassword, currentYear, major)
             VALUES
-              (:userID, :userPassword, :userFName, :userLName, :currentYear, :major);";
+              (:userID, :userPassword, :currentYear, :major);";
 
     $sth = $dbh->prepare($sql);
     $sth->bindParam(':userID', $userID);
     $sth->bindParam(':userPassword', $userPassword);
-    $sth->bindParam(':userFName', $userFName);
-    $sth->bindParam(':userLName', $userLName);
+    //$sth->bindParam(':userFName', $userFName);
+    //$sth->bindParam(':userLName', $userLName);
     $sth->bindParam(':currentYear', $currentYear);
     $sth->bindParam(':major', $major);
 
