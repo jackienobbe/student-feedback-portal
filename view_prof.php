@@ -16,8 +16,7 @@
     <h2>Professor Details</h2>
     <p><span class="error"><?php echo $error_msg;?></span></p>
     <table>
-      <tr><td>Professor ID: </td><td><?php echo $professorID;?></td></tr>
-      <tr><td>Professor Name: </td><td><?php echo $professorFName;?></td></tr>
+      <tr><td>Professor Name: </td><td><?php echo $professorFName . " " . $professorLName;?></td></tr>
       <tr><td>Department: </td><td><?php echo $departmentName ;?></td></tr>
     </table>
     <input type="hidden" name="professorID" value="<?php echo $professorID;?>" />

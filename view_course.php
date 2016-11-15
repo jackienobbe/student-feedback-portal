@@ -9,13 +9,11 @@
   <style>.error {color: #FF0000;}</style>
 </head>
 <body>
-  <h2>Course Information</h2>
   <form>
-
-    <?php include_once 'includes/db_functions2.php';
+    <?php include_once 'includes/db_functions.php';
           include_once 'includes/view_course.inc.php';?>
-          //this won't show up
 
+    <h2>Course Information</h2>
     <p><span class="error"><?php echo $error_msg;?></span></p>
     <table>
       <tr><td>Course Id: </td><td><?php echo $courseID;?></td></tr>
