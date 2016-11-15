@@ -17,7 +17,7 @@
     Student ID: <input type="text" name="userID" value="<?php echo $userID;?>" />
 
     <button type="submit" formaction="view_student.php" formmethod="POST"
-onclick="return checkform_userID(this.form, this.form.userID);">View</button>
+      onclick="return checkform_userID(this.form, this.form.userID);">View</button>
 
     <input type="reset" />
   <p>Go back to <a href="index.html">main page</a>.</p>

@@ -256,7 +256,7 @@ function enroll_student($userID, $courseID, $sectionNum, $semester, &$error_msg)
  *         -1 if product does not exist
  *         error code if other db/sql error
  */
-function read_prof($professorID, &$profFName, &$profLName, &$departmentName, &$error_msg)
+function read_prof($professorID, &$professorFName, &$professorLName, &$departmentName, &$error_msg)
 {
   // Connect to database server
   include_once 'db_connect.php';

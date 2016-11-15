@@ -22,7 +22,7 @@
     </table>
     <input type="hidden" name="professorID" value="<?php echo $professorID;?>" />
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
-    <p> Back to <a href = "index.html">main page</a></p>
+    <p>Head back to <a href = "index.html">main page</a>.</p>
   </form>
 </body>
 </html>
