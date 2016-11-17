@@ -9,7 +9,6 @@ if (isset($_POST["professorID"]))
   $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
   // Read product from database given its code
   $rc = read_prof($professorID, $professorFName, $professorLName, $departmentName, $error_msg);
-  echo "<script type='text/javascript'>alert('Freaking here!"  . $professorID . "');</script> ";
 
   if ($rc != 0)
     // error

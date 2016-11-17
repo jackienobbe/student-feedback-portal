@@ -301,49 +301,6 @@ function read_prof($professorID, &$professorFName, &$professorLName, &$departmen
   }
 }
 
-function read_prof3($professorID, &$profFName, &$profLName, &$departmentName, &$error_msg)
-{
-  // Connect to database server
-  include_once 'db_connect.php';
-
-  try
-  {
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $sql = "SELECT professorID, professorFName, professorLName, departmentName
-            FROM Professor NATURAL JOIN ProfessorToDepartment NATURAL JOIN Department
-            WHERE professorID = :professorID;";
-
-    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-    $sth->bindParam(':professorID', $professorID);
-    // Execute the prepared query.
-    $sth->execute();
-    $array = $sth->fetchAll(PDO::FETCH_ASSOC);
-    $dbh = null;
-
-    // Check whether the submitted product already exists
-    if (count($array) == 0)
-    {
-      // no product found
-      $error_msg = "This professor doesn't exist.";
-      return -1;
-    }
-    else
-    {
-      $record = $array[0];
-      $professorFName = $record['professorFName'];
-      $professorLName = $record['professorLName'];
-      $departmentName =  $record['departmentName'];
-      return 0;
-    }
-  }
-  catch(PDOException $e)
-  {
-    $dbh = null;
-    header("Location: error.php?err=" . $e->getMessage());
-    exit();
-  }
-}
 /* READ PROF'S COURSES
  *
  */

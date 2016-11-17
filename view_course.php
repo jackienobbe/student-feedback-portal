@@ -15,11 +15,10 @@
 
     <h2>Course Information</h2>
     <p><span class="error"><?php echo $error_msg;?></span></p>
-    <table>
-      <tr><td>Course Id: </td><td><?php echo $courseID;?></td></tr>
-      <tr><td>Course Name: </td><td><?php echo $courseName;?></td></tr>
-      <tr><td>Department: </td><td><?php echo $departmentName;?></td></tr>
-    </table>
+
+    Course Id: <?php echo $courseID;?> <br/>
+    Course Name: <?php echo $courseName;?><br/>
+    Department: <?php echo $departmentName;?><br/>
     <input type="hidden" name="courseID" value="<?php echo $courseID;?>" />
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
     <p>Or, go back to the <a href="index.html">main page</a>.</p>
