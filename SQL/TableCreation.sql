@@ -95,6 +95,7 @@ CREATE TABLE Enroll (
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+-- TODO: make sure trigger on Enroll increments SUrvey ID
 CREATE TABLE Survey (
     userID int,
     courseID varchar (10),
@@ -113,24 +114,23 @@ CREATE TABLE Answer_Type(
 
 CREATE TABLE Question (
 	questionID	int,
-    surveyID	int,
 	questionText  varchar(128) NOT NULL,
 	answerTypeID	int NOT NULL,
-    PRIMARY KEY (questionID, surveyID),
-    FOREIGN KEY (surveyID) REFERENCES Survey (surveyID) 
-		ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY KEY (questionID),
 	FOREIGN KEY (answerTypeID) REFERENCES Answer_Type (answerTypeID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
 CREATE TABLE Answer_Text (
-	questionID int,
-    surveyID	int,
+	surveyID	int,
+    questionID int,
 	answer varchar(500) NOT NULL,
     voteCount int,
-	PRIMARY KEY (questionID, surveyID),
-	FOREIGN KEY (questionID, surveyID) REFERENCES Question (questionID, surveyID)
+	PRIMARY KEY (surveyID, questionID),
+    FOREIGN KEY (surveyID) REFERENCES Survey (surveyID)
+		ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (questionID) REFERENCES Question (questionID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -140,32 +140,33 @@ CREATE TABLE OfferedAnswer (
     answerText varchar (40) NOT NULL
 );
 
+
 CREATE TABLE Question_Answer (
 	questionID int,
-    surveyID	int,
     offeredAnswerID int,
-    PRIMARY KEY (questionID, surveyID, offeredAnswerID),
-    FOREIGN KEY (questionID, surveyID) REFERENCES Question (questionID, surveyID)
+    PRIMARY KEY (questionID, offeredAnswerID),
+    FOREIGN KEY (questionID) REFERENCES Question (questionID)
 		ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (offeredAnswerID) REFERENCES OfferedAnswer (offeredAnswerID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Answer_Choice (
-	questionID int,
-    surveyID	int,
+	surveyID	int,
+    questionID 	int,
 	offeredAnswerID int NOT NULL,
-	PRIMARY KEY (questionID, surveyID, offeredAnswerID),
-    FOREIGN KEY (questionID, surveyID, offeredAnswerID) REFERENCES Question_Answer (questionID, surveyID, offeredAnswerID)
+	PRIMARY KEY (surveyID, questionID, offeredAnswerID),
+    FOREIGN KEY (surveyID) REFERENCES Survey (surveyID)
+		ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (questionID, offeredAnswerID) REFERENCES Question_Answer (questionID, offeredAnswerID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Question_Answer_Statistics(
 	questionID int,
-    surveyID	int,
     offeredAnswerID int,
     percent decimal(3,2) NOT NULL DEFAULT 0.00,
-    PRIMARY KEY (questionID, surveyID, offeredAnswerID),
-    FOREIGN KEY (questionID, surveyID, offeredAnswerID) REFERENCES Question_Answer (questionID, surveyID, offeredAnswerID)
+    PRIMARY KEY (questionID, offeredAnswerID),
+    FOREIGN KEY (questionID, offeredAnswerID) REFERENCES Question_Answer (questionID, offeredAnswerID)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );

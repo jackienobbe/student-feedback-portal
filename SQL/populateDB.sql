@@ -13,7 +13,7 @@ INSERT INTO System_User VALUES ( 00001,'admin','admin',' admin', 0);
 
 /* insert into Student table*/
 INSERT INTO Student VALUES ( 59609, 4, 'Computer Science');
-INSERT INTO Student VALUES ( 64313, 3,'Engineering & Management Science');
+INSERT INTO Student VALUES ( 64313, 3, 'Engineering & Management Science');
 INSERT INTO Student VALUES ( 71006, 3, 'Computer Science');
 INSERT INTO Student VALUES ( 71007, 3, 'Computer Science');
 INSERT INTO Student VALUES ( 63744, 3, 'Engineering & Management Science');
@@ -91,20 +91,19 @@ INSERT INTO Answer_Type VALUES (1, 'Text');
 INSERT INTO Answer_Type VALUES (2, 'Choice');
 
 /* insert into Question */
-INSERT INTO Question VALUES ( 1, 1, 'How many hours do you spend on the homework?', 2);
-INSERT INTO Question VALUES ( 2, 1, 'Is the material covered in class relevant to the course?', 1);
-INSERT INTO Question VALUES ( 3, 1, 'How many classes sessions did you miss?', 2);
-INSERT INTO Question VALUES ( 4, 1, 'Does the professor demonstrate good knowledge of the class material?', 1);
-INSERT INTO Question VALUES ( 5, 1, 'Please identify what you consider to be the weaknesses and the strengths of this class', 1);
+INSERT INTO Question VALUES ( 1, 'How many hours do you spend on the homework?', 2);
+INSERT INTO Question VALUES ( 2, 'Is the material covered in class relevant to the course?', 1);
+INSERT INTO Question VALUES ( 3, 'How many classes sessions did you miss?', 2);
+INSERT INTO Question VALUES ( 4, 'Does the professor demonstrate good knowledge of the class material?', 1);
+INSERT INTO Question VALUES ( 5, 'Please identify what you consider to be the weaknesses and the strengths of this class', 1);
 
 
 /* insert into Answer_Text */
-INSERT INTO Answer_Text VALUES ( 2, 1, 'The material covered in class is not very relevant to the course!', 0);
--- redo these answers vv
-INSERT INTO Answer_Text VALUES ( 2, 2, ' This class taught me how to apply theory to practice', 0);
-INSERT INTO Answer_Text VALUES ( 2, 3, 'I think that the professor demonstrates good knowledge of the material', 0);
-INSERT INTO Answer_Text VALUES ( 2, 4, 'Students participation is encouraged', 0);
-INSERT INTO Answer_Text VALUES ( 2, 5, 'The professor gives a lot of assignments and pop quizzes', 0);
+INSERT INTO Answer_Text VALUES (1, 2,'The material covered in class is not very relevant to the course!', 0);
+INSERT INTO Answer_Text VALUES (2, 2,' This class taught me how to apply theory to practice', 0);
+INSERT INTO Answer_Text VALUES (3, 2,'I think that the professor demonstrates good knowledge of the material', 0);
+INSERT INTO Answer_Text VALUES (4, 2,'Students participation is encouraged', 0);
+INSERT INTO Answer_Text VALUES (5, 2,'The professor gives a lot of assignments and pop quizzes', 0);
 
 /* insert into OfferedAnswer */
 INSERT INTO OfferedAnswer VALUES (1,'1-2');
@@ -114,19 +113,29 @@ INSERT INTO OfferedAnswer VALUES (4,'6-8');
 INSERT INTO OfferedAnswer VALUES (5,'8-10');
 
 /* insert into Question_Answer */
-INSERT INTO Question_Answer VALUES (1,'2');
-INSERT INTO Question_Answer VALUES (2,'3');
-INSERT INTO Question_Answer VALUES (3,'5');
-INSERT INTO Question_Answer VALUES (4,'1');
-INSERT INTO Question_Answer VALUES (5,'4');
+INSERT INTO Question_Answer VALUES (1, 1);
+INSERT INTO Question_Answer VALUES (1, 2);
+INSERT INTO Question_Answer VALUES (1, 3);
+INSERT INTO Question_Answer VALUES (1, 4);
+INSERT INTO Question_Answer VALUES (1, 5);
+INSERT INTO Question_Answer VALUES (3, 1);
+INSERT INTO Question_Answer VALUES (3, 2);
+INSERT INTO Question_Answer VALUES (3, 3);
+INSERT INTO Question_Answer VALUES (3, 4);
+INSERT INTO Question_Answer VALUES (3, 5);
 
 
 /* insert into Answer_Choice */
-INSERT INTO Answer_Choice VALUES (59609,3,2);
-INSERT INTO Answer_Choice VALUES (71006,4,1);
-INSERT INTO Answer_Choice VALUES (64313,1,5);
-INSERT INTO Answer_Choice VALUES (59603,2,3);
-INSERT INTO Answer_Choice VALUES (64313,5,4);
+INSERT INTO Answer_Choice VALUES (1,1,1);
+INSERT INTO Answer_Choice VALUES (1,3,1);
+INSERT INTO Answer_Choice VALUES (2,1,2);
+INSERT INTO Answer_Choice VALUES (2,3,2);
+INSERT INTO Answer_Choice VALUES (3,1,3);
+INSERT INTO Answer_Choice VALUES (3,3,3);
+INSERT INTO Answer_Choice VALUES (4,1,1);
+INSERT INTO Answer_Choice VALUES (4,3,1);
+INSERT INTO Answer_Choice VALUES (5,1,2);
+INSERT INTO Answer_Choice VALUES (5,3,2);
 
 /* insert into Question_Answer_Statistics
 INSERT INTO Question_Answer_Statistics VALUES ();
