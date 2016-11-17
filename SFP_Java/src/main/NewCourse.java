@@ -17,7 +17,9 @@ public class NewCourse extends javax.swing.JFrame {
     public NewCourse() {
         initComponents();
     }
-
+    String url = "jdbc:mysql://127.0.0.1:3306/studentFeedbackPortal";
+    String uid = "SFP";
+    String pw = "SFP";
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

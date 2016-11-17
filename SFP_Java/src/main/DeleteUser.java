@@ -23,9 +23,9 @@ public class DeleteUser extends javax.swing.JFrame {
         initComponents();
     }
 
-    String url = "jdbc:mysql://127.0.0.1:3306/CH8";
-    String uid = "root";
-    String pw = "root";
+    String url = "jdbc:mysql://127.0.0.1:3306/studentFeedbackPortal";
+    String uid = "SFP";
+    String pw = "SFP";
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -223,7 +223,7 @@ public class DeleteUser extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection(url, uid, pw);
 
             // the mysql delete statement
-            String qry = "DELETE FROM User "
+            String qry = "DELETE FROM System_User "
             + "WHERE UserID = ?; ";
            
             // create the mysql insert preparedstatement

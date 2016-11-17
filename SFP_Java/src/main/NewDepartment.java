@@ -22,9 +22,9 @@ public class NewDepartment extends javax.swing.JFrame {
     public NewDepartment() {
         initComponents();
     }
-    String url = "jdbc:mysql://127.0.0.1:3306/CH8";
-    String uid = "root";
-    String pw = "root";
+    String url = "jdbc:mysql://127.0.0.1:3306/studentFeedbackPortal";
+    String uid = "SFP";
+    String pw = "SFP";
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
