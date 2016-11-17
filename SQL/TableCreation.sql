@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Answer_Choice_Statistics;
+DROP TABLE IF EXISTS Question_Answer_Statistics;
 DROP TABLE IF EXISTS Answer_Choice;
 DROP TABLE IF EXISTS Question_Answer;
 DROP TABLE IF EXISTS OfferedAnswer;
@@ -63,7 +63,7 @@ CREATE TABLE ProfessorToDepartment(
 );
 
 CREATE TABLE Course (
-	courseID varchar (10),
+	courseID varchar (10) PRIMARY KEY,
     courseName varchar (60) NOT NULL,
 	departmentID varchar (5) NOT NULL,
 	FOREIGN KEY (departmentID) REFERENCES Department (departmentID) 
@@ -160,7 +160,7 @@ CREATE TABLE Answer_Choice (
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE Answer_Choice_Statistics(
+CREATE TABLE Question_Answer_Statistics(
 	questionID int,
     surveyID	int,
     offeredAnswerID int,
