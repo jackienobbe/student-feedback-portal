@@ -95,7 +95,6 @@ CREATE TABLE Enroll (
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
--- TODO: make sure trigger on Enroll increments SUrvey ID
 CREATE TABLE Survey (
     userID int,
     courseID varchar (10),
@@ -165,7 +164,7 @@ CREATE TABLE Answer_Choice (
 CREATE TABLE Question_Answer_Statistics(
 	questionID int,
     offeredAnswerID int,
-    percent decimal(3,2) NOT NULL DEFAULT 0.00,
+    percent decimal(5,2) NOT NULL DEFAULT 0.00,
     PRIMARY KEY (questionID, offeredAnswerID),
     FOREIGN KEY (questionID, offeredAnswerID) REFERENCES Question_Answer (questionID, offeredAnswerID)
 		ON UPDATE CASCADE ON DELETE CASCADE

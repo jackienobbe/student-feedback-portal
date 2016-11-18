@@ -48,6 +48,7 @@ INSERT INTO ProfessorToDepartment VALUES (2,'CS');
 
 /*insert into Course */
 INSERT INTO Course VALUES ('CSC 3323','Analysis of Algorithms', 'CSC');
+INSERT INTO Course VALUES ('CSC 3309','Artificial Intelligence', 'CSC');
 INSERT INTO Course VALUES ('GBU 3303','Enterprises, Markets and the Moroccan Economy','BA');
 INSERT INTO Course VALUES ('CSC 3325','Software Engineering 2','CSC');
 INSERT INTO Course VALUES ('EGR 2402','Electric Circuits','GE');
@@ -63,12 +64,14 @@ INSERT INTO Course VALUES ('ARA 1311','Beginning Arabic 1','LC');
 INSERT INTO Course VALUES ('HRD 4303','Leadership and Management Development','HRD');
 
 
+DELETE FROM Section WHERE courseID = 'CSC 3309';
 /*insert into Section*/
 INSERT INTO Section VALUES (01,'GBU 3303','Spring 2016',6);
 INSERT INTO Section VALUES (02,'CSC 3326','Fall 2016',1);
 INSERT INTO Section VALUES (01,'CSC 2302','Fall 2016',5);
 INSERT INTO Section VALUES (02,'HRD 4303','Spring 2015',2);
 INSERT INTO Section VALUES (02,'EGR 2402','Summer 2016',4);
+INSERT INTO Section VALUES (01,'CSC 3309','Fall 2016',1);
 
 
 /* insert into Enroll*/
@@ -77,6 +80,7 @@ INSERT INTO Enroll VALUES (71006,'CSC 3326','Fall 2016',02);
 INSERT INTO Enroll VALUES (59603,'CSC 2302','Fall 2016',01);
 INSERT INTO Enroll VALUES (59609,'CSC 2302','Fall 2016',01);
 INSERT INTO Enroll VALUES (71007,'CSC 3326','Fall 2016',02);
+INSERT INTO Enroll VALUES (71007,'CSC 3309','Fall 2016',01);
 
 
 /* insert into Survey */
@@ -125,6 +129,7 @@ INSERT INTO Question_Answer VALUES (3, 4);
 INSERT INTO Question_Answer VALUES (3, 5);
 
 
+DELETE FROM Answer_Choice WHERE questionID = 1;
 /* insert into Answer_Choice */
 INSERT INTO Answer_Choice VALUES (1,1,1);
 INSERT INTO Answer_Choice VALUES (1,3,1);
