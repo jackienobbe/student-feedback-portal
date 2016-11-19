@@ -7,24 +7,20 @@
   <title> Charrafi: View Invoice</title>
   <script type="text/JavaScript" src="js/forms.js"></script>
   <style>.error {color: #FF0000;}</style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+  <?php include("header.php"); ?>
+  <div class="container-fluid">
   <form>
     <?php include_once 'includes/db_functions.php';
           include_once 'includes/view_invoice.inc.php';?>
 
-    <h2>View an invoice</h2>
-    <p><span class="error"><?php echo $error_msg;?></span></p>
-    <table>
-      <tr><td>Invoice number: </td><td><?php echo $invnum;?></td></tr>
-      <tr><td>Customer code: </td><td><?php echo $cuscode;?></td></tr>
-      <tr><td>Date: </td><td><?php echo $date;?></td></tr>
-      <tr><td><button type="submit" formaction="upd_invoice.php" formmethod="POST" >Update</button>
-              <button type="submit" formaction="del_invoice.php" formmethod="POST" >Delete</button></td><td></td></tr>
-    </table>
-    <input type="hidden" name="invnum" value="<?php echo $invnum;?>" />
-    <input type="hidden" name="ref" value="<?php echo $ref;?>" />
-    <p>You can now go back to the <a href="index.html">main page</a>.</p>
+    <h2>View an Invoice</h2>
+
   </form>
+</div>
 </body>
 </html>

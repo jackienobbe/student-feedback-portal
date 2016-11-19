@@ -7,21 +7,25 @@
   <title> sfp || view course</title>
   <script type="text/JavaScript" src="js/forms.js"></script>
   <style>.error {color: #FF0000;}</style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <form>
+
     <?php include_once 'includes/db_functions.php';
           include_once 'includes/view_course.inc.php';?>
-
-    <h2>Course Information</h2>
-    <p><span class="error"><?php echo $error_msg;?></span></p>
-
-    Course Id: <?php echo $courseID;?> <br/>
-    Course Name: <?php echo $courseName;?><br/>
-    Department: <?php echo $departmentName;?><br/>
+<?php include("header.php"); ?>
+<div class="container-fluid">
+  <h2>Course Information</h2>
+  <p><span class="error"><?php echo $error_msg;?></span></p>
+  <form>
+    <label>Course ID</label>  <?php echo $courseID;?> <br/>
+    <label>Course Name</label>  <?php echo $courseName;?><br/>
+    <label>Department</label>  <?php echo $departmentName;?><br/>
     <input type="hidden" name="courseID" value="<?php echo $courseID;?>" />
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
-    <p>Or, go back to the <a href="index.html">main page</a>.</p>
   </form>
+</div>
 </body>
 </html>

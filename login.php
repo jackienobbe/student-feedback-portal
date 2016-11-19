@@ -6,20 +6,26 @@
 <head>
   <title> sfp || login</title>
   <script type="text/JavaScript" src="js/forms.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   <style>.error {color: #FF0000;}</style>
 </head>
 <body>
+  <?php include("header.php"); ?>
+
+<div class="container-fluid">
   <form action="includes/login.inc.php" method="POST">
     <?php include_once 'includes/db_functions.php';
-          include_once 'includes/login.inc.php'; ?>
+          //include_once 'includes/login.inc.php'; ?>
 
     <h2>Login</h2>
     <p><span class="error"><?php echo $error_msg;?></span></p>
-    <p>Student Id: <input type="text" name="userID" value="<?php echo $userID;?>" /></p>
-    <p>Password:   <input type="password" name="userPassword" value="<?php echo $userPassword;?>" /></p>
-    <button type="submit"  formmethod="POST"
-      onclick="return checkform_login(this.form, this.form.userID, this.form.userPassword);">Login</button>
-  <p>Go back to <a href="index.html">main page</a>.</p>
+    <label>Student Id </label>  <input type="text" name="userID" value="<?php echo $userID;?>" /></br>
+    <label>Password </label>  <input type="password" name="userPassword" value="<?php echo $userPassword;?>" /></br>
+    <button type="submit">Login</button>
   </form>
+</div>
 </body>
 </html>
