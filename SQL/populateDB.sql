@@ -64,7 +64,7 @@ INSERT INTO Course VALUES ('ARA 1311','Beginning Arabic 1','LC');
 INSERT INTO Course VALUES ('HRD 4303','Leadership and Management Development','HRD');
 
 
-DELETE FROM Section WHERE courseID = 'CSC 3309';
+-- DELETE FROM Section WHERE courseID = 'CSC 3309';
 /*insert into Section*/
 INSERT INTO Section VALUES (01,'GBU 3303','Spring 2016',6);
 INSERT INTO Section VALUES (02,'CSC 3326','Fall 2016',1);
@@ -129,7 +129,7 @@ INSERT INTO Question_Answer VALUES (3, 4);
 INSERT INTO Question_Answer VALUES (3, 5);
 
 
-DELETE FROM Answer_Choice WHERE questionID = 1;
+-- DELETE FROM Answer_Choice WHERE questionID = 1;
 /* insert into Answer_Choice */
 INSERT INTO Answer_Choice VALUES (1,1,1);
 INSERT INTO Answer_Choice VALUES (1,3,1);
