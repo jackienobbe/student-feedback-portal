@@ -17,7 +17,7 @@ Show Triggers;
 DROP TRIGGER IF EXISTS trig_Update_Stats_After_Insert;
 
 
-/* Trigger on table answer_choice that updates Question_Answer statstics  */ 
+/* Trigger on table answer_choice that updates Question_Answer_Statstics  */ 
 DELIMITER $$ 
 CREATE TRIGGER trig_Update_Stats_After_INSERT AFTER INSERT ON Answer_Choice 
 FOR EACH ROW  
@@ -64,6 +64,7 @@ END;
 $$ 
 DELIMITER ;
 
+/* Trigger on table answer_choice that updates Question_Answer_Statstics */
 DELIMITER $$ 
 CREATE TRIGGER trig_Update_Stats_After_DELETE AFTER DELETE ON Answer_Choice 
 FOR EACH ROW  
@@ -77,7 +78,7 @@ BEGIN
     DECLARE answer_choice_cursor CURSOR FOR
     SELECT offeredAnswerID, count(offeredAnswerID)
 	FROM Answer_Choice
-    WHERE questionID = OLD.questionID					-- ?
+    WHERE questionID = OLD.questionID
 	GROUP BY offeredAnswerID;
     
     DECLARE CONTINUE HANDLER 
@@ -85,7 +86,7 @@ BEGIN
     
     SET $TotalAnswerCount = (select count(questionID) 
 						from Answer_Choice 
-						where questionID = OLD.questionID);		-- ?
+						where questionID = OLD.questionID);
     
     OPEN answer_choice_cursor;
     
@@ -99,7 +100,7 @@ BEGIN
 
 		UPDATE Question_Answer_Statistics 
 		SET percent = (($OfferedAnswerCount/$TotalAnswerCount) * 100.0 )
-		WHERE Question_Answer_Statistics.questionID = OLD.questionID			-- ?
+		WHERE Question_Answer_Statistics.questionID = OLD.questionID
 		AND Question_Answer_Statistics.offeredAnswerID = $OfferedAnswer; 
         
 	END LOOP AnswerStat;
@@ -131,7 +132,7 @@ BEGIN
     DECLARE old_answer_choice_cursor CURSOR FOR
     SELECT offeredAnswerID, count(offeredAnswerID)
 	FROM Answer_Choice
-    WHERE questionID = OLD.questionID				-- ?
+    WHERE questionID = OLD.questionID
 	GROUP BY offeredAnswerID;
     
     DECLARE CONTINUE HANDLER 
@@ -146,7 +147,7 @@ BEGIN
                         
 	SET $OldTotalAnswerCount = (select count(questionID) 
 						from Answer_Choice 
-						where questionID = OLD.questionID);		-- ?
+						where questionID = OLD.questionID);
     
     -- Update Stats for New value -----------------------------------------
     OPEN new_answer_choice_cursor;
@@ -161,7 +162,7 @@ BEGIN
 
 		UPDATE Question_Answer_Statistics 
 		SET percent = (($OfferedAnswerCount/$NewTotalAnswerCount) * 100.0 )
-		WHERE Question_Answer_Statistics.questionID = OLD.questionID		-- ?
+		WHERE Question_Answer_Statistics.questionID = OLD.questionID
 		AND Question_Answer_Statistics.offeredAnswerID = $OfferedAnswer; 
         
 	END LOOP NewAnswerStat;
@@ -191,8 +192,6 @@ BEGIN
 END; 
 $$ 
 DELIMITER ;
-
-
 
 
 Show Triggers;
@@ -225,22 +224,13 @@ BEGIN
 	
 	IF( NEW.courseID NOT LIKE NEW.departmentID +'%' )
     THEN
-		-- signal SQL State
-        -- SEE LINK BELOW
+		SIGNAL SQLSTATE '45000' 
+		SET MESSAGE_TEXT = "Course ID must contain the Department ID associated with the course.";
 	END IF;
 	
 END;
 $$
 DELIMITER ;
-
--- Maybe?
--- SIGNAL SQLSTATE '45000' 
--- SET MESSAGE_TEXT = "your error text";
--- LINK
--- http://stackoverflow.com/questions/2981930/mysql-trigger-to-prevent-insert-under-certain-conditions
-
-
-
 
 
 
