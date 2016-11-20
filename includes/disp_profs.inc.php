@@ -24,8 +24,9 @@ include_once 'db_connect.php';
 
 try {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "SELECT professorID, professorFName, professorLName, departmentName
-          FROM Professor NATURAL JOIN ProfessorToDepartment NATURAL JOIN Department ";
+  $sql = "SELECT P.professorID, professorFName, professorLName, departmentName
+          FROM Professor P LEFT JOIN ProfessorToDepartment PD ON P.professorID = PD.professorID
+          LEFT JOIN Department D ON D.departmentID = PD.departmentID; ";
   if ($professorLName != "_all")
   {
     $sql .= " WHERE professorLName = :professorLName";

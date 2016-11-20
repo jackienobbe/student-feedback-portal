@@ -23,19 +23,17 @@ class ListItems extends RecursiveIteratorIterator {
 include_once 'db_connect.php';
 
 try {
+
+  $professorID = $_POST['professorID'];
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "SELECT offered_answer
-          FROM Professor NATURAL JOIN ProfessorToDepartment NATURAL JOIN Department ";
-  if ($professorLName != "_all")
-  {
-    $sql .= " WHERE professorLName = :professorLName";
-    $sth = $dbh->prepare($sql);
-    $sth->bindParam(':professorLName', $professorLName);
-  }
-  else
-  { // all
-    $sth = $dbh->prepare($sql);
-  }
+  $sql = "SELECT questionText, answerText, percent
+	         FROM Question Q NATURAL JOIN OfferedAnswer
+           LEFT JOIN Question_Answer_Statistics QAS ON Q.questionID = QAS.questionID
+           WHERE professorID = :professorID;
+           ORDER BY QuestionText, answerText; ";
+
+  $sth = $dbh->prepare($sql);
+  $sth->bindParam(':professorID', $professorID);
   $sth->execute();
 
   echo "<ul>\n";

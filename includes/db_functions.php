@@ -265,9 +265,10 @@ function read_prof($professorID, &$professorFName, &$professorLName, &$departmen
   {
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT professorID, professorFName, professorLName, departmentName
-            FROM Professor NATURAL JOIN ProfessorToDepartment NATURAL JOIN Department
-            WHERE professorID = :professorID;";
+    $sql = "SELECT P.professorID, professorFName, professorLName, departmentName
+            FROM Professor P LEFT JOIN ProfessorToDepartment PD ON P.professorID = PD.professorID
+            LEFT JOIN Department D ON D.departmentID = PD.departmentID
+            WHERE P.professorID = :professorID;" ;
 
     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':professorID', $professorID);

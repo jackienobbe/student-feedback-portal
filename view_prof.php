@@ -26,7 +26,10 @@
     <input type="hidden" name="professorID" value="<?php echo $professorID;?>" />
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
+    <?php include("disp_courses.inc.php"); ?>
+
   </form>
+
 </div>
 </body>
 </html>
