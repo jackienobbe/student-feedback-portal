@@ -68,6 +68,7 @@ INSERT INTO Course VALUES ('HRD 4303','Leadership and Management Development','H
 /*insert into Section*/
 INSERT INTO Section VALUES (01,'GBU 3303','Spring 2016',6);
 INSERT INTO Section VALUES (02,'CSC 3326','Fall 2016',1);
+INSERT INTO Section VALUES (01,'CSC 3326','Spring 2015',1);
 INSERT INTO Section VALUES (01,'CSC 2302','Fall 2016',5);
 INSERT INTO Section VALUES (02,'HRD 4303','Spring 2015',2);
 INSERT INTO Section VALUES (02,'EGR 2402','Summer 2016',4);
