@@ -1,20 +1,3 @@
-Show Triggers;
-
-DROP TRIGGER IF EXISTS trig_QuestionAnswer;
-
-/* Trigger that makes sure there is a statistic for every question answer */
-DELIMITER $$ 
-CREATE TRIGGER trig_Add_to_Statistics AFTER INSERT ON Question_Answer  
-FOR EACH ROW 
-BEGIN 
-	INSERT INTO Question_Answer_Statistics (questionID, offeredAnswerID)
-    VALUES (NEW.questionID, NEW.offeredAnswerID); 
-END;
-$$ 
-DELIMITER ;  
-
-Show Triggers;
-DROP TRIGGER IF EXISTS trig_Update_Stats_After_INSERT;
 
 
 /* Trigger on table answer_choice that updates Question_Answer_Statstics  */ 

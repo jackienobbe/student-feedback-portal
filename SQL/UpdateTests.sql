@@ -9,3 +9,4 @@ WHERE questionID = 1
 	AND surveyID = 1;
     
     
+SELECT * FROM Section;
