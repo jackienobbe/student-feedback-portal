@@ -1,6 +1,6 @@
 <?php
 //
-// disp_profs.inc.php
+// disp_reviews.inc.php
 //
 
 class ListItems extends RecursiveIteratorIterator {
@@ -8,14 +8,13 @@ class ListItems extends RecursiveIteratorIterator {
     parent::__construct($it, self::LEAVES_ONLY);
   }
   function current() {
-    return parent::current();
+    return "<td>" . parent::current() . "</td>";
   }
   function beginChildren() {
-    echo "<li> <button name='surveyID' type='submit' formaction='view_course_reviews.php'
-          value='" . parent::current() . "' formmethod='POST'>" . parent::current() . "</button>\n";
+    echo "<tr>\n";
   }
   function endChildren() {
-    echo "</button></li>\n";
+    echo "</tr>\n";
   }
 }
 
@@ -23,21 +22,25 @@ class ListItems extends RecursiveIteratorIterator {
 include 'db_connect.php';
 
 try {
-  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "CALL sp_courses_taught_by_professor( :professorID );";
+  $courseID = $_POST['courseID'];
+  $professorID = $_POST['professorID'];
 
-  $sth = $dbh->prepare($sql);
-  $sth->bindParam(':professorID', $professorID);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $sql = "SELECT professorFName, professorLName, courseName
+          FROM Professor NATURAL JOIN Section NATURAL JOIN Course
+          WHERE professorID = :professorID && courseID = :courseID;";
+
+  $sql .= ";";
   $sth->execute();
 
-  echo "<ul>\n";
+  echo "<table>\n";
 
   // set the resulting array to associative
   $result = $sth->setFetchMode(PDO::FETCH_ASSOC);
   foreach(new ListItems(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
-    echo $v;
+    echo $v . " ";
   }
-  echo "</ul>";
+  echo "</table>";
   $dbh = null;
 }
 catch(PDOException $e) {

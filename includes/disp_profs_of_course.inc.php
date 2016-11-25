@@ -19,22 +19,19 @@ class ListItems extends RecursiveIteratorIterator {
   }
 }
 
-function profName($professorID, $professorFName, $professorLName) {
-    return $professorFName . " " . $professorLName;
-}
-
-
 // Connect to database server
 include 'db_connect.php';
 
 try {
+  $courseID = $_POST["courseID"];
+  $professorID = $_POST['professorID'];
+
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $sql = "CALL sp_professors_for_a_course( :courseID );";
 
   $sth = $dbh->prepare($sql);
   $sth->bindParam(':courseID', $courseID);
   $sth->execute();
-
 
 
   echo "<ul>\n";
@@ -44,16 +41,7 @@ try {
   foreach(new ListItems(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
     echo $v . " "; // ['professorFName'] . " " . $v['professorLName'];
   }
-  $sql2 = "SELECT DISTINCT professorFName, professorLName
-    FROM Course NATURAL JOIN Section NATURAL JOIN Professor
-    WHERE courseID = :courseID;";
 
-  $sth2 = $dbh->prepare($sql2);
-  $sth2->bindParam(':courseID', $courseID);
-  $sth2->execute();
-  foreach(new ListItems(new RecursiveArrayIterator($sth2->fetchAll())) as $k=>$v) {
-    echo $v . " ";
-  }
   echo "</ul>";
   $dbh = null;
 }

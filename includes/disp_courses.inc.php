@@ -12,20 +12,20 @@ class ListItems extends RecursiveIteratorIterator {
   }
   function beginChildren() {
     echo "<li> <button name='courseID' type='submit' formaction='view_course.php'
-          value='" . parent::current() . "' formmethod='POST'>" . parent::current() . "</button>\n";
+          value='" . parent::current() . "' formmethod='POST'>";
   }
   function endChildren() {
-    echo "</li>\n";
+    echo "</button></li>\n";
   }
 }
 
 // Connect to database server
-include_once 'db_connect.php';
+include 'db_connect.php';
 
 try {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $sql = "SELECT courseID, courseName, departmentName
-          FROM Course NATURAL JOIN Department";
+          FROM Course NATURAL JOIN Department";  // ORDER BY courseID;";
 
   if ($courseID != "_all")
   {
@@ -35,6 +35,7 @@ try {
   }
   else
   { // all
+    $sql .= ";";
     $sth = $dbh->prepare($sql);
   }
   $sth->execute();
@@ -44,7 +45,7 @@ try {
   // set the resulting array to associative
   $result = $sth->setFetchMode(PDO::FETCH_ASSOC);
   foreach(new ListItems(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
-    echo $v;
+    echo $v . "  ";
   }
   echo "</ul>";
   $dbh = null;

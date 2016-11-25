@@ -20,6 +20,8 @@
     <h2><?php echo $courseID . " // " . $courseName;?> </h2>
     <label>Department</label>  <?php echo $departmentName;?><br/>
     <input type="hidden" name="courseID" value="<?php echo $courseID;?>" />
+    <input type="hidden" name="courseName" value="<?php echo $courseName;?>" />
+
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
     <label>Previous Professors</label>

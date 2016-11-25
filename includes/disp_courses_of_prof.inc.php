@@ -11,7 +11,7 @@ class ListItems extends RecursiveIteratorIterator {
     return parent::current();
   }
   function beginChildren() {
-    echo "<li> <button name='professorID' type='submit' formaction='view_prof.php'
+    echo "<li> <button name='courseID' type='submit' formaction='view_course_reviews.php'
           value='" . parent::current() . "' formmethod='POST'>";
   }
   function endChildren() {
@@ -20,24 +20,16 @@ class ListItems extends RecursiveIteratorIterator {
 }
 
 // Connect to database server
-include_once 'db_connect.php';
+include 'db_connect.php';
 
 try {
+  $professorID = $_POST['professorID'];
+
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "SELECT P.professorID, professorFName, professorLName, departmentName
-          FROM Professor P LEFT JOIN ProfessorToDepartment PD ON P.professorID = PD.professorID
-          LEFT JOIN Department D ON D.departmentID = PD.departmentID";
-  if ($professorLName != "_all")
-  {
-    $sql .= " WHERE professorLName = :professorLName;";
-    $sth = $dbh->prepare($sql);
-    $sth->bindParam(':professorLName', $professorLName);
-  }
-  else
-  { // all
-    $sql .= ";";
-    $sth = $dbh->prepare($sql);
-  }
+  $sql = "CALL sp_courses_taught_by_professor( :professorID );";
+
+  $sth = $dbh->prepare($sql);
+  $sth->bindParam(':professorID', $professorID);
   $sth->execute();
 
   echo "<ul>\n";

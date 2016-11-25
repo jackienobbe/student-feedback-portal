@@ -13,7 +13,7 @@
 <body>
   <?php include("header.php"); ?>
   <div class="container-fluid">
-  <form>
+  <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
     <?php include_once 'includes/db_functions.php';
           include_once 'includes/view_prof.inc.php';?>
 
@@ -22,9 +22,8 @@
     <input type="hidden" name="professorID" value="<?php echo $professorID;?>" />
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
-  </br>
     <label>Previous Courses</label>
-    <?php include_once 'includes/disp_reviews.inc.php';?>
+    <?php include_once 'includes/disp_courses_of_prof.inc.php';?>
 
   </form>
 

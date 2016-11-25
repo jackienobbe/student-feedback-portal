@@ -13,17 +13,22 @@
 <body>
   <?php include("header.php"); ?>
   <div class="container-fluid">
-  <form>
+  <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
     <?php include_once 'includes/db_functions.php';
           include_once 'includes/view_course_reviews.inc.php';?>
 
-    <h2><?php echo $courseID . " " . $courseName; ?></h2>
+    <h2><?php echo $courseID . " // " . $courseName; ?></h2>
     <label>Taught by</label>  <?php echo $professorFName . " " . $professorLName;?><br/>
+
+    <input type="hidden" name="courseID" value="<?php echo $courseID;?>" />
     <input type="hidden" name="professorID" value="<?php echo $professorID;?>" />
+
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
+    <h3>Course Reviews</h3>
+    <?php include 'includes/disp_reviews.inc.php'; ?>
     <h3>Other Courses Taught By This Professor</h3>
-    <?php include_once 'includes/disp_reviews.inc.php';?>
+    <?php include_once 'includes/disp_courses_of_prof.inc.php';?>
 
   </form>
 
