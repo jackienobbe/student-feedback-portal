@@ -11,11 +11,11 @@ class ListItems extends RecursiveIteratorIterator {
     return parent::current();
   }
   function beginChildren() {
-    echo "<li> <button name='surveyID' type='submit' formaction='view_course_reviews.php'
-          value='" . parent::current() . "' formmethod='POST'>" . parent::current() . "</button>\n";
+     echo "<li> <button name='surveyID' type='submit' formaction='view_course_reviews.php'
+          value='" . parent::current() . "' formmethod='POST'>";
   }
   function endChildren() {
-    echo "</li>\n";
+    echo "</button></li>\n";
   }
 }
 
@@ -35,7 +35,7 @@ try {
   // set the resulting array to associative
   $result = $sth->setFetchMode(PDO::FETCH_ASSOC);
   foreach(new ListItems(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
-    echo $v;
+    echo $v . " ";
   }
   echo "</ul>";
   $dbh = null;
