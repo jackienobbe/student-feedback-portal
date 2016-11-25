@@ -12,9 +12,8 @@
 </head>
 <body>
   <?php include("header.php"); ?>
-
   <div class="container-fluid">
-<form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST" >
+  <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST" >
     <h2>Search Professors</h2>
     <?php include_once 'includes/search_prof.inc.php';?>
     <p><label>Professor Last Name</label>  <input type="text" name="professorLName" value="<?php if ($professorLName == '_all') echo ""; else echo $professorLName;?>" />
@@ -25,8 +24,6 @@
 
   </form>
 </div>
-
-
 
 </body>
 </html>

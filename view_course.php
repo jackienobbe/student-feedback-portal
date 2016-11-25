@@ -17,14 +17,16 @@
           include_once 'includes/view_course.inc.php';?>
 <?php include("header.php"); ?>
 <div class="container-fluid">
-  <h2>Course Information</h2>
-  <p><span class="error"><?php echo $error_msg;?></span></p>
   <form>
-    <label>Course ID</label>  <?php echo $courseID;?> <br/>
-    <label>Course Name</label>  <?php echo $courseName;?><br/>
+    <h2><?php echo $courseName;?> </h2>
+    <label>Course ID</label>  <?php echo $courseID;?><br/>
     <label>Department</label>  <?php echo $departmentName;?><br/>
     <input type="hidden" name="courseID" value="<?php echo $courseID;?>" />
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
+
+    <h3>Professors That Have Taught This Course</h3>
+    <?php include_once 'includes/disp_profs_of_course.inc.php';?>
+
   </form>
 </div>
 </body>

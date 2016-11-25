@@ -24,10 +24,10 @@ include 'db_connect.php';
 
 try {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "CALL sp_courses_taught_by_professor( :professorID );";
+  $sql = "CALL sp_professors_for_a_course( :courseID );";
 
   $sth = $dbh->prepare($sql);
-  $sth->bindParam(':professorID', $professorID);
+  $sth->bindParam(':courseID', $courseID);
   $sth->execute();
 
   echo "<ul>\n";

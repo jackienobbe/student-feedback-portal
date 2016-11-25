@@ -31,6 +31,5 @@
     <?php $_POST["71007"]; ?>
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
   </form>
-  <p> Back to <a href = "index.html">main page</a>.</p>
 </body>
 </html>
