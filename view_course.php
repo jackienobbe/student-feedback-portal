@@ -17,8 +17,7 @@
   <form>
     <?php include_once 'includes/db_functions.php';
           include_once 'includes/view_course.inc.php';?>
-    <h2><?php echo $courseName;?> </h2>
-    <label>Course ID</label>  <?php echo $courseID;?><br/>
+    <h2><?php echo $courseID . " // " . $courseName;?> </h2>
     <label>Department</label>  <?php echo $departmentName;?><br/>
     <input type="hidden" name="courseID" value="<?php echo $courseID;?>" />
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />

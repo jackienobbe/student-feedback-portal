@@ -15,7 +15,7 @@ class ListItems extends RecursiveIteratorIterator {
           value='" . parent::current() . "' formmethod='POST'>" . parent::current() . "</button>\n";
   }
   function endChildren() {
-    echo "</li>\n";
+    echo "</button></li>\n";
   }
 }
 
