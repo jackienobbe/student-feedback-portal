@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
- search_courses.php
+ search_prof.php
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -16,9 +16,9 @@
   <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST" >
     <h2>Search Professors</h2>
     <?php include_once 'includes/search_prof.inc.php';?>
-    <p><label>Professor Last Name</label>  <input type="text" name="professorLName" value="<?php if ($professorLName == '_all') echo ""; else echo $professorLName;?>" />
+    <label>Professor Last Name</label>  <input type="text" name="professorLName" value="<?php if ($professorLName == '_all') echo ""; else echo $professorLName;?>" />
     <input type="submit" name="search" value="Search" />
-    <input type="submit" name="search" value="All" /></p>
+    <input type="submit" name="search" value="All" />
 
     <?php include_once 'includes/disp_profs.inc.php';?>
 

@@ -27,7 +27,11 @@ INSERT INTO Professor VALUES (3, 'Jamila','El Kilani');
 INSERT INTO Professor VALUES (4, 'Anas','Bentamy');
 INSERT INTO Professor VALUES (5, 'Hanaa','Talei');
 INSERT INTO Professor VALUES (6, 'Rhizlane','Hammoud');
-
+INSERT INTO Professor VALUES (7, 'Omar','Houssaini');
+INSERT INTO Professor VALUES (8, 'Fouad Mohammed','Abbou'); 
+INSERT INTO Professor VALUES (9, 'Mohamed Riduan','Abid'); 
+INSERT INTO Professor VALUES (10, 'Nabil', 'Rhiati');
+INSERT INTO Professor VALUES (11, 'Fouad', 'Berrada');
 
 /* insert into Department*/
 INSERT INTO Department VALUES ('CSC', ' Computer Science');

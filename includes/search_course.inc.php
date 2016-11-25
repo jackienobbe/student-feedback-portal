@@ -1,6 +1,6 @@
 <?php
 //
-// search_invoices.inc.php
+// search_courses.inc.php
 //
 
 $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);

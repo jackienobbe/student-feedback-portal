@@ -1,6 +1,6 @@
 <?php
 //
-// disp_profs.inc.php
+// disp_courses.inc.php
 //
 
 class ListItems extends RecursiveIteratorIterator {
@@ -26,6 +26,7 @@ try {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $sql = "SELECT courseID, courseName, departmentName
           FROM Course NATURAL JOIN Department";
+
   if ($courseID != "_all")
   {
     $sql .= " WHERE courseID = :courseID";

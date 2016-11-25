@@ -12,19 +12,18 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-    <?php include_once 'includes/db_functions.php';
-          include_once 'includes/view_course.inc.php';?>
 <?php include("header.php"); ?>
 <div class="container-fluid">
   <form>
+    <?php include_once 'includes/db_functions.php';
+          include_once 'includes/view_course.inc.php';?>
     <h2><?php echo $courseName;?> </h2>
     <label>Course ID</label>  <?php echo $courseID;?><br/>
     <label>Department</label>  <?php echo $departmentName;?><br/>
     <input type="hidden" name="courseID" value="<?php echo $courseID;?>" />
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
-    <h3>Professors That Have Taught This Course</h3>
+    <label>Previous Professors</label>
     <?php include_once 'includes/disp_profs_of_course.inc.php';?>
 
   </form>

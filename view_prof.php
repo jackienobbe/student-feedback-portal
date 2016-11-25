@@ -22,7 +22,8 @@
     <input type="hidden" name="professorID" value="<?php echo $professorID;?>" />
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
-    <h3>Courses Taught By This Professor</h3>
+  </br>
+    <label>Previous Courses</label>
     <?php include_once 'includes/disp_reviews.inc.php';?>
 
   </form>

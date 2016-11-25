@@ -1,5 +1,6 @@
 <?php
 // view_prof.inc.php
+
 $error_msg = "";
 if (isset($_POST["professorID"]))
 {
