@@ -108,11 +108,16 @@ INSERT INTO Question VALUES ( 5, 'Please identify what you consider to be the we
 
 
 /* insert into Answer_Text */
-INSERT INTO Answer_Text VALUES (1, 2,'The material covered in class is not very relevant to the course!', 0);
-INSERT INTO Answer_Text VALUES (2, 2,' This class taught me how to apply theory to practice', 0);
-INSERT INTO Answer_Text VALUES (3, 2,'I think that the professor demonstrates good knowledge of the material', 0);
-INSERT INTO Answer_Text VALUES (4, 2,'Students participation is encouraged', 0);
-INSERT INTO Answer_Text VALUES (5, 2,'The professor gives a lot of assignments and pop quizzes', 0);
+INSERT INTO Answer_Text (surveyID, questionId, answer) 
+	VALUES (1, 2,'The material covered in class is not very relevant to the course!');
+INSERT INTO Answer_Text (surveyID, questionId, answer) 
+	VALUES (2, 2,' This class taught me how to apply theory to practice');
+INSERT INTO Answer_Text (surveyID, questionId, answer) 
+	VALUES (3, 2,'I think that the professor demonstrates good knowledge of the material');
+INSERT INTO Answer_Text (surveyID, questionId, answer) 
+	VALUES (4, 2,'Students participation is encouraged');
+INSERT INTO Answer_Text (surveyID, questionId, answer) 
+	VALUES (5, 2,'The professor gives a lot of assignments and pop quizzes');
 
 /* insert into OfferedAnswer */
 INSERT INTO OfferedAnswer VALUES (1,'1-2');

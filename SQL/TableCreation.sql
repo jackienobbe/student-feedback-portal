@@ -125,7 +125,7 @@ CREATE TABLE Answer_Text (
 	surveyID	int,
     questionID int,
 	answer varchar(500) NOT NULL,
-    voteCount int,
+    voteCount int DEFAULT 0,
 	PRIMARY KEY (surveyID, questionID),
     FOREIGN KEY (surveyID) REFERENCES Survey (surveyID)
 		ON UPDATE CASCADE ON DELETE CASCADE,
