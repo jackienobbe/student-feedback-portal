@@ -14,7 +14,7 @@ $$
 DELIMITER ;  
 
 Show Triggers;
-DROP TRIGGER IF EXISTS trig_Update_Stats_After_Insert;
+DROP TRIGGER IF EXISTS trig_Update_Stats_After_INSERT;
 
 
 /* Trigger on table answer_choice that updates Question_Answer_Statstics  */ 
@@ -64,12 +64,15 @@ END;
 $$ 
 DELIMITER ;
 
+Show Triggers;
+DROP TRIGGER IF EXISTS trig_Update_Stats_After_DELETE;
+
 /* Trigger on table answer_choice that updates Question_Answer_Statstics */
 DELIMITER $$ 
 CREATE TRIGGER trig_Update_Stats_After_DELETE AFTER DELETE ON Answer_Choice 
 FOR EACH ROW  
 BEGIN 
-
+	
 	DECLARE $TotalAnswerCount int; 
     DECLARE $OfferedAnswer int; 
 	DECLARE $OfferedAnswerCount int; 
@@ -83,16 +86,24 @@ BEGIN
     
     DECLARE CONTINUE HANDLER 
         FOR NOT FOUND SET $Finished = 1;
+
     
     SET $TotalAnswerCount = (select count(questionID) 
 						from Answer_Choice 
 						where questionID = OLD.questionID);
+    
+    -- Debugging
+    SET @TotalAnswerCount = $TotalAnswerCount;
     
     OPEN answer_choice_cursor;
     
     AnswerStat: LOOP
     
     FETCH answer_choice_cursor INTO $OfferedAnswer, $OfferedAnswerCount;
+    
+    -- Debugging
+    SET @OfferedAnswer = $OfferedAnswer;
+    SET @OfferedAnswerCount = $OfferedAnswerCount;
     
 	IF $Finished = 1 THEN 
 		LEAVE AnswerStat;
@@ -107,9 +118,21 @@ BEGIN
     
     CLOSE answer_choice_cursor;
     
+    
 END; 
 $$ 
 DELIMITER ;
+
+-- DEBUGGING
+
+SELECT @TotalAnswerCount;
+SELECT @OfferedAnswer;
+SELECT @OfferedAnswerCount;
+
+
+-- END DEBUGGING
+
+
 
 DELIMITER $$ 
 CREATE TRIGGER trig_Update_Stats_After_UPDATE AFTER UPDATE ON Answer_Choice 

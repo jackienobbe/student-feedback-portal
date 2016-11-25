@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Question_Answer_Statistics;
+DROP TABLE IF EXISTS Question_Answer_Statistics_By_Section;
 DROP TABLE IF EXISTS Answer_Choice;
 DROP TABLE IF EXISTS Question_Answer;
 DROP TABLE IF EXISTS OfferedAnswer;
@@ -161,11 +161,24 @@ CREATE TABLE Answer_Choice (
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE Question_Answer_Statistics(
+CREATE TABLE Question_Answer_Statistics_By_Section(
+	sectionNum int,
+	courseID varchar (10),
+	semester varchar (20),
 	questionID int,
     offeredAnswerID int,
     percent decimal(5,2) NOT NULL DEFAULT 0.00,
-    PRIMARY KEY (questionID, offeredAnswerID),
+    PRIMARY KEY (sectionNum, courseID, semester, questionID, offeredAnswerID),
     FOREIGN KEY (questionID, offeredAnswerID) REFERENCES Question_Answer (questionID, offeredAnswerID)
+		ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (sectionNum, courseID, semester) REFERENCES Section (sectionNum, courseID, semester)
 		ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE Question_Answer_Statistics_By_Course_And_Professor(
+	courseID varchar(10),
+    questionID int,
+    offeredAnswerID int,
+    percent decimal(5,2) NOT NULL DEFAULT 0.00,
+    PRIMARY KEY(courseID, questionID, offeredAnswerID)
 );
