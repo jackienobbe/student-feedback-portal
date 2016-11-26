@@ -39,7 +39,7 @@ try {
   // set the resulting array to associative
   $result = $sth->setFetchMode(PDO::FETCH_ASSOC);
   foreach(new ListItems(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
-    echo $v . " "; // ['professorFName'] . " " . $v['professorLName'];
+    echo $v . " ";
   }
 
   echo "</ul>";

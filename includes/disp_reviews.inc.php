@@ -26,11 +26,9 @@ try {
   $professorID = $_POST['professorID'];
 
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "SELECT professorFName, professorLName, courseName
-          FROM Professor NATURAL JOIN Section NATURAL JOIN Course
-          WHERE professorID = :professorID && courseID = :courseID;";
-
-  $sql .= ";";
+  $sql = "SELECT courseID, courseName FROM Course WHERE courseID = :courseID;";
+  $sth = $dbh->prepare($sql);
+  $sth->bindParam(':courseID', $courseID);
   $sth->execute();
 
   echo "<table>\n";

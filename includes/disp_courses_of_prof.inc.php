@@ -24,7 +24,6 @@ include 'db_connect.php';
 
 try {
   $professorID = $_POST['professorID'];
-
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $sql = "CALL sp_courses_taught_by_professor( :professorID );";
 
