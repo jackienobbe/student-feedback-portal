@@ -10,3 +10,10 @@ WHERE questionID = 1
     
     
 SELECT * FROM Section;
+
+
+SELECT surveyID FROM Answer_Choice;
+
+SELECT * FROM
+	Survey NATURAL JOIN Section
+WHERE userID = 71006;
