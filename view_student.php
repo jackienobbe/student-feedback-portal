@@ -14,21 +14,18 @@
 <body>
   <?php include("header.php"); ?>
   <form>
-    <?php include_once 'includes/db_functions.php';
-          include_once 'includes/view_student.inc.php';
-          include_once 'includes/view_student_curr_courses.inc.php';?>
+    <?php include 'includes/db_functions.php';
+          include 'includes/view_student.inc.php'; ?>
 
-    <h2>Student Details</h2>
-    <table>
-      <tr><td>Student Name: </td><td><?php echo $userFName . " " . $userLName;?></td></tr>
-      <tr><td>Major: </td><td><?php echo $major;?></td></tr>
-	    <tr><td>Student Id: </td><td><?php echo $userID;?></td></tr>
-      <tr><td>Year: </td><td><?php echo $currentYear;?></td></tr>
+    <h2><?php echo $userFName . " " . $userLName ?></h2>
+      <label> Major </label><?php echo $major;?>
+	    <label>Student Id </label><?php echo $userID;?>
+      <label>Year </label><?php echo $currentYear;?>
     </table>
 
-    <h2>Current Classes</h2>
+    <h3>Current Classes</h3>
+    <?include_once 'includes/view_student_curr_courses.inc.php';?>
 
-    <?php $_POST["71007"]; ?>
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
   </form>
 </body>

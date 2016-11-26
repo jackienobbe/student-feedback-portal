@@ -17,8 +17,8 @@
 
 <div class="container-fluid">
   <form action="includes/login.inc.php" method="POST">
-    <?php include_once 'includes/db_functions.php';
-          //include_once 'includes/login.inc.php'; ?>
+    <?php if(isset($_SESSION['userID'])){ echo $_SESSION['userID'];} ?>
+    <?php include 'includes/db_functions.php'; ?>
 
     <h2>Login</h2>
     <p><span class="error"><?php echo $error_msg;?></span></p>

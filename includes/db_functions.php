@@ -15,7 +15,7 @@
 function create_account($userID, $userPassword, $userFName, $userLName, $major, $currentYear, &$error_msg)
 {
   // Connect to database server
-  include_once 'db_connect.php';
+  include 'db_connect.php';
 
   try
   {
@@ -67,7 +67,7 @@ function create_account($userID, $userPassword, $userFName, $userLName, $major, 
 function read_student($userID, &$userFName, &$userLName, &$currentYear, &$major, &$error_msg)
 {
   // Connect to database server
-  include_once 'db_connect.php';
+  include 'db_connect.php';
 
   try
   {
@@ -115,7 +115,7 @@ function read_student($userID, &$userFName, &$userLName, &$currentYear, &$major,
 function get_curr_student_courses($userID, &$courseID, &$sectionNum, &$semester, &$courseName, &$error_msg)
 {
   // Connect to database server
-  include_once 'db_connect.php';
+  include 'db_connect.php';
 
   try
   {
@@ -163,7 +163,7 @@ function get_curr_student_courses($userID, &$courseID, &$sectionNum, &$semester,
 function get_prev_student_courses($userID, &$courseID, &$sectionNum, &$semester, &$courseName, &$error_msg)
 {
   // Connect to database server
-  include_once 'db_connect.php';
+  include 'db_connect.php';
 
   try
   {
@@ -211,7 +211,7 @@ function get_prev_student_courses($userID, &$courseID, &$sectionNum, &$semester,
 function enroll_student($userID, $courseID, $sectionNum, $semester, &$error_msg)
 {
   // Connect to database server
-  include_once 'db_connect.php';
+  include 'db_connect.php';
 
   try
   {
@@ -259,7 +259,7 @@ function enroll_student($userID, $courseID, $sectionNum, $semester, &$error_msg)
 function read_prof($professorID, &$professorFName, &$professorLName, &$departmentName, &$error_msg)
 {
   // Connect to database server
-  include_once 'db_connect.php';
+  include 'db_connect.php';
 
   try
   {
@@ -308,7 +308,7 @@ function read_prof($professorID, &$professorFName, &$professorLName, &$departmen
 function get_prof_courses($userID, &$courseID, &$sectionNum, &$semester, &$courseName, &$error_msg)
 {
   // Connect to database server
-  include_once 'db_connect.php';
+  include 'db_connect.php';
 
   try
   {
@@ -355,7 +355,7 @@ function get_prof_courses($userID, &$courseID, &$sectionNum, &$semester, &$cours
 function get_course_profs($courseID, &$professorFName, &$professorLName, &$semester, &$error_msg)
 {
   // Connect to database server
-  include_once 'db_connect.php';
+  include 'db_connect.php';
 
   try
   {
@@ -405,7 +405,7 @@ function get_course_profs($courseID, &$professorFName, &$professorLName, &$semes
 function read_course($courseID, &$courseName, &$departmentName, &$error_msg)
 {
   // Connect to database server
-  include_once 'db_connect.php';
+  include 'db_connect.php';
 
   try
   {
@@ -449,7 +449,7 @@ function read_course($courseID, &$courseName, &$departmentName, &$error_msg)
 function login($userID, $userPassword, &$error_msg)
 {
   // Connect to database server
-  include_once 'db_connect.php';
+  include 'db_connect.php';
 
   try
   {
@@ -489,37 +489,37 @@ function login($userID, $userPassword, &$error_msg)
 function login2($userID, $userPassword, &$error_msg)
 {
   // Connect to database server
-  include_once 'db_connect.php';
+  include 'db_connect.php';
 
   try
   {
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT userID, userPassword FROM System_User LIMIT 1;";
-      // SELECT userID, userPassword
-      // FROM System_User
-      // WHERE userID = :userID && userPassword = :userPassword;";
+    $sql = "SELECT userID FROM System_User
+            WHERE userID = :userID && userPassword = :userPassword;";
 
-    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-    //$sth->bindParam(':userID', $userID);
-    //$sth->bindParam(':userPassword', $userPassword);
+    $sth = $dbh->prepare($sql); //, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    $sth->bindParam(':userID', $userID);
+    $sth->bindParam(':userPassword', $userPassword);
 
     // Execute the prepared query.
     $sth->execute();
     $array = $sth->fetchAll(PDO::FETCH_ASSOC);
+
     $dbh = null;
 
-    // Check whether the submitted product already exists
-    // if (count($array) == 0)
-    // {
-    //   // no product found
-    //   $error_msg = "This course doesn't exist.";
-    //   return -1;
-    // }
-    //else
-    //{
-      //  $record = $array[0];
-    return 0;
+    //Check whether the submitted product already exists
+    if (count($array) == 0)
+    {
+      // no product found
+      $error_msg = "User ID and password do not match. ";
+      return -1;
+    }
+    else
+    {
+       $record = $array[0];
+       return 0;
+    }
   }
   catch(PDOException $e)
   {

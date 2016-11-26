@@ -1,39 +1,63 @@
 <?php
- ob_start();
- session_start();
- include_once 'dbconnect.php';
+ob_start();
+session_start();
+include 'db_connect.php';
 
- // it will never let you open index(login) page if session is set
- // if ( isset($_SESSION["userID"])!="" ) {
- //  header("Location: view_student.php");
- //  exit;
- // }
+// it will never let you open index(login) page if session is set
+if ( isset($_SESSION["userID"]) != "" ) {
+  header("Location: logout.inc.php");
+  //header("Location: ../view_student.php");
+  exit;
+}
 
- $error_msg = "";
- if($_SERVER["REQUEST_METHOD"] == "POST") {
+$error_msg = "";
+if($_SERVER["REQUEST_METHOD"] == "POST") {
   if (!isset($_SESSION["userID"]))
   {
     // username and password sent from form
     $userID = $_POST['userID'];
     $userPassword = $_POST['userPassword'];
 
-    $ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
-    echo "Here";
-    $rc = login2($userID, $userPassword, $error_msg);
-    echo $rc;
-    if ($rc != 0)
-    {
-       // error
-       header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
+    //$ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
+
+    //echo $userID . "\n";
+    //echo $userPassword . "\n";
+
+    //$rc = login2($userID, $userPassword, $error_msg);
+    try {
+      $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $sql = "SELECT userID FROM System_User
+      WHERE userID = :userID && userPassword = :userPassword;";
+
+      $sth = $dbh->prepare($sql); //, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+
+      $sth->bindParam(':userID', $userID);
+      $sth->bindParam(':userPassword', $userPassword);
+
+      // Execute the prepared query.
+      $sth->execute();
+      //$array =
+      $sth->fetchAll(PDO::FETCH_ASSOC);
+      //echo "Aye";
+      if (count($sth) == 0)
+      {
+        // error
+        header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
+      }
+      else {
+        //echo "here";
+        $_SESSION['userID'] = $userID;
+        echo $_SESSION['userID'];
+        header("Location: ../welcome.php");
+      }
     }
-    else {
-      $_SESSION['userID'] = $userID;
-      echo $_SESSION['userID'];
-      header("location: welcome.php");
+    catch(PDOException $e)
+    {
+      $dbh = null;
+      header("Location: error.php?err=" . $e->getMessage());
     }
     //session_register("userID");
 
   }
-
- //take stuff from the internet. Add it here.
 }
