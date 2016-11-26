@@ -74,10 +74,10 @@ function read_student($userID, &$userFName, &$userLName, &$currentYear, &$major,
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "SELECT userID, userFName, userLName, currentYear, major
-            FROM User NATURAL JOIN Student
+            FROM System_User NATURAL JOIN Student
             WHERE userID = :userID;";
 
-    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    $sth = $dbh->prepare($sql);//, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':userID', $userID);
     // Execute the prepared query.
     $sth->execute();
@@ -447,46 +447,6 @@ function read_course($courseID, &$courseName, &$departmentName, &$error_msg)
 }
 
 function login($userID, $userPassword, &$error_msg)
-{
-  // Connect to database server
-  include 'db_connect.php';
-
-  try
-  {
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT userID, userPassword
-            FROM System_User
-            WHERE userID = :userID && userPassword = :userPassword; ";
-
-    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-    $sth->bindParam(':userID', $userID);
-    $sth->bindParam(':userPassword', $userPassword);
-    // Execute the prepared query.
-    $sth->execute();
-    $array = $sth->fetchAll(PDO::FETCH_ASSOC);
-    $dbh = null;
-
-    if (count($array) == 0)
-    {
-      // no user found
-      $error_msg = "Student ID and password do not match. Please try again.";
-      return -1;
-    }
-    else
-    {
-      //$record = $array[0];
-      return 0;
-    }
-  }
-  catch(PDOException $e)
-  {
-    $dbh = null;
-    header("Location: error.php?err=" . $e->getMessage());
-    exit();
-  }
-}
-
-function login2($userID, $userPassword, &$error_msg)
 {
   // Connect to database server
   include 'db_connect.php';

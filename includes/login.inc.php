@@ -17,13 +17,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // username and password sent from form
     $userID = $_POST['userID'];
     $userPassword = $_POST['userPassword'];
-
+    $currSemester = "Fall 2016";
     //$ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
 
     //echo $userID . "\n";
     //echo $userPassword . "\n";
 
-    //$rc = login2($userID, $userPassword, $error_msg);
+    //$rc = login($userID, $userPassword, $error_msg);
     try {
       $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -39,15 +39,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       $sth->execute();
       //$array =
       $sth->fetchAll(PDO::FETCH_ASSOC);
-      //echo "Aye";
-      if (count($sth) == 0)
+
+      if (count($sth) != 1)
       {
         // error
         header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
       }
       else {
-        //echo "here";
         $_SESSION['userID'] = $userID;
+        $_SESSION['currentSemester'] = $currSemester;
         echo $_SESSION['userID'];
         header("Location: ../welcome.php");
       }
@@ -57,7 +57,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       $dbh = null;
       header("Location: error.php?err=" . $e->getMessage());
     }
-    //session_register("userID");
-
   }
 }

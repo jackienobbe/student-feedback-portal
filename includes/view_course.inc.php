@@ -16,16 +16,6 @@ if (isset($_POST["courseID"]))
 }
 else  // type is GET
 {
-  $courseID = $courseName = $departmentName = "";
-  if (isset($_GET["err"]))
-  {
-    // We are here because there was an error in either update or delete
-    $error_msg = $_GET["err"];
-    $courseID = $_GET["courseID"];
-  }
-  else if (isset($_GET["courseID"]))
-    $courseID = $_GET["courseID"];
-  else
     // Coming from outside url with product code not provided
     header("Location:get_course_num.php");
 }

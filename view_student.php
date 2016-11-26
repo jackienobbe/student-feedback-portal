@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  view_student.php
+view_student.php
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -12,21 +12,24 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <?php include("header.php"); ?>
-  <form>
-    <?php include 'includes/db_functions.php';
-          include 'includes/view_student.inc.php'; ?>
+  <?php include 'header.php'; ?>
+  <div class="container-fluid">
+    <form>
+      <?php include 'includes/db_functions.php';
+      include 'includes/view_student.inc.php'; ?>
 
-    <h2><?php echo $userFName . " " . $userLName ?></h2>
-      <label> Major </label><?php echo $major;?>
-	    <label>Student Id </label><?php echo $userID;?>
-      <label>Year </label><?php echo $currentYear;?>
-    </table>
+      <h2><?php echo $userFName . " " . $userLName; ?></h2>
+      <label>Major  </label> <?php echo $major;?></br>
+      <label>Student Id  </label> <?php echo $userID;?></br>
+      <label>Year  </label> <?php echo $currentYear;?></br>
 
-    <h3>Current Classes</h3>
-    <?include_once 'includes/view_student_curr_courses.inc.php';?>
+      <h3>Current Courses</h3>
+      <?include 'includes/view_student_curr_courses.inc.php';?>
+      <button name="addCourses">add more courses</button>
+      <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
-    <input type="hidden" name="ref" value="<?php echo $ref;?>" />
-  </form>
+      <?include 'includes/view_student_prev_courses.inc.php' ?>
+    </form>
+  </div>
 </body>
 </html>

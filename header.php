@@ -10,12 +10,11 @@
       <li><a href="search_course.php">Courses</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="create_account.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
       <?php if(!isset($_SESSION['userID'])): ?>
-
-          <li><a href='login.php'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>
+        <li><a href="create_account.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href='login.php'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>
       <?php else: ?>
-        <li><a href="#">Hi <?php echo $_SESSION['userID']; ?></a></li>
+        <li><a href="view_student.php">Hey, Brother. <?php echo $_SESSION['userID']; ?></a></li>
         <li><a href='includes/logout.inc.php'><span <span class='glyphicon glyphicon-log-out'></span> Logout</a></li>
       <?php endif; ?>
     </ul>
