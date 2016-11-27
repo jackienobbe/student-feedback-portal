@@ -30,16 +30,27 @@ try {
   $sth = $dbh->prepare($sql);
   $sth->bindParam(':courseID', $courseID);
   $sth->execute();
-
-  echo "<table>\n";
-
-  // set the resulting array to associative
   $result = $sth->setFetchMode(PDO::FETCH_ASSOC);
-  foreach(new ListItems(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
-    echo $v . " ";
+
+  if(count($result) > 1)
+  {
+    echo "<table>\n";
+
+    // set the resulting array to associative
+    foreach(new ListItems(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
+      echo $v . " ";
+    }
+    echo "</table>\n";
   }
-  echo "</table>";
+  else {
+    echo "<p>There aren't any reviews for this course by this professor yet...</p>\n";
+    if(isset($_SESSION['userID']))
+    {
+      echo "<p>Taking this course this semester? <a href='#'> Enroll and add a review!</a></p>\n";
+    }
+  }
   $dbh = null;
+  
 }
 catch(PDOException $e) {
   $dbh = null;

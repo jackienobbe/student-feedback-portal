@@ -27,8 +27,8 @@
 
     <h3>Course Reviews</h3>
     <?php include 'includes/disp_reviews.inc.php'; ?>
-    <h3>Other Courses Taught By This Professor</h3>
-    <?php include 'includes/disp_courses_of_prof.inc.php';?>
+    <h3>Other Courses by this Professor</h3>
+    <?php include 'includes/disp_courses_of_prof.inc.php'; ?>
   </form>
 
 </div>

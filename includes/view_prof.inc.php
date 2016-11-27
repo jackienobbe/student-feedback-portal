@@ -18,16 +18,6 @@ if (isset($_POST["professorID"]))
 }
 else  // type is GET
 {
-  $professorID = $professorFName = $professorLName = $departmentName = "(in progress)";
-  if (isset($_GET["err"]))
-  {
-    // We are here because there was an error in either update or delete
-    $error_msg = $_GET["err"];
-    $courseID = $_GET["professorID"];
-  }
-  else if (isset($_GET["professorID"]))
-    $professorID = $_GET["professorID"];
-  else
     // Coming from outside url with product code not provided
-    header("Location:get_course_num.php");
+    header("Location:search_prof.php");
 }
