@@ -167,10 +167,10 @@ CREATE TABLE Question_Answer_Statistics_By_Section(
 	courseID varchar (10),
 	semester varchar (20),
 	questionID int,
-    offeredAnswerID int,
-    percent decimal(5,2) NOT NULL DEFAULT 0.00,
-    PRIMARY KEY (sectionNum, courseID, semester, questionID, offeredAnswerID),
-    FOREIGN KEY (questionID, offeredAnswerID) REFERENCES Question_Answer (questionID, offeredAnswerID)
+	offeredAnswerID int,
+	percent decimal(5,2) NOT NULL DEFAULT 0.00,
+	PRIMARY KEY (sectionNum, courseID, semester, questionID, offeredAnswerID),
+	FOREIGN KEY (questionID, offeredAnswerID) REFERENCES Question_Answer (questionID, offeredAnswerID)
 		ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (sectionNum, courseID, semester) REFERENCES Section (sectionNum, courseID, semester)
 		ON UPDATE CASCADE ON DELETE CASCADE

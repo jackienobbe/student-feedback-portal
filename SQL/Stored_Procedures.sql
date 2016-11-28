@@ -139,7 +139,7 @@ BEGIN
 	-- 	NATURAL JOIN Question_Answer_Statistics
     -- WHERE questionID = $questionID;
 
-  SELECT * FROM Question_Answer_Statistics_By_Section
+  SELECT * FROM Question_Answer_Statistics_By_Section;
     -- WHERE
     -- PK from section
 
