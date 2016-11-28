@@ -28,9 +28,9 @@ try {
 
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   // needs surveyID shtuff (add it to the front of the query)
-  $sql = "SELECT courseID, sectionNum, semester, courseName
+  $sql = "SELECT courseID, courseName
   FROM Enroll NATURAL JOIN Course NATURAL JOIN System_User
-  WHERE userID = :userID && semester = :currSemester";
+  WHERE userID = :userID && semester = :currSemester;";
 
   $sth = $dbh->prepare($sql);
   $sth->bindParam(':userID', $userID);
@@ -39,18 +39,18 @@ try {
   $sth->execute();
   $result = $sth->setFetchMode(PDO::FETCH_ASSOC);
 
-  if(count($result) > 1)
-  {
-    echo "<ul>\n";
+  $counter = 0;
 
-    // set the resulting array to associative
-    foreach(new ListItems(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
-      echo $v . " ";
-    }
-    echo "</ul>";
-    $dbh = null;
+  echo "<ul>\n";
+
+  // set the resulting array to associative
+  foreach(new ListItems(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
+    echo $v . " ";
+    $counter++;
   }
-  else {
+  echo "</ul>";
+  $dbh = null;
+  if($counter == 0) {
     echo "<p>Hmm... you don't appear to be in any courses this semester.</p>";
   }
 }

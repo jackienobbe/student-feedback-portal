@@ -25,10 +25,12 @@ view_student.php
 
       <h3>Current Courses</h3>
       <?include 'includes/view_student_curr_courses.inc.php';?>
-      <button name="addCourses">add more courses</button>
+      <button name="addCourses" type="submit" formaction="">add more courses</button>
+      <? include 'includes/disp_courses_to_enroll.inc.php'; ?>
       <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
       <?include 'includes/view_student_prev_courses.inc.php' ?>
+
     </form>
   </div>
 </body>
