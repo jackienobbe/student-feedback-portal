@@ -78,7 +78,7 @@ public class NewCourse extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Department Name");
+        jLabel3.setText("Department Id");
 
         jButton2.setText("Create Course");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -119,16 +119,16 @@ public class NewCourse extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -320,14 +320,15 @@ public class NewCourse extends javax.swing.JFrame {
 
             // the mysql insert statement
             String qry = "INSERT INTO Course "
-                    + " (CourseID, CourseName)"
-                    + " VALUES (?, ?); ";
+                    + " (courseID, courseName, departmentID)"
+                    + " VALUES (?, ?, ?); ";
             
 
             // create the mysql insert preparedstatement
             PreparedStatement prepStmt = conn.prepareStatement(qry);
-            prepStmt.setString(1, jTextField1.getText());
-            prepStmt.setString(2, jTextField2.getText());
+            prepStmt.setString(1, jTextField2.getText());
+            prepStmt.setString(2, jTextField1.getText());
+            prepStmt.setString(3, jTextField3.getText());
 
             // execute the preparedstatement
             prepStmt.execute();
@@ -335,6 +336,7 @@ public class NewCourse extends javax.swing.JFrame {
             jLabel4.setText("Success! ");
             jTextField1.setText("");
             jTextField2.setText("");
+            jTextField3.setText("");
             }
     
             catch (SQLException ex) {
