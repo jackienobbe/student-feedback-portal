@@ -90,6 +90,7 @@ INSERT INTO Survey VALUES (71006,'CSC 3326','Fall 2016',2);
 INSERT INTO Survey VALUES (59603,'CSC 2302','Fall 2016',3);
 INSERT INTO Survey VALUES (59609,'CSC 2302','Fall 2016',4);
 INSERT INTO Survey VALUES (71007,'CSC 3326','Fall 2016',5);
+# DELETE FROM Survey WHERE surveyID = 2;
 
 /* insert into Answer_Type*/
 INSERT INTO Answer_Type VALUES (1, 'Text');
@@ -135,7 +136,7 @@ INSERT INTO Question_Answer VALUES (3, 4);
 INSERT INTO Question_Answer VALUES (3, 5);
 
 
--- DELETE FROM Answer_Choice WHERE questionID = 1;
+DELETE FROM Answer_Choice WHERE surveyID = 2;
 /* insert into Answer_Choice */
 INSERT INTO Answer_Choice VALUES (1,1,1);
 INSERT INTO Answer_Choice VALUES (1,3,1);
@@ -145,9 +146,10 @@ INSERT INTO Answer_Choice VALUES (3,1,3);
 INSERT INTO Answer_Choice VALUES (3,3,3);
 INSERT INTO Answer_Choice VALUES (4,1,1);
 INSERT INTO Answer_Choice VALUES (4,3,1);
-INSERT INTO Answer_Choice VALUES (5,1,2);
-INSERT INTO Answer_Choice VALUES (5,3,2);
+INSERT INTO Answer_Choice VALUES (5,1,1);
+INSERT INTO Answer_Choice VALUES (5,3,1);
 
-/* insert into Question_Answer_Statistics */
+/* insert into Question_Answer_Statistics_By_Section */
 -- Will be filled with data supplied by triggers.
--- INSERT INTO Question_Answer_Statistics VALUES ();
+-- INSERT INTO Question_Answer_Statistics_By_Section VALUES ();
+DELETE FROM Question_Answer_Statistics_By_Section WHERE courseID = 'CSC 3326';
