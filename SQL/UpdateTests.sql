@@ -1,3 +1,20 @@
+# For trigger trig_Create_Stats_For_Section
+
+# 1) Declare cursor for
+# Cursor will be used to calculate the percentages for
+# the answered question. This means only considering the surveys about that section.
+  SELECT questionID, offeredAnswerID FROM Question_Answer
+  ORDER BY questionID;
+
+# 2 )
+	# Store data about what section the survey is about, and the answer given
+  SELECT sectionNum, courseID, semester
+    FROM Survey	NATURAL JOIN Enroll
+      NATURAL JOIN Section
+	WHERE surveyID = 2;
+
+# END trigger trig_Create_Stats_For_Section
+
 # For trigger trig_Update_Stats_After_INSERT
 
 # 1) Get section the answer choice was about
