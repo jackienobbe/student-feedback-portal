@@ -71,7 +71,7 @@ INSERT INTO Course VALUES ('HRD 4303','Leadership and Management Development','H
 -- DELETE FROM Section WHERE courseID = 'CSC 3309';
 /*insert into Section*/
 INSERT INTO Section VALUES (01,'GBU 3303','Spring 2016',6);
-INSERT INTO Section VALUES (02,'CSC 3326','Fall 2016',1);
+INSERT INTO Section VALUES (01,'CSC 3326','Fall 2016',1);
 INSERT INTO Section VALUES (01,'CSC 3326','Spring 2015',1);
 INSERT INTO Section VALUES (01,'CSC 2302','Fall 2016',5);
 INSERT INTO Section VALUES (02,'HRD 4303','Spring 2015',2);
@@ -81,10 +81,10 @@ INSERT INTO Section VALUES (01,'CSC 3309','Fall 2016',1);
 
 /* insert into Enroll*/
 INSERT INTO Enroll VALUES (64313,'GBU 3303','Spring 2016',01);
-INSERT INTO Enroll VALUES (71006,'CSC 3326','Fall 2016',02);
+INSERT INTO Enroll VALUES (71006,'CSC 3326','Fall 2016',01);
 INSERT INTO Enroll VALUES (59603,'CSC 2302','Fall 2016',01);
 INSERT INTO Enroll VALUES (59609,'CSC 2302','Fall 2016',01);
-INSERT INTO Enroll VALUES (71007,'CSC 3326','Fall 2016',02);
+INSERT INTO Enroll VALUES (71007,'CSC 3326','Fall 2016',01);
 INSERT INTO Enroll VALUES (71007,'CSC 3309','Fall 2016',01);
 
 
@@ -152,5 +152,6 @@ INSERT INTO Answer_Choice VALUES (4,3,1);
 INSERT INTO Answer_Choice VALUES (5,1,2);
 INSERT INTO Answer_Choice VALUES (5,3,2);
 
-/* insert into Question_Answer_Statistics
-INSERT INTO Question_Answer_Statistics VALUES ();
+/* insert into Question_Answer_Statistics */
+-- Will be filled with data supplied by triggers.
+-- INSERT INTO Question_Answer_Statistics VALUES ();

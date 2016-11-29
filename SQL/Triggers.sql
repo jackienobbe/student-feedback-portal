@@ -1,75 +1,135 @@
-Show Triggers;
-
-DROP TRIGGER IF EXISTS trig_QuestionAnswer;
-
-/* Trigger that makes sure there is a statistic for every question answer */
-DELIMITER $$ 
-CREATE TRIGGER trig_Add_to_Statistics AFTER INSERT ON Question_Answer  
-FOR EACH ROW 
-BEGIN 
-	INSERT INTO Question_Answer_Statistics (questionID, offeredAnswerID)
-    VALUES (NEW.questionID, NEW.offeredAnswerID); 
-END;
-$$ 
-DELIMITER ;  
-
-Show Triggers;
-DROP TRIGGER IF EXISTS trig_Update_Stats_After_Insert;
-
 
 /* Trigger on table answer_choice that updates Question_Answer_Statstics  */ 
 DELIMITER $$ 
 CREATE TRIGGER trig_Update_Stats_After_INSERT AFTER INSERT ON Answer_Choice 
 FOR EACH ROW  
-BEGIN 
+BEGIN
 
-	DECLARE $TotalAnswerCount int; 
-    DECLARE $OfferedAnswer int; 
-	DECLARE $OfferedAnswerCount int; 
-    DECLARE $Finished int DEFAULT 0;
-    
-    DECLARE answer_choice_cursor CURSOR FOR
-    SELECT offeredAnswerID, count(offeredAnswerID)
-	FROM Answer_Choice
-    WHERE questionID = NEW.questionID
-	GROUP BY offeredAnswerID;
-    
-    DECLARE CONTINUE HANDLER 
-        FOR NOT FOUND SET $Finished = 1;
-    
-    SET $TotalAnswerCount = (select count(questionID) 
-						from Answer_Choice 
-						where questionID = NEW.questionID);
-    
-    OPEN answer_choice_cursor;
-    
-    AnswerStat: LOOP
-    
-    FETCH answer_choice_cursor INTO $OfferedAnswer, $OfferedAnswerCount;
-    
-	IF $Finished = 1 THEN 
-		LEAVE AnswerStat;
-	END IF;
+	DECLARE $totalAnswerCount int;
+	DECLARE $currentOfferedAnswerCount int;
+	DECLARE $currentOfferedAnswer int;
+	DECLARE $offeredAnswerID int;
+	DECLARE $questionID int;
+	DECLARE $sectionNum int;
+	DECLARE $courseID varchar(10);
+	DECLARE $semester varchar(20);
+	DECLARE $Finished int DEFAULT 0;
 
-		UPDATE Question_Answer_Statistics 
-		SET percent = (($OfferedAnswerCount/$TotalAnswerCount) * 100.0 )
-		WHERE Question_Answer_Statistics.questionID = NEW.questionID
-		AND Question_Answer_Statistics.offeredAnswerID = $OfferedAnswer; 
-        
-	END LOOP AnswerStat;
-    
-    CLOSE answer_choice_cursor;
+	# Cursor is only concerned with the percentages for the
+	# one question that changed
+	DECLARE answer_choice_cursor CURSOR FOR
+		SELECT offeredAnswerID, count(offeredAnswerID)
+		FROM Answer_Choice
+		WHERE questionID = NEW.questionID
+		GROUP BY offeredAnswerID;
+
+	DECLARE CONTINUE HANDLER
+	FOR NOT FOUND SET $Finished = 1;
+
+  # Store data about what section the survey is about, and the answer given
+  SELECT sectionNum, courseID, semester, questionID, offeredAnswerID
+		INTO $sectionNum, $courseID, $semester, $questionID, $offeredAnswerID
+    FROM Answer_Choice NATURAL JOIN Survey
+		NATURAL JOIN Enroll
+        NATURAL JOIN Section
+	WHERE surveyID = NEW.surveyID;
+
+	# Calculate the number of offered answers for the section and question
+	SET $totalAnswerCount =
+  (SELECT count(questionID)
+   FROM Answer_Choice
+   WHERE questionID = NEW.questionID
+         AND surveyID IN (SELECT surveyID FROM Section
+     NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
+   WHERE sectionNum = $sectionNum
+         AND courseID = $courseID
+         AND semester = $semester));
+
+#  If the choice for that section (all 5 attributes) is NOT in the table,
+#  then insert into stats table
+	IF(NOT exists(SELECT * FROM Question_Answer_Statistics_By_Section
+		WHERE sectionNum = $sectionNum
+		AND courseID = $courseID
+		AND semester = $semester
+		AND questionID = $questionID
+		AND offeredAnswerID = $offeredAnswerID))
+	THEN
+	-- The percent will default to 0.00
+			INSERT INTO Question_Answer_Statistics_By_Section
+			(sectionNum, courseID, semester, questionID, offeredAnswerID )
+			VALUES ($sectionNum, $courseID, $semester, $questionID, $offeredAnswerID);
+	END IF
+
+
+	OPEN answer_choice_cursor;
+
+	AnswerStat: LOOP
+
+		FETCH answer_choice_cursor INTO $currentOfferedAnswer, $currentOfferedAnswerCount;
+
+		IF $Finished = 1 THEN
+			LEAVE AnswerStat;
+		END IF;
+
+		UPDATE Question_Answer_Statistics_By_Section
+			SET percent = (($currentOfferedAnswerCount/$totalAnswerCount) * 100.0)
+			WHERE sectionNum = $sectionNum
+				AND courseID = $courseID
+				AND semester = $semester
+				AND questionID = $questionID
+				AND offeredAnswerID = $currentOfferedAnswer;
+
+
+# 		UPDATE Question_Answer_Statistics_By_Section
+# 		SET percent = (($OfferedAnswerCount/$TotalAnswerCount) * 100.0 )
+# 		WHERE Question_Answer_Statistics_By_Section.questionID = NEW.questionID
+# 					AND Question_Answer_Statistics_By_Section.offeredAnswerID = $OfferedAnswer
+# 					AND -- add constraints with the declared variables;
+#
+		END LOOP AnswerStat;
+
+		CLOSE answer_choice_cursor;
     
 END; 
 $$ 
 DELIMITER ;
+
+#Test queries
+
+SELECT sectionNum, courseID, semester, questionID, offeredAnswerID
+    FROM Answer_Choice NATURAL JOIN Survey
+		NATURAL JOIN Enroll
+        NATURAL JOIN Section
+	WHERE surveyID = 1;
+
+SELECT * FROM Question_Answer_Statistics_By_Section;
+
+SELECT * FROM
+	Section NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
+WHERE sectionNum = 1
+			AND courseID = 'CSC 3326'
+			AND semester = 'Fall 2016';
+
+SELECT count(questionID) AS TotalAnswerCount
+FROM Answer_Choice
+WHERE questionID = 1
+	AND surveyID IN (SELECT surveyID FROM Section
+	NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
+WHERE sectionNum = 1
+			AND courseID = 'CSC 3326'
+			AND semester = 'Fall 2016');
+
+# End Test Queries
+    
+Show Triggers;
+DROP TRIGGER IF EXISTS trig_Update_Stats_After_DELETE;
 
 /* Trigger on table answer_choice that updates Question_Answer_Statstics */
 DELIMITER $$ 
 CREATE TRIGGER trig_Update_Stats_After_DELETE AFTER DELETE ON Answer_Choice 
 FOR EACH ROW  
 BEGIN 
-
+	
 	DECLARE $TotalAnswerCount int; 
     DECLARE $OfferedAnswer int; 
 	DECLARE $OfferedAnswerCount int; 
@@ -83,16 +143,24 @@ BEGIN
     
     DECLARE CONTINUE HANDLER 
         FOR NOT FOUND SET $Finished = 1;
+
     
     SET $TotalAnswerCount = (select count(questionID) 
 						from Answer_Choice 
 						where questionID = OLD.questionID);
+    
+    -- Debugging
+    SET @TotalAnswerCount = $TotalAnswerCount;
     
     OPEN answer_choice_cursor;
     
     AnswerStat: LOOP
     
     FETCH answer_choice_cursor INTO $OfferedAnswer, $OfferedAnswerCount;
+    
+    -- Debugging
+    SET @OfferedAnswer = $OfferedAnswer;
+    SET @OfferedAnswerCount = $OfferedAnswerCount;
     
 	IF $Finished = 1 THEN 
 		LEAVE AnswerStat;
@@ -107,9 +175,21 @@ BEGIN
     
     CLOSE answer_choice_cursor;
     
+    
 END; 
 $$ 
 DELIMITER ;
+
+-- DEBUGGING
+
+SELECT @TotalAnswerCount;
+SELECT @OfferedAnswer;
+SELECT @OfferedAnswerCount;
+
+
+-- END DEBUGGING
+
+
 
 DELIMITER $$ 
 CREATE TRIGGER trig_Update_Stats_After_UPDATE AFTER UPDATE ON Answer_Choice 
