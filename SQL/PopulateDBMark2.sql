@@ -148,5 +148,17 @@ INSERT INTO Answer_Choice VALUES (3,1,3);
 INSERT INTO Answer_Choice VALUES (3,3,3);
 INSERT INTO Answer_Choice VALUES (4,1,1);
 INSERT INTO Answer_Choice VALUES (4,3,1);
+# Things should be 50/50 ^^
+# 100% Here vv
 INSERT INTO Answer_Choice VALUES (5,1,1);
 INSERT INTO Answer_Choice VALUES (5,3,1);
+# Trying to invoke some more fancy looking stats.
+# Same person, multiple answers
+INSERT INTO Answer_Choice VALUES (2,1,3);
+INSERT INTO Answer_Choice VALUES (2,1,4);
+INSERT INTO Answer_Choice VALUES (2,1,5);
+
+INSERT INTO Answer_Choice VALUES (2,3,3);
+INSERT INTO Answer_Choice VALUES (2,3,2);
+
+

@@ -66,7 +66,6 @@ DELIMITER ;
 
 
 
-
 /* Trigger on table answer_choice that updates Question_Answer_Statistics_By_Section  */
 DELIMITER $$
 CREATE TRIGGER trig_Update_Stats_After_INSERT AFTER INSERT ON Answer_Choice
