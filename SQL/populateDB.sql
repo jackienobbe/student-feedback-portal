@@ -97,43 +97,151 @@ INSERT INTO Answer_Type VALUES (1, 'Text');
 INSERT INTO Answer_Type VALUES (2, 'Choice');
 
 /* insert into Question */
-INSERT INTO Question VALUES ( 1, 'How many hours do you spend on the homework?', 2);
-INSERT INTO Question VALUES ( 2, 'Is the material covered in class relevant to the course?', 1);
-INSERT INTO Question VALUES ( 3, 'How many classes sessions did you miss?', 2);
-INSERT INTO Question VALUES ( 4, 'Does the professor demonstrate good knowledge of the class material?', 1);
-INSERT INTO Question VALUES ( 5, 'Please identify what you consider to be the weaknesses and the strengths of this class', 1);
-
+INSERT INTO Question VALUES ( 1, 'The instructor was an effective communicator.', 2);
+INSERT INTO Question VALUES ( 2, 'Lessons are well-prepared.', 2);
+INSERT INTO Question VALUES ( 3, 'The instructor was approachable.', 2);
+INSERT INTO Question VALUES ( 4, 'The instructor demonstrates knowledge of the subject.', 2);
+INSERT INTO Question VALUES ( 5, 'Student participation is encouraged.', 2);
+INSERT INTO Question VALUES ( 6, 'Grading was fair.', 2);
+INSERT INTO Question VALUES ( 7, 'I learned a lot in this course.', 2);
+INSERT INTO Question VALUES ( 8, 'On average, the number of hours I spent on coursework outside of class, per week:', 2);
+INSERT INTO Question VALUES ( 9, 'The concepts in this class were predominantly presented in... (check up to two):', 2);
+INSERT INTO Question VALUES ( 10, 'Most of the test material in this class came from... (check up to two)', 2);
+INSERT INTO Question VALUES ( 11, 'How many group projects were assigned?', 2);
+INSERT INTO Question VALUES ( 12, 'The main percentage of my overall grade was based on...', 2);
+INSERT INTO Question VALUES ( 13, 'The secondary component of my grade was based on...', 2);
+INSERT INTO Question VALUES ( 14, 'Comments about the professor:', 1);
+INSERT INTO Question VALUES ( 15, 'Comments about the course: ', 1);
 
 /* insert into Answer_Text */
-INSERT INTO Answer_Text (surveyID, questionId, answer) 
+INSERT INTO Answer_Text (surveyID, questionId, answer)
 	VALUES (1, 2,'The material covered in class is not very relevant to the course!');
-INSERT INTO Answer_Text (surveyID, questionId, answer) 
+INSERT INTO Answer_Text (surveyID, questionId, answer)
 	VALUES (2, 2,' This class taught me how to apply theory to practice');
-INSERT INTO Answer_Text (surveyID, questionId, answer) 
+INSERT INTO Answer_Text (surveyID, questionId, answer)
 	VALUES (3, 2,'I think that the professor demonstrates good knowledge of the material');
-INSERT INTO Answer_Text (surveyID, questionId, answer) 
+INSERT INTO Answer_Text (surveyID, questionId, answer)
 	VALUES (4, 2,'Students participation is encouraged');
-INSERT INTO Answer_Text (surveyID, questionId, answer) 
+INSERT INTO Answer_Text (surveyID, questionId, answer)
 	VALUES (5, 2,'The professor gives a lot of assignments and pop quizzes');
 
 /* insert into OfferedAnswer */
-INSERT INTO OfferedAnswer VALUES (1,'1-2');
-INSERT INTO OfferedAnswer VALUES (2,'2-4');
-INSERT INTO OfferedAnswer VALUES (3,'4-6');
-INSERT INTO OfferedAnswer VALUES (4,'6-8');
-INSERT INTO OfferedAnswer VALUES (5,'8-10');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Strongly Agree');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Agree');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Neutral');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Disagree');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Strongly Disagree');
+
+INSERT INTO OfferedAnswer (answerText) VALUES ('2 or less');
+INSERT INTO OfferedAnswer (answerText) VALUES ('3-4');
+INSERT INTO OfferedAnswer (answerText) VALUES ('5-6');
+INSERT INTO OfferedAnswer (answerText) VALUES ('7-8');
+INSERT INTO OfferedAnswer (answerText) VALUES ('9 or more');
+
+INSERT INTO OfferedAnswer (answerText) VALUES ('Lecture');
+INSERT INTO OfferedAnswer (answerText) VALUES ('External readings');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Laboratory assignments/activities');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Group Discussion');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Other');
+
+INSERT INTO OfferedAnswer (answerText) VALUES ('There were no tests administered in this course');
+
+INSERT INTO OfferedAnswer (answerText) VALUES ('0');
+INSERT INTO OfferedAnswer (answerText) VALUES ('1-2');
+INSERT INTO OfferedAnswer (answerText) VALUES ('7 or more');
+
+INSERT INTO OfferedAnswer (answerText) VALUES ('Exams');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Quizzes');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Homework');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Presentations');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Individual projects');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Group Projects');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Papers (less than 10 pages)');
+INSERT INTO OfferedAnswer (answerText) VALUES ('Papers (10 or more pages)');
+INSERT INTO OfferedAnswer (answerText) VALUES ('No primary component');
 
 /* insert into Question_Answer */
-INSERT INTO Question_Answer VALUES (1, 1);
-INSERT INTO Question_Answer VALUES (1, 2);
-INSERT INTO Question_Answer VALUES (1, 3);
-INSERT INTO Question_Answer VALUES (1, 4);
-INSERT INTO Question_Answer VALUES (1, 5);
-INSERT INTO Question_Answer VALUES (3, 1);
-INSERT INTO Question_Answer VALUES (3, 2);
-INSERT INTO Question_Answer VALUES (3, 3);
-INSERT INTO Question_Answer VALUES (3, 4);
-INSERT INTO Question_Answer VALUES (3, 5);
+INSERT INTO Question_Answer VALUES (1, 6);
+INSERT INTO Question_Answer VALUES (1, 7);
+INSERT INTO Question_Answer VALUES (1, 8);
+INSERT INTO Question_Answer VALUES (1, 9);
+INSERT INTO Question_Answer VALUES (1, 10);
+INSERT INTO Question_Answer VALUES (2, 6);
+INSERT INTO Question_Answer VALUES (2, 7);
+INSERT INTO Question_Answer VALUES (2, 8);
+INSERT INTO Question_Answer VALUES (2, 9);
+INSERT INTO Question_Answer VALUES (2, 10);
+INSERT INTO Question_Answer VALUES (3, 6);
+INSERT INTO Question_Answer VALUES (3, 7);
+INSERT INTO Question_Answer VALUES (3, 8);
+INSERT INTO Question_Answer VALUES (3, 9);
+INSERT INTO Question_Answer VALUES (3, 10);
+INSERT INTO Question_Answer VALUES (4, 6);
+INSERT INTO Question_Answer VALUES (4, 7);
+INSERT INTO Question_Answer VALUES (4, 8);
+INSERT INTO Question_Answer VALUES (4, 9);
+INSERT INTO Question_Answer VALUES (4, 10);
+INSERT INTO Question_Answer VALUES (5, 6);
+INSERT INTO Question_Answer VALUES (5, 7);
+INSERT INTO Question_Answer VALUES (5, 8);
+INSERT INTO Question_Answer VALUES (5, 9);
+INSERT INTO Question_Answer VALUES (5, 10);
+INSERT INTO Question_Answer VALUES (6, 6);
+INSERT INTO Question_Answer VALUES (6, 7);
+INSERT INTO Question_Answer VALUES (6, 8);
+INSERT INTO Question_Answer VALUES (6, 9);
+INSERT INTO Question_Answer VALUES (6, 10);
+INSERT INTO Question_Answer VALUES (7, 6);
+INSERT INTO Question_Answer VALUES (7, 7);
+INSERT INTO Question_Answer VALUES (7, 8);
+INSERT INTO Question_Answer VALUES (7, 9);
+INSERT INTO Question_Answer VALUES (7, 10);
+--
+INSERT INTO Question_Answer VALUES (8, 11);
+INSERT INTO Question_Answer VALUES (8, 12);
+INSERT INTO Question_Answer VALUES (8, 13);
+INSERT INTO Question_Answer VALUES (8, 14);
+INSERT INTO Question_Answer VALUES (8, 15);
+INSERT INTO Question_Answer VALUES (9, 16);
+INSERT INTO Question_Answer VALUES (9, 17);
+INSERT INTO Question_Answer VALUES (9, 18);
+INSERT INTO Question_Answer VALUES (9, 19);
+INSERT INTO Question_Answer VALUES (9, 20);
+INSERT INTO Question_Answer VALUES (10, 16);
+INSERT INTO Question_Answer VALUES (10, 17);
+INSERT INTO Question_Answer VALUES (10, 18);
+INSERT INTO Question_Answer VALUES (10, 19);
+INSERT INTO Question_Answer VALUES (10, 20);
+INSERT INTO Question_Answer VALUES (10, 21);
+INSERT INTO Question_Answer VALUES (11, 22);
+INSERT INTO Question_Answer VALUES (11, 23);
+INSERT INTO Question_Answer VALUES (11, 12);
+INSERT INTO Question_Answer VALUES (11, 13);
+INSERT INTO Question_Answer VALUES (11, 24);
+INSERT INTO Question_Answer VALUES (12, 22);
+INSERT INTO Question_Answer VALUES (12, 23);
+INSERT INTO Question_Answer VALUES (12, 12);
+INSERT INTO Question_Answer VALUES (12, 13);
+INSERT INTO Question_Answer VALUES (12, 24);
+INSERT INTO Question_Answer VALUES (13, 25);
+INSERT INTO Question_Answer VALUES (13, 26);
+INSERT INTO Question_Answer VALUES (13, 27);
+INSERT INTO Question_Answer VALUES (13, 28);
+INSERT INTO Question_Answer VALUES (13, 29);
+INSERT INTO Question_Answer VALUES (13, 30);
+INSERT INTO Question_Answer VALUES (13, 31);
+INSERT INTO Question_Answer VALUES (13, 32);
+INSERT INTO Question_Answer VALUES (13, 33);
+INSERT INTO Question_Answer VALUES (14, 25);
+INSERT INTO Question_Answer VALUES (14, 26);
+INSERT INTO Question_Answer VALUES (14, 27);
+INSERT INTO Question_Answer VALUES (14, 28);
+INSERT INTO Question_Answer VALUES (14, 29);
+INSERT INTO Question_Answer VALUES (14, 30);
+INSERT INTO Question_Answer VALUES (14, 31);
+INSERT INTO Question_Answer VALUES (14, 32);
+INSERT INTO Question_Answer VALUES (14, 33);
+
 
 
 DELETE FROM Answer_Choice WHERE surveyID = 2;
