@@ -148,11 +148,12 @@ END;
 $$
 DELIMITER ;
 
+# WORKING ^^
 
 Show Triggers;
 DROP TRIGGER IF EXISTS trig_Update_Stats_After_DELETE;
 
-/* Trigger on table answer_choice that updates Question_Answer_Statstics */
+/* Trigger on table answer_choice that updates Question_Answer_Statistics */
 DELIMITER $$ 
 CREATE TRIGGER trig_Update_Stats_After_DELETE AFTER DELETE ON Answer_Choice 
 FOR EACH ROW  

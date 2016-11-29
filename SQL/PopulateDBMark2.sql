@@ -138,7 +138,7 @@ INSERT INTO Answer_Text (surveyID, questionId, answer)
 	VALUES (5, 2,'The professor gives a lot of assignments and pop quizzes');
 
 
-# DELETE FROM Answer_Choice WHERE surveyID = 2;
+# DELETE FROM Answer_Choice WHERE offeredAnswerID = 1;
 /* insert into Answer_Choice */
 INSERT INTO Answer_Choice VALUES (1,1,1);
 INSERT INTO Answer_Choice VALUES (1,3,1);
