@@ -156,3 +156,27 @@ CALL sp_display_statistics_by_section(1);
 -- 		NATURAL JOIN OfferedAnswer
 -- 		NATURAL JOIN Question_Answer_Statistics
 --     WHERE questionID = 1;
+
+
+-- ---------------------------------------------------------------
+DROP PROCEDURE IF EXISTS pCreateProfGetIDInsertDept;
+
+DELIMITER $$
+CREATE PROCEDURE pCreateProfGetIDInsertDept($professorFName VARCHAR(50), $professorLName VARCHAR(50), $deptCode VARCHAR(5))
+BEGIN
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+	START TRANSACTION;
+
+	INSERT INTO Professor(professorFName, professorLName)
+    VALUES($professorFName, $professorLName);
+
+    SET @professorID := (SELECT professorID FROM Professor
+    WHERE professorFName = $professorFName && professorLName = $professorLName);
+
+    SELECT @professorID;
+
+    INSERT INTO ProfessorToDepartment(professorID, departmentID)
+    VALUES(@professorID, $deptCode);
+END;
+$$
+DELIMITER ;
