@@ -100,7 +100,7 @@ CREATE TABLE Survey (
     userID int,
     courseID varchar (10),
 	semester varchar(20),
-    surveyID int UNIQUE,
+    surveyID int UNIQUE NOT NULL,
     PRIMARY KEY (userID, courseID, semester),
     FOREIGN KEY (userID, courseID, semester) REFERENCES Enroll (userID, courseID, semester)
 		ON UPDATE CASCADE ON DELETE CASCADE
