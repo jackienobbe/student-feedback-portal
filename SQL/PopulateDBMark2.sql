@@ -75,15 +75,6 @@ INSERT INTO Section VALUES (02,'EGR 2402','Summer 2016',4);
 INSERT INTO Section VALUES (01,'CSC 3309','Fall 2016',1);
 
 
-/* insert into Enroll*/
-INSERT INTO Enroll VALUES (64313,'GBU 3303','Spring 2016',01);
-INSERT INTO Enroll VALUES (71006,'CSC 3326','Fall 2016',01);
-INSERT INTO Enroll VALUES (59603,'CSC 2302','Fall 2016',01);
-INSERT INTO Enroll VALUES (59609,'CSC 2302','Fall 2016',01);
-INSERT INTO Enroll VALUES (71007,'CSC 3326','Fall 2016',01);
-INSERT INTO Enroll VALUES (71007,'CSC 3309','Fall 2016',01);
-
-
 /* insert into Answer_Type*/
 INSERT INTO Answer_Type VALUES (1, 'Text');
 INSERT INTO Answer_Type VALUES (2, 'Choice');
@@ -149,31 +140,37 @@ INSERT INTO Question_Answer VALUES (1, 7);
 INSERT INTO Question_Answer VALUES (1, 8);
 INSERT INTO Question_Answer VALUES (1, 9);
 INSERT INTO Question_Answer VALUES (1, 10);
+
 INSERT INTO Question_Answer VALUES (2, 6);
 INSERT INTO Question_Answer VALUES (2, 7);
 INSERT INTO Question_Answer VALUES (2, 8);
 INSERT INTO Question_Answer VALUES (2, 9);
 INSERT INTO Question_Answer VALUES (2, 10);
+
 INSERT INTO Question_Answer VALUES (3, 6);
 INSERT INTO Question_Answer VALUES (3, 7);
 INSERT INTO Question_Answer VALUES (3, 8);
 INSERT INTO Question_Answer VALUES (3, 9);
 INSERT INTO Question_Answer VALUES (3, 10);
+
 INSERT INTO Question_Answer VALUES (4, 6);
 INSERT INTO Question_Answer VALUES (4, 7);
 INSERT INTO Question_Answer VALUES (4, 8);
 INSERT INTO Question_Answer VALUES (4, 9);
 INSERT INTO Question_Answer VALUES (4, 10);
+
 INSERT INTO Question_Answer VALUES (5, 6);
 INSERT INTO Question_Answer VALUES (5, 7);
 INSERT INTO Question_Answer VALUES (5, 8);
 INSERT INTO Question_Answer VALUES (5, 9);
 INSERT INTO Question_Answer VALUES (5, 10);
+
 INSERT INTO Question_Answer VALUES (6, 6);
 INSERT INTO Question_Answer VALUES (6, 7);
 INSERT INTO Question_Answer VALUES (6, 8);
 INSERT INTO Question_Answer VALUES (6, 9);
 INSERT INTO Question_Answer VALUES (6, 10);
+
 INSERT INTO Question_Answer VALUES (7, 6);
 INSERT INTO Question_Answer VALUES (7, 7);
 INSERT INTO Question_Answer VALUES (7, 8);
@@ -185,27 +182,32 @@ INSERT INTO Question_Answer VALUES (8, 12);
 INSERT INTO Question_Answer VALUES (8, 13);
 INSERT INTO Question_Answer VALUES (8, 14);
 INSERT INTO Question_Answer VALUES (8, 15);
+
 INSERT INTO Question_Answer VALUES (9, 16);
 INSERT INTO Question_Answer VALUES (9, 17);
 INSERT INTO Question_Answer VALUES (9, 18);
 INSERT INTO Question_Answer VALUES (9, 19);
 INSERT INTO Question_Answer VALUES (9, 20);
+
 INSERT INTO Question_Answer VALUES (10, 16);
 INSERT INTO Question_Answer VALUES (10, 17);
 INSERT INTO Question_Answer VALUES (10, 18);
 INSERT INTO Question_Answer VALUES (10, 19);
 INSERT INTO Question_Answer VALUES (10, 20);
 INSERT INTO Question_Answer VALUES (10, 21);
+
 INSERT INTO Question_Answer VALUES (11, 22);
 INSERT INTO Question_Answer VALUES (11, 23);
 INSERT INTO Question_Answer VALUES (11, 12);
 INSERT INTO Question_Answer VALUES (11, 13);
 INSERT INTO Question_Answer VALUES (11, 24);
+
 INSERT INTO Question_Answer VALUES (12, 22);
 INSERT INTO Question_Answer VALUES (12, 23);
 INSERT INTO Question_Answer VALUES (12, 12);
 INSERT INTO Question_Answer VALUES (12, 13);
 INSERT INTO Question_Answer VALUES (12, 24);
+
 INSERT INTO Question_Answer VALUES (13, 25);
 INSERT INTO Question_Answer VALUES (13, 26);
 INSERT INTO Question_Answer VALUES (13, 27);
@@ -215,6 +217,7 @@ INSERT INTO Question_Answer VALUES (13, 30);
 INSERT INTO Question_Answer VALUES (13, 31);
 INSERT INTO Question_Answer VALUES (13, 32);
 INSERT INTO Question_Answer VALUES (13, 33);
+
 INSERT INTO Question_Answer VALUES (14, 25);
 INSERT INTO Question_Answer VALUES (14, 26);
 INSERT INTO Question_Answer VALUES (14, 27);
@@ -225,7 +228,17 @@ INSERT INTO Question_Answer VALUES (14, 31);
 INSERT INTO Question_Answer VALUES (14, 32);
 INSERT INTO Question_Answer VALUES (14, 33);
 
+/* insert into Enroll*/
+INSERT INTO Enroll VALUES (64313,'GBU 3303','Spring 2016',01);
+INSERT INTO Enroll VALUES (71006,'CSC 3326','Fall 2016',01);
+INSERT INTO Enroll VALUES (59603,'CSC 2302','Fall 2016',01);
+INSERT INTO Enroll VALUES (59609,'CSC 2302','Fall 2016',01);
+INSERT INTO Enroll VALUES (71007,'CSC 3326','Fall 2016',01);
+INSERT INTO Enroll VALUES (71007,'CSC 3309','Fall 2016',01);
+
 /* insert into Survey */
+# Should be automatically created from Trigger on Enroll
+
 # INSERT INTO Survey VALUES (64313,'GBU 3303','Spring 2016',1);
 # INSERT INTO Survey VALUES (71006,'CSC 3326','Fall 2016',2);
 # INSERT INTO Survey VALUES (59603,'CSC 2302','Fall 2016',3);

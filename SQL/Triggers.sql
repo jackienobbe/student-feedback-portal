@@ -6,13 +6,19 @@ CREATE TRIGGER trig_Auto_Create_Survey AFTER INSERT ON Enroll
 FOR EACH ROW
 BEGIN
 
-  # If statement to see if there are any surveys
-  # If there aren't, insert with surveyID = 1
-    DECLARE $SurveyIDMax int;
+  DECLARE $SurveyIDMax int;
     SELECT MAX(surveyID) INTO $SurveyIDMax
     FROM Survey;
+  # If statement to see if there are any surveys
+  # If there aren't, insert with surveyID = 1
+	IF(NOT EXISTS(SELECT surveyID FROM Survey))
+  THEN
+    INSERT INTO Survey VALUES (NEW.userID, NEW.courseID, NEW.semester, 1);
 
-	INSERT INTO Survey VALUES (NEW.userID, NEW.courseID, NEW.semester, ($SurveyIDMax + 1));
+  ELSE
+    INSERT INTO Survey VALUES (NEW.userID, NEW.courseID, NEW.semester, ($SurveyIDMax + 1));
+
+  END IF;
 
 END;
 $$

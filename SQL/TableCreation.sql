@@ -137,7 +137,7 @@ CREATE TABLE Answer_Text (
 
 CREATE TABLE OfferedAnswer (
 	offeredAnswerID int AUTO_INCREMENT PRIMARY KEY,
-    answerText varchar (40) NOT NULL
+    answerText varchar (60) NOT NULL
 );
 
 
