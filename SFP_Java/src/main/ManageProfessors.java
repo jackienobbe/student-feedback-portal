@@ -340,8 +340,9 @@ public class ManageProfessors extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection(url, uid, pw);
             Statement stmt = conn.createStatement();
 
-            String qry = "SELECT professorFName AS \"First Name\", professorLName as \"Last Name\""
-                    + "FROM professor";
+            String qry = "SELECT professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
+                    + "FROM professor NATURAL JOIN professortodepartment "
+                    + "NATURAL JOIN department";
 
             // Result set get the result of the SQL query 
             ResultSet rs = stmt.executeQuery(qry);
@@ -393,8 +394,6 @@ public class ManageProfessors extends javax.swing.JFrame {
             
             // execute the preparedstatement
             prepStmt.execute();
-
-            //second query to rediplay the table
             
             jLabel2.setText("Professor deleted! ");
             jTextField1.setText("");
@@ -412,8 +411,9 @@ public class ManageProfessors extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection(url, uid, pw);
             Statement stmt = conn.createStatement();
 
-            String qry = "SELECT professorFName AS \"First Name\", professorLName as \"Last Name\""
-                    + "FROM professor";
+            String qry = "SELECT professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
+                    + "FROM professor NATURAL JOIN professortodepartment "
+                    + "NATURAL JOIN department";
 
             // Result set get the result of the SQL query 
             ResultSet rs = stmt.executeQuery(qry);
