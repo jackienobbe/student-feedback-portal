@@ -304,8 +304,8 @@ public class ManageProfessors extends javax.swing.JFrame {
             for (int i = 1; i <= c; i++) {
                 dtm.addColumn(rsmd.getColumnName(i));
             }
-            dtm.addColumn("Edit");
-            dtm.addColumn("Delete");
+            //dtm.addColumn("Edit");
+            //dtm.addColumn("Delete");
             Object[] row;
             while (rs.next()) {
                 row = new Object[c];

@@ -7,29 +7,25 @@ package main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author jacquelinenobbe
+ * @author imanecharrafi
  */
-public class ManageDepartments extends javax.swing.JFrame {
+public class DeleteCourse extends javax.swing.JFrame {
 
     /**
-     * Creates new form ManageDepartments
+     * Creates new form DeleteCourse
      */
-    public ManageDepartments() {
+    public DeleteCourse() {
         initComponents();
     }
-
     String url = "jdbc:mysql://127.0.0.1:3306/studentFeedbackPortal";
     String uid = "SFP";
     String pw = "SFP";
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,14 +36,17 @@ public class ManageDepartments extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -57,41 +56,26 @@ public class ManageDepartments extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Student Feedback Portal || Admin || Manage Departments");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Manage Departments"));
+        jLabel1.setText("CourseID");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable1.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                jTable1ComponentAdded(evt);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
             }
         });
-        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTable1AncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Main Menu");
+        jButton1.setText("Delete");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Main Menu");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -100,23 +84,45 @@ public class ManageDepartments extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(318, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(142, 142, 142)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
+        jLabel2.getAccessibleContext().setAccessibleName("");
+
         jMenu1.setText("New...");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
 
         jMenuItem6.setText("Professor");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +147,9 @@ public class ManageDepartments extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem8);
+
+        jMenuItem9.setText("Section");
+        jMenu1.add(jMenuItem9);
 
         jMenuBar1.add(jMenu1);
 
@@ -199,65 +208,70 @@ public class ManageDepartments extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        NewDepartment frm = new NewDepartment();
-        frm.setLocation(getLocation());
-        frm.setSize(getSize());
-        setVisible(false);
-        frm.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection conn = DriverManager.getConnection(url, uid, pw);
+
+            // the mysql delete statement
+            String qry = "DELETE FROM course "
+            + "WHERE courseID = ?; ";
+           
+            // create the mysql insert preparedstatement
+            PreparedStatement prepStmt = conn.prepareStatement(qry);
+            prepStmt.setString(1, jTextField1.getText());
+
+            // execute the preparedstatement
+            prepStmt.execute();
+
+            jLabel2.setText("Course deleted! ");
+            jTextField1.setText("");
+
+        } catch (SQLException ex) {
+            System.err.println("SQLException: " + ex);
+            jLabel2.setText("SQLException: " + ex);
+        } catch (Exception e) {
+            System.err.println("Exception: " + e);
+            jLabel2.setText("Exception: " + e);
+        }           
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+         System.exit(0);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        ManageProfessors frm = new ManageProfessors();
+         ManageProfessors frm = new ManageProfessors();
         frm.setLocation(getLocation());
         frm.setSize(getSize());
         setVisible(false);
         frm.setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        NewProfessor frm = new NewProfessor();
-        frm.setLocation(getLocation());
-        frm.setSize(getSize());
-        setVisible(false);
-        frm.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        NewCourse frm = new NewCourse();
-        frm.setLocation(getLocation());
-        frm.setSize(getSize());
-        setVisible(false);
-        frm.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        ManageCourses frm = new ManageCourses();
-        frm.setLocation(getLocation());
-        frm.setSize(getSize());
-        setVisible(false);
-        frm.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         ManageDepartments frm = new ManageDepartments();
@@ -268,6 +282,42 @@ public class ManageDepartments extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        ManageCourses frm = new ManageCourses();
+        frm.setLocation(getLocation());
+        frm.setSize(getSize());
+        setVisible(false);
+        frm.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        NewProfessor frm = new NewProfessor();
+        frm.setLocation(getLocation());
+        frm.setSize(getSize());
+        setVisible(false);
+        frm.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        NewDepartment frm = new NewDepartment();
+        frm.setLocation(getLocation());
+        frm.setSize(getSize());
+        setVisible(false);
+        frm.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        NewCourse frm = new NewCourse();
+        frm.setLocation(getLocation());
+        frm.setSize(getSize());
+        setVisible(false);
+        frm.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         DeleteUser frm = new DeleteUser();
         frm.setLocation(getLocation());
@@ -277,58 +327,14 @@ public class ManageDepartments extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jTable1ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jTable1ComponentAdded
-
-    }//GEN-LAST:event_jTable1ComponentAdded
-
-    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-
-            Connection conn = DriverManager.getConnection(url, uid, pw);
-            Statement stmt = conn.createStatement();
-
-            String qry = "SELECT departmentID AS DeptID, "
-                    + "departmentName AS \"Department Name\" "
-                    + "FROM Department;";
-
-            // Result set get the result of the SQL query 
-            ResultSet rs = stmt.executeQuery(qry);
-
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int c = rsmd.getColumnCount();
-            DefaultTableModel dtm = new DefaultTableModel();
-            for (int i = 1; i <= c; i++) {
-                dtm.addColumn(rsmd.getColumnName(i));
-            }
-            //dtm.addColumn("Edit");
-            //dtm.addColumn("Delete");
-            Object[] row;
-            while (rs.next()) {
-                row = new Object[c];
-                for (int i = 0; i < c; i++) {
-                    row[i] = rs.getString(i + 1);
-                }
-                dtm.addRow(row);
-            }
-            jTable1.setModel(dtm);
-        } catch (SQLException | ClassNotFoundException ex) {
-            System.err.println("SQLException: " + ex);
-        }
-    }//GEN-LAST:event_jTable1AncestorAdded
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         SFP frm = new SFP();
         frm.setLocation(getLocation());
         frm.setSize(getSize());
         setVisible(false);
         frm.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -347,26 +353,29 @@ public class ManageDepartments extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManageDepartments.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManageDepartments.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManageDepartments.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManageDepartments.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManageDepartments().setVisible(true);
+                new DeleteCourse().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -379,8 +388,8 @@ public class ManageDepartments extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

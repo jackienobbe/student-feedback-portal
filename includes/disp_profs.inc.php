@@ -20,7 +20,7 @@ class ListItems extends RecursiveIteratorIterator {
 }
 
 // Connect to database server
-include_once 'db_connect.php';
+include 'db_connect.php';
 
 try {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
