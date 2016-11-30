@@ -261,25 +261,26 @@ INSERT INTO Enroll VALUES (71007,'CSC 3309','Fall 2016',01);
 
 # DELETE FROM Answer_Choice WHERE offeredAnswerID = 1;
 /* insert into Answer_Choice */
-INSERT INTO Answer_Choice VALUES (1,1,6);
-INSERT INTO Answer_Choice VALUES (1,3,6);
-INSERT INTO Answer_Choice VALUES (2,1,7);
-INSERT INTO Answer_Choice VALUES (2,3,7);
-INSERT INTO Answer_Choice VALUES (3,1,8);
-INSERT INTO Answer_Choice VALUES (3,3,8);
-INSERT INTO Answer_Choice VALUES (4,1,6);
-INSERT INTO Answer_Choice VALUES (4,3,6);
+#
+# INSERT INTO Answer_Choice VALUES (1,1,6);
+# INSERT INTO Answer_Choice VALUES (1,3,6);
+# INSERT INTO Answer_Choice VALUES (2,1,7);
+# INSERT INTO Answer_Choice VALUES (2,3,7);
+# INSERT INTO Answer_Choice VALUES (3,1,8);
+# INSERT INTO Answer_Choice VALUES (3,3,8);
+# INSERT INTO Answer_Choice VALUES (4,1,6);
+# INSERT INTO Answer_Choice VALUES (4,3,6);
 # Things should be 50/50 ^^
 # 100% Here vv
-INSERT INTO Answer_Choice VALUES (5,1,6);
-INSERT INTO Answer_Choice VALUES (5,3,6);
+# INSERT INTO Answer_Choice VALUES (5,1,6);
+# INSERT INTO Answer_Choice VALUES (5,3,6);
 # Trying to invoke some more fancy looking stats.
 # Same person, same section multiple answers
-INSERT INTO Answer_Choice VALUES (2,1,7);
-INSERT INTO Answer_Choice VALUES (2,1,8);
-INSERT INTO Answer_Choice VALUES (2,1,9);
-
-INSERT INTO Answer_Choice VALUES (2,3,8);
-INSERT INTO Answer_Choice VALUES (2,3,6);
+# INSERT INTO Answer_Choice VALUES (2,1,7);
+# INSERT INTO Answer_Choice VALUES (2,1,8);
+# INSERT INTO Answer_Choice VALUES (2,1,9);
+#
+# INSERT INTO Answer_Choice VALUES (2,3,8);
+# INSERT INTO Answer_Choice VALUES (2,3,6);
 
 

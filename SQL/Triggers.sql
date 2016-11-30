@@ -181,23 +181,23 @@ DELIMITER ;
 Show Triggers;
 
 
-Show Triggers;
-DROP TRIGGER IF EXISTS trig_Validate_Course_ID;
-
-DELIMITER $$
-CREATE TRIGGER trig_Validate_Course_ID BEFORE INSERT ON Course
-FOR EACH ROW
-BEGIN
-	
-	IF( NEW.courseID NOT LIKE NEW.departmentID +'%' )
-    THEN
-		SIGNAL SQLSTATE '45000' 
-		SET MESSAGE_TEXT = "Course ID must contain the Department ID associated with the course.";
-	END IF;
-	
-END;
-$$
-DELIMITER ;
+# Show Triggers;
+# DROP TRIGGER IF EXISTS trig_Validate_Course_ID;
+#
+# DELIMITER $$
+# CREATE TRIGGER trig_Validate_Course_ID BEFORE INSERT ON Course
+# FOR EACH ROW
+# BEGIN
+#
+# 	IF( NEW.courseID NOT LIKE NEW.departmentID +'%' )
+#     THEN
+# 		SIGNAL SQLSTATE '45000'
+# 		SET MESSAGE_TEXT = "Course ID must contain the Department ID associated with the course.";
+# 	END IF;
+#
+# END;
+# $$
+# DELIMITER ;
 
 
 
