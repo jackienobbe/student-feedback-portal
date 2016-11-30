@@ -401,11 +401,10 @@ public class ManageDepartments extends javax.swing.JFrame {
             
             // execute the preparedstatement
             prepStmt.execute();
-
-            //second query to rediplay the table
             
+            
+            //jTextField1.setText("");
             jLabel2.setText("Department deleted! ");
-            jTextField1.setText("");
            
         } catch (SQLException ex) {
             System.err.println("SQLException: " + ex);
@@ -414,10 +413,10 @@ public class ManageDepartments extends javax.swing.JFrame {
             System.err.println("Exception: " + e);
             jLabel2.setText("Exception: " + e);
         }     
-    //  TO DISPLAY THE UPDATED TABLE AFTER DELETIION
-    try {
+        //TO DISPLAY THE UPDATED TABLE AFTER DELETION, WE INCLUDE THE QUERY FROM THE TABLE ABOVE AGAIN
+       /* try {
             Class.forName("com.mysql.jdbc.Driver");
-
+            
             Connection conn = DriverManager.getConnection(url, uid, pw);
             Statement stmt = conn.createStatement();
 
@@ -446,8 +445,7 @@ public class ManageDepartments extends javax.swing.JFrame {
             jTable1.setModel(dtm);
         } catch (SQLException | ClassNotFoundException ex) {
             System.err.println("SQLException: " + ex);
-        }
-    
+        }*/
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
