@@ -10,5 +10,5 @@ package main;
  * @author toshiba
  */
 class rs {
-    
+
 }

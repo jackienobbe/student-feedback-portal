@@ -109,7 +109,7 @@ public class ManageCourses extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Update");
+        jButton3.setText("Edit");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -445,6 +445,7 @@ public class ManageCourses extends javax.swing.JFrame {
         setVisible(false);
         frm.setVisible(true);
         dispose();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
