@@ -12,6 +12,10 @@ class ReviewModel
         $this->db = $dbh;
     }
 
+    public function getAllQuestions() {
+        return $this->db->query('SELECT questionID, questionText FROM Question');
+    }
+
     public function getAllReviews() {
         return $this->db->query('SELECT questionID, offeredAnswerID FROM Question_Answer_Statistics_By_Section');
     }
@@ -19,7 +23,10 @@ class ReviewModel
 
 // Connect to database server
 include 'db_connect.php';
-$reviewModel = new ReviewModel($dbh);
+$questionModel = new ReviewModel($dbh);
+$questionList = $reviewModel->getAllQuestions();
+
+$questionModel = new ReviewModel($dbh);
 $reviewList = $reviewModel->getAllReviews();
 
 try {
@@ -29,12 +36,22 @@ try {
   // $statement = $dbh->query("SELECT questionID FROM Question_Answer_Statistics_By_Section");
   // $statement->bindParam(':courseID', $courseID);
   // $row = $statement->fetch(PDO::FETCH_ASSOC);
-  echo "test";
+
   echo "<ul>";
-  foreach ($reviewList as $row) {
-    echo "<li>".$row['questionID'].' - '.$row['offeredAnswerID']."</li>";
+  $questionID = '';
+  foreach ($questionList as $row) {
+    echo "<li> " . $row['questionText']." </li>\n";
+    // echo "<ul>";
+    // while($row['questionID'] == $questionID){
+    //   foreach($reviewList as $reviewRow){
+    //     echo "<li> " . $reviewRow['answerText'] . " </li> \n";
+    //   }
+    // }
+    // echo "</ul>";
+    // $questionID += 1;
   }
   echo "</ul>";
+
   $dbh = null;
 //
 }

@@ -396,6 +396,7 @@ function get_course_profs($courseID, &$professorFName, &$professorLName, &$semes
   }
 }
 
+
 /* READ COURSE
  * read_course(): reads a course profile from course table
  * returns 0 if product successfully deleted
@@ -491,45 +492,95 @@ function login($userID, $userPassword, &$error_msg)
 
 function read_course_prof_info($professorID, $courseID, &$professorFName, &$professorLName, &$courseName, &$error_msg)
 {
-   // Connect to database server
-    include 'db_connect.php';
+  // Connect to database server
+   include 'db_connect.php';
 
-    try
-    {
-      $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+   try
+   {
+     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      $sql = "SELECT professorFName, professorLName, courseName
-              FROM Professor NATURAL JOIN Section NATURAL JOIN Course
-              WHERE professorID = :professorID && courseID = :courseID;";
+     $sql = "SELECT professorFName, professorLName, courseName
+             FROM Professor NATURAL JOIN Section NATURAL JOIN Course
+             WHERE professorID = :professorID && courseID = :courseID;";
 
-      $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-      $sth->bindParam(':professorID', $professorID);
-      $sth->bindParam(':courseID', $courseID);
-      // Execute the prepared query.
-      $sth->execute();
-      $array = $sth->fetchAll(PDO::FETCH_ASSOC);
-      $dbh = null;
+     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+     $sth->bindParam(':professorID', $professorID);
+     $sth->bindParam(':courseID', $courseID);
+     // Execute the prepared query.
+     $sth->execute();
+     $array = $sth->fetchAll(PDO::FETCH_ASSOC);
+     $dbh = null;
 
-      // Check whether the submitted product already exists
-      if (count($array) == 0)
-      {
-        // no product found
-        $error_msg = "This course doesn't exist.";
-        return -1;
-      }
-      else
-      {
-        $record = $array[0];
-        $courseName = $record['courseName'];
-        $professorFName =  $record['professorFName'];
-        $professorLName =  $record['professorLName'];
-        return 0;
-      }
-    }
-    catch(PDOException $e)
-    {
-      $dbh = null;
-      header("Location: error.php?err=" . $e->getMessage());
-      exit();
-    }
+     // Check whether the submitted product already exists
+     if (count($array) == 0)
+     {
+       // no product found
+       $error_msg = "This course doesn't exist.";
+       return -1;
+     }
+     else
+     {
+       $record = $array[0];
+       $courseName = $record['courseName'];
+       $professorFName =  $record['professorFName'];
+       $professorLName =  $record['professorLName'];
+       return 0;
+     }
+   }
+   catch(PDOException $e)
+   {
+     $dbh = null;
+     header("Location: error.php?err=" . $e->getMessage());
+     exit();
+   }
   }
+
+function read_course_section_prof_info($professorID, $courseID, $sectionNum, $semester, &$professorFName, &$professorLName, &$courseName, &$error_msg)
+{
+  // Connect to database server
+   include 'db_connect.php';
+
+   try
+   {
+     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+     $sql = "SELECT professorFName, professorLName, courseName, semester
+             FROM Professor NATURAL JOIN Section NATURAL JOIN Course
+             WHERE professorID = :professorID AND courseID = :courseID
+             AND sectionNum = :sectionNum AND semester = :semester;";
+
+     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+     $sth->bindParam(':professorID', $professorID);
+     $sth->bindParam(':courseID', $courseID);
+     $sth->bindParam(':sectionNum', $sectionNum);
+     $sth->bindParam(':semester', $semester);
+
+     // Execute the prepared query.
+     $sth->execute();
+     $array = $sth->fetchAll(PDO::FETCH_ASSOC);
+     $dbh = null;
+
+     // Check whether the submitted product already exists
+     if (count($array) == 0)
+     {
+       // no product found
+       $error_msg = "This course doesn't exist.";
+       return -1;
+     }
+     else
+     {
+       $record = $array[0];
+       $semester = $record['semester'];
+       $courseName = $record['courseName'];
+       $professorFName =  $record['professorFName'];
+       $professorLName =  $record['professorLName'];
+       return 0;
+     }
+   }
+   catch(PDOException $e)
+   {
+     $dbh = null;
+     header("Location: error.php?err=" . $e->getMessage());
+     exit();
+   }
+}
