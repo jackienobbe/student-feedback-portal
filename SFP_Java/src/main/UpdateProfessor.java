@@ -5,6 +5,17 @@
  */
 package main;
 
+import java.sql.Connection;
+//import java.sql.Resultset;
+//import java.com.mysql.jdbc.Resultset;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author toshiba
@@ -17,7 +28,9 @@ public class UpdateProfessor extends javax.swing.JFrame {
     public UpdateProfessor() {
         initComponents();
     }
-
+    String url = "jdbc:mysql://127.0.0.1:3306/studentFeedbackPortal";
+    String uid = "SFP";
+    String pw = "SFP";
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,6 +52,9 @@ public class UpdateProfessor extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -67,7 +83,7 @@ public class UpdateProfessor extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Department Name");
+        jLabel4.setText("Department ID");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,6 +96,15 @@ public class UpdateProfessor extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTable1AncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Update");
@@ -96,6 +121,8 @@ public class UpdateProfessor extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Professor ID");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -104,24 +131,30 @@ public class UpdateProfessor extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
                                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextField2))
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(197, 197, 197)))
                         .addGap(0, 11, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -140,13 +173,21 @@ public class UpdateProfessor extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenu1.setText("New...");
@@ -338,12 +379,140 @@ public class UpdateProfessor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // First of all we will display all professors before the update
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection conn = DriverManager.getConnection(url, uid, pw);
+            Statement stmt = conn.createStatement();
+
+            String qry = "SELECT professorID AS \"Professor ID\" ,professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
+                    + "FROM professor NATURAL JOIN professortodepartment "
+                    + "NATURAL JOIN department";
+
+            // Result set get the result of the SQL query 
+            ResultSet rs = stmt.executeQuery(qry);
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int c = rsmd.getColumnCount();
+            DefaultTableModel dtm = new DefaultTableModel();
+            for (int i = 1; i <= c; i++) {
+                dtm.addColumn(rsmd.getColumnName(i));
+            }
+            
+            Object[] row;
+            while (rs.next()) {
+                row = new Object[c];
+                for (int i = 0; i < c; i++) {
+                    row[i] = rs.getString(i + 1);
+                }
+                dtm.addRow(row);
+            }
+            jTable1.setModel(dtm);
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.err.println("SQLException: " + ex);
+        }
+        //Update a professor
+        
+        try {
+             Class.forName("com.mysql.jdbc.Driver");
+            Connection c = DriverManager.getConnection(url, uid, pw); 
+            
+            String qry= "UPDATE professor p natural join professortodepartment ptd  SET departmentID='"+jTextField4.getText()
+               +"',professorFName='"+jTextField1.getText()+ professorLName='"
+               +jTextField2.getText()+"' WHERE p.professorID='"+jTextField3.getText()+"'AND ptd.professorID='"
+               +jTextField3.getText()
+               +"'";
+               /*"UPDATE course SET courseName='"+jTextField2.getText()+"',departmentID='"
+               +jTextField3.getText()+"' WHERE courseID='"+jTextField1.getText()
+               +"'";
+               */
+            PreparedStatement pSt = c.prepareStatement(qry);
+            pSt.execute();
+            
+            jLabel3.setText("Professor updated! ");
+            
+        } catch (SQLException ex) {
+            System.err.println("SQLException: " + ex);
+            jLabel3.setText("SQLException: " + ex);
+        } catch (Exception e) {
+            System.err.println("Exception: " + e);
+            jLabel3.setText("Exception: " + e);
+        }
+        
+        // Display all professors after updating the table
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection conn = DriverManager.getConnection(url, uid, pw);
+            Statement stmt = conn.createStatement();
+
+            String qry = "SELECT professorID AS \"Professor ID\" ,professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
+                    + "FROM professor NATURAL JOIN professortodepartment "
+                    + "NATURAL JOIN department";
+
+            // Result set get the result of the SQL query 
+            ResultSet rs = stmt.executeQuery(qry);
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int c = rsmd.getColumnCount();
+            DefaultTableModel dtm = new DefaultTableModel();
+            for (int i = 1; i <= c; i++) {
+                dtm.addColumn(rsmd.getColumnName(i));
+            }
+            
+            Object[] row;
+            while (rs.next()) {
+                row = new Object[c];
+                for (int i = 0; i < c; i++) {
+                    row[i] = rs.getString(i + 1);
+                }
+                dtm.addRow(row);
+            }
+            jTable1.setModel(dtm);
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.err.println("SQLException: " + ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // New Section
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection conn = DriverManager.getConnection(url, uid, pw);
+            Statement stmt = conn.createStatement();
+
+            String qry = "SELECT professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
+                    + "FROM professor NATURAL JOIN professortodepartment "
+                    + "NATURAL JOIN department";
+
+            // Result set get the result of the SQL query 
+            ResultSet rs = stmt.executeQuery(qry);
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int c = rsmd.getColumnCount();
+            DefaultTableModel dtm = new DefaultTableModel();
+            for (int i = 1; i <= c; i++) {
+                dtm.addColumn(rsmd.getColumnName(i));
+            }
+            
+            Object[] row;
+            while (rs.next()) {
+                row = new Object[c];
+                for (int i = 0; i < c; i++) {
+                    row[i] = rs.getString(i + 1);
+                }
+                dtm.addRow(row);
+            }
+            jTable1.setModel(dtm);
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.err.println("SQLException: " + ex);
+        }
+    }//GEN-LAST:event_jTable1AncestorAdded
 
     /**
      * @param args the command line arguments
@@ -385,7 +554,9 @@ public class UpdateProfessor extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -405,6 +576,7 @@ public class UpdateProfessor extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }
