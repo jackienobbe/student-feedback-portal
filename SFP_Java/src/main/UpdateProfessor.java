@@ -138,8 +138,8 @@ public class UpdateProfessor extends javax.swing.JFrame {
                         .addComponent(jButton2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -154,8 +154,7 @@ public class UpdateProfessor extends javax.swing.JFrame {
                                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jTextField2))
                                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(197, 197, 197)))
-                        .addGap(0, 11, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -386,7 +385,7 @@ public class UpdateProfessor extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection(url, uid, pw);
             Statement stmt = conn.createStatement();
 
-            String qry = "SELECT professorID AS \"Professor ID\" ,professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
+            String qry ="SELECT professorID AS \"Professor ID\" ,professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
                     + "FROM professor NATURAL JOIN professortodepartment "
                     + "NATURAL JOIN department";
 
@@ -419,14 +418,11 @@ public class UpdateProfessor extends javax.swing.JFrame {
             Connection c = DriverManager.getConnection(url, uid, pw); 
             
             String qry= "UPDATE professor p natural join professortodepartment ptd  SET departmentID='"+jTextField4.getText()
-               +"',professorFName='"+jTextField1.getText()+ professorLName='"
+               +"', professorFName='"+jTextField1.getText()+"',professorLName='"
                +jTextField2.getText()+"' WHERE p.professorID='"+jTextField3.getText()+"'AND ptd.professorID='"
                +jTextField3.getText()
                +"'";
-               /*"UPDATE course SET courseName='"+jTextField2.getText()+"',departmentID='"
-               +jTextField3.getText()+"' WHERE courseID='"+jTextField1.getText()
-               +"'";
-               */
+              
             PreparedStatement pSt = c.prepareStatement(qry);
             pSt.execute();
             
@@ -486,9 +482,10 @@ public class UpdateProfessor extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection(url, uid, pw);
             Statement stmt = conn.createStatement();
 
-            String qry = "SELECT professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
+            String qry = "SELECT professorID AS \"Professor ID\" ,professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
                     + "FROM professor NATURAL JOIN professortodepartment "
                     + "NATURAL JOIN department";
+
 
             // Result set get the result of the SQL query 
             ResultSet rs = stmt.executeQuery(qry);
