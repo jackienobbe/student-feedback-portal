@@ -92,4 +92,61 @@ INSERT INTO Question_Answer_Statistics_By_Section
 			VALUES (1, 'CSC 3326', 'Fall 2016', 1, 2);
 # End Loop
 
+# --------------------------------------------------------------------------
 
+
+# For trigger trig_Create_Stats_For_Course_Professor
+
+# 1) Declare cursor for
+		SELECT questionID, offeredAnswerID FROM Question_Answer
+		ORDER BY questionID;
+
+# 2) See what professor and course this survey is about
+SELECT courseID, professorID
+    FROM Survey	NATURAL JOIN Enroll
+      NATURAL JOIN Section
+	WHERE surveyID = 3;
+
+# 3)See if there is any stats for this combination already
+SELECT * FROM Question_Answer_Statistics_By_Course_And_Professor
+		WHERE courseID = 'CSC 3309'
+		AND professorID = 4;
+
+# End trigger trig_Create_Stats_For_Course_Professor
+
+
+# For trigger trig_Update_Course_Professor_Stats_Before_INSERT
+
+# 1)
+# Store data about what section the answer is about, and the answer given
+  SELECT DISTINCT courseID, professorID, questionID, offeredAnswerID
+    FROM Answer_Choice NATURAL JOIN Survey
+			NATURAL JOIN Enroll
+      NATURAL JOIN Section
+	WHERE surveyID = 3
+	AND questionID = 1
+	AND offeredAnswerID = 1;
+
+# 2)
+# Cursor will be used to calculate the percentages for the answered question.
+# This means only considering the surveys about that professor and course.
+SELECT offeredAnswerID, count(offeredAnswerID)
+FROM Answer_Choice
+WHERE questionID = 1
+      AND surveyID IN (SELECT surveyID FROM Section
+  NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice)
+GROUP BY offeredAnswerID;
+
+SELECT * FROM Section
+  NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice;
+
+DECLARE answer_choice_cursor CURSOR FOR
+		SELECT offeredAnswerID, count(offeredAnswerID)
+		FROM Answer_Choice
+		WHERE questionID = 1
+			AND surveyID IN (SELECT surveyID FROM Section
+			NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
+			WHERE sectionNum = 1
+					AND courseID = 'CSC 3326'
+					AND semester = 'Fall 2016')
+		GROUP BY offeredAnswerID;

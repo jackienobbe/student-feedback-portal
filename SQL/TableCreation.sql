@@ -17,7 +17,6 @@ DROP TABLE IF EXISTS Professor;
 DROP TABLE IF EXISTS System_User;
 DROP TABLE IF EXISTS UserType;
 
-
 -- Student, Administrator
 CREATE TABLE UserType(
   userTypeID int PRIMARY KEY,
