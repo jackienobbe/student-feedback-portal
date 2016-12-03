@@ -30,7 +30,7 @@ public class ManageCourses extends javax.swing.JFrame {
     String url = "jdbc:mysql://127.0.0.1:3306/studentFeedbackPortal";
     String uid = "SFP";
     String pw = "SFP";
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -327,10 +327,10 @@ public class ManageCourses extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jPanel1ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jPanel1ComponentAdded
-        
+
     }//GEN-LAST:event_jPanel1ComponentAdded
-                 
-    
+
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         SFP frm = new SFP();
         frm.setLocation(getLocation());
@@ -339,8 +339,8 @@ public class ManageCourses extends javax.swing.JFrame {
         frm.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-    private void jTable1ComponentAdded(java.awt.event.ContainerEvent evt) {                                       
-        
+    private void jTable1ComponentAdded(java.awt.event.ContainerEvent evt) {
+
     }
     private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
         try {
@@ -360,8 +360,8 @@ public class ManageCourses extends javax.swing.JFrame {
             for (int i = 1; i <= c; i++) {
                 dtm.addColumn(rsmd.getColumnName(i));
             }
-           // dtm.addColumn("Edit");
-           // dtm.addColumn("Delete");
+            // dtm.addColumn("Edit");
+            // dtm.addColumn("Delete");
             Object[] row;
             while (rs.next()) {
                 row = new Object[c];
@@ -378,46 +378,39 @@ public class ManageCourses extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection conn = DriverManager.getConnection(url, uid, pw);
-            
-            // the mysql delete statement
-            String qry = "DELETE FROM course "
-            + "WHERE courseID = ?; ";
-           
-            // create the mysql insert preparedstatement
-            PreparedStatement prepStmt = conn.prepareStatement(qry);
-            prepStmt.setString(1, jTextField1.getText());
-            
-            // execute the preparedstatement
-            prepStmt.execute();
-
-            //second query to rediplay the table
-            
-            jLabel2.setText("Course deleted! ");
-            jTextField1.setText("");
-           
-        } catch (SQLException ex) {
-            System.err.println("SQLException: " + ex);
-            jLabel2.setText("SQLException: " + ex);
-        } catch (Exception e) {
-            System.err.println("Exception: " + e);
-            jLabel2.setText("Exception: " + e);
-        }           
-         
-        // calling the query again to display the updated table after a course has been deleted!
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
             Connection conn = DriverManager.getConnection(url, uid, pw);
+
+            // the mysql delete statement
+            String qry = "SELECT * FROM course "
+                    + "WHERE courseID = ?; ";
+
+            // create the mysql insert preparedstatement
+            PreparedStatement prepStmt = conn.prepareStatement(qry);
+            prepStmt.setString(1, jTextField1.getText());
+            ResultSet rs = prepStmt.executeQuery();
+
+            // execute the preparedstatement
+            if (rs.next()) {
+                qry = "DELETE FROM course "
+                    + "WHERE courseID = ?; ";
+                prepStmt = conn.prepareStatement(qry);
+                prepStmt.setString(1, jTextField1.getText());
+                prepStmt.execute();
+                jLabel2.setText("Course deleted! ");
+                jTextField1.setText("");
+               try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            conn = DriverManager.getConnection(url, uid, pw);
             Statement stmt = conn.createStatement();
 
-            String qry = "SELECT CourseID , CourseName, departmentID FROM Course";
+            qry = "SELECT courseID , courseName, departmentID FROM course";
 
             // Result set get the result of the SQL query 
-            ResultSet rs = stmt.executeQuery(qry);
+            rs = stmt.executeQuery(qry);
 
             ResultSetMetaData rsmd = rs.getMetaData();
             int c = rsmd.getColumnCount();
@@ -425,8 +418,8 @@ public class ManageCourses extends javax.swing.JFrame {
             for (int i = 1; i <= c; i++) {
                 dtm.addColumn(rsmd.getColumnName(i));
             }
-           // dtm.addColumn("Edit");
-           // dtm.addColumn("Delete");
+            // dtm.addColumn("Edit");
+            // dtm.addColumn("Delete");
             Object[] row;
             while (rs.next()) {
                 row = new Object[c];
@@ -439,6 +432,19 @@ public class ManageCourses extends javax.swing.JFrame {
         } catch (SQLException | ClassNotFoundException ex) {
             System.err.println("SQLException: " + ex);
         }
+            }
+            else
+                jLabel2.setText("Wrong course ID");
+        } catch (SQLException ex) {
+            System.err.println("SQLException: " + ex);
+            jLabel2.setText("SQLException: " + ex);
+        } catch (Exception e) {
+            System.err.println("Exception: " + e);
+            jLabel2.setText("Exception: " + e);
+        }
+
+        // calling the query again to display the updated table after a course has been deleted!
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -447,7 +453,7 @@ public class ManageCourses extends javax.swing.JFrame {
         setVisible(false);
         frm.setVisible(true);
         dispose();
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
