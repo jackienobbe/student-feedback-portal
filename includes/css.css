@@ -1,4 +1,4 @@
-button {
+ul li button {
   background:none;
   color: #42b0f4;
   border:none;
@@ -9,8 +9,14 @@ button {
 
 button:hover {
   text-decoration: underline;
+  color: #42b0f4;
 }
 
 .error {
   color: #FF0000;
+}
+
+textarea {
+  height: 75px;
+  width: 600px;
 }

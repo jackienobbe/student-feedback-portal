@@ -134,22 +134,27 @@ INSERT INTO OfferedAnswer (answerText) VALUES ('Neutral');
 INSERT INTO OfferedAnswer (answerText) VALUES ('Disagree');
 INSERT INTO OfferedAnswer (answerText) VALUES ('Strongly Disagree');
 
+-- 6
+INSERT INTO OfferedAnswer (answerText) VALUES ('0');
+INSERT INTO OfferedAnswer (answerText) VALUES ('1-2');
+
+-- 8
 INSERT INTO OfferedAnswer (answerText) VALUES ('2 or less');
 INSERT INTO OfferedAnswer (answerText) VALUES ('3-4');
 INSERT INTO OfferedAnswer (answerText) VALUES ('5-6');
 INSERT INTO OfferedAnswer (answerText) VALUES ('7-8');
 INSERT INTO OfferedAnswer (answerText) VALUES ('9 or more');
 
+-- 13
 INSERT INTO OfferedAnswer (answerText) VALUES ('Lecture');
 INSERT INTO OfferedAnswer (answerText) VALUES ('External readings');
 INSERT INTO OfferedAnswer (answerText) VALUES ('Laboratory assignments/activities');
 INSERT INTO OfferedAnswer (answerText) VALUES ('Group Discussion');
 INSERT INTO OfferedAnswer (answerText) VALUES ('Other');
 
+-- 18
 INSERT INTO OfferedAnswer (answerText) VALUES ('There were no tests administered in this course');
-
-INSERT INTO OfferedAnswer (answerText) VALUES ('0');
-INSERT INTO OfferedAnswer (answerText) VALUES ('1-2');
+-- 19
 INSERT INTO OfferedAnswer (answerText) VALUES ('7 or more');
 
 INSERT INTO OfferedAnswer (answerText) VALUES ('Exams');
@@ -207,34 +212,34 @@ INSERT INTO Question_Answer VALUES (7, 3);
 INSERT INTO Question_Answer VALUES (7, 4);
 INSERT INTO Question_Answer VALUES (7, 5);
 # End of Agree/Disagree
-INSERT INTO Question_Answer VALUES (8, 6);
-INSERT INTO Question_Answer VALUES (8, 7);
 INSERT INTO Question_Answer VALUES (8, 8);
 INSERT INTO Question_Answer VALUES (8, 9);
 INSERT INTO Question_Answer VALUES (8, 10);
+INSERT INTO Question_Answer VALUES (8, 11);
+INSERT INTO Question_Answer VALUES (8, 12);
 
+INSERT INTO Question_Answer VALUES (9, 8);
+INSERT INTO Question_Answer VALUES (9, 9);
+INSERT INTO Question_Answer VALUES (9, 10);
 INSERT INTO Question_Answer VALUES (9, 11);
-INSERT INTO Question_Answer VALUES (9, 12);
-INSERT INTO Question_Answer VALUES (9, 13);
-INSERT INTO Question_Answer VALUES (9, 14);
-INSERT INTO Question_Answer VALUES (9, 15);
+INSERT INTO Question_Answer VALUES (9, 17);
 
-INSERT INTO Question_Answer VALUES (10, 11);
-INSERT INTO Question_Answer VALUES (10, 12);
 INSERT INTO Question_Answer VALUES (10, 13);
 INSERT INTO Question_Answer VALUES (10, 14);
 INSERT INTO Question_Answer VALUES (10, 15);
+INSERT INTO Question_Answer VALUES (10, 16);
+INSERT INTO Question_Answer VALUES (10, 17);
 
-INSERT INTO Question_Answer VALUES (11, 17);
-INSERT INTO Question_Answer VALUES (11, 18);
+INSERT INTO Question_Answer VALUES (11, 6);
 INSERT INTO Question_Answer VALUES (11, 7);
-INSERT INTO Question_Answer VALUES (11, 8);
+INSERT INTO Question_Answer VALUES (11, 9);
+INSERT INTO Question_Answer VALUES (11, 10);
 INSERT INTO Question_Answer VALUES (11, 19);
 
-INSERT INTO Question_Answer VALUES (12, 17);
-INSERT INTO Question_Answer VALUES (12, 18);
+INSERT INTO Question_Answer VALUES (12, 6);
 INSERT INTO Question_Answer VALUES (12, 7);
-INSERT INTO Question_Answer VALUES (12, 8);
+INSERT INTO Question_Answer VALUES (12, 9);
+INSERT INTO Question_Answer VALUES (12, 10);
 INSERT INTO Question_Answer VALUES (12, 19);
 
 INSERT INTO Question_Answer VALUES (13, 20);

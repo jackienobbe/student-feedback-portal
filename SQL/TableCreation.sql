@@ -1,3 +1,4 @@
+-- here
 DROP TABLE IF EXISTS Question_Answer_Statistics_By_Course_And_Professor;
 DROP TABLE IF EXISTS Question_Answer_Statistics_By_Section;
 DROP TABLE IF EXISTS Answer_Choice;
