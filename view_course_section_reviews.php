@@ -6,6 +6,7 @@
 <head>
   <title>sfp || view course reviews</title>
   <script type="text/JavaScript" src="js/forms.js"></script>
+  <link rel="stylesheet" type="text/css" href="includes/css.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -32,7 +33,7 @@
 
     <h3>View Reviews of Other Sections for this Course and Professor</h3>
     <?php include 'includes/disp_course_sections_for_prof.inc.php'; ?>
-    
+
     <h3>Other Courses by this Professor</h3>
     <?php include 'includes/disp_courses_of_prof.inc.php'; ?>
   </form>

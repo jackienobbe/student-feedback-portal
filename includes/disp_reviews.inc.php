@@ -22,7 +22,7 @@ class ReviewModel
 
   public function getPossibleAnswers() {
     return $this->db->query('SELECT questionID, offeredAnswerID, answerText
-      FROM OfferedAnswer NATURAL JOIN Question_Answer
+      FROM OfferedAnswer NATURAL JOIN Question_Answer 
       ORDER BY questionID ASC, offeredAnswerID ASC ');
     }
   }

@@ -51,8 +51,8 @@ class ReviewModel
 					" value=" . $reviewRow['offeredAnswerID'] . "/> </td><td> " .
 					$reviewRow['answerText'] . " </td></tr> \n";
 				}
+				echo "</table>";
 			}
-			echo "</table>";
 		}
 		echo "</ul>\n";
 		echo "<input type='submit'>";

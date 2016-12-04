@@ -1,0 +1,16 @@
+button {
+  background:none;
+  color: #42b0f4;
+  border:none;
+  padding:0;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: #FF0000;
+}
