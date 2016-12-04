@@ -12,82 +12,77 @@ class ReviewModel
     $this->db = $dbh;
   }
 
-  public function getAllQuestions() {
+  public function getChoiceQuestions() {
     return $this->db->query('SELECT questionID, questionText FROM Question WHERE answerTypeID = 2');
   }
 
-  public function getReviewForQuestion( int $inQuestionID ) {
-    // $qID = $inQuestionID;
-    // return $this->db->query('SELECT questionID, offeredAnswerID, answerText
-    //  FROM OfferedAnswer NATURAL JOIN Question_Answer WHERE questionID = $qID
-    //  ORDER BY questionID ASC, offeredAnswerID ASC '); // ->bindParam(':inQuestionID', $qID);
-    // $sql = ('SELECT questionID, offeredAnswerID, answerText
-    //   FROM OfferedAnswer NATURAL JOIN Question_Answer WHERE questionID = :qID
-    //   ORDER BY questionID ASC, offeredAnswerID ASC');
-    //
-    //   $sth = $this->db->prepare($sql);
-    //   $sth->bindParam(':qID', $qID);
-      return $sth->execute();
+  public function getTextQuestions() {
+    return $this->db->query('SELECT questionID, questionText FROM Question WHERE answerTypeID = 1');
+  }
 
+  public function getPossibleAnswers() {
+    return $this->db->query('SELECT questionID, offeredAnswerID, answerText
+      FROM OfferedAnswer NATURAL JOIN Question_Answer
+      ORDER BY questionID ASC, offeredAnswerID ASC ');
     }
+  }
+  // Connect to database server
+  include 'db_connect.php';
 
-    public function getAllReviews() {
-      return $this->db->query('SELECT questionID, offeredAnswerID, answerText
-        FROM OfferedAnswer NATURAL JOIN Question_Answer
-       ORDER BY questionID ASC, offeredAnswerID ASC ');
-      }
-    }
-    // Connect to database server
-    include 'db_connect.php';
+  $choiceQuestionModel = new ReviewModel($dbh);
+  $choiceQuestionList = $choiceQuestionModel->getChoiceQuestions();
 
-    $questionModel = new ReviewModel($dbh);
-    $questionList = $questionModel->getAllQuestions();
+  $textQuestionModel = new ReviewModel($dbh);
+  $textQuestionList = $textQuestionModel->getTextQuestions();
 
-    // $reviewModel = new ReviewModel($dbh);
-    // $reviewList = $reviewModel->getAllReviews();
+  // $reviewModel = new ReviewModel($dbh);
+  // $reviewList = $reviewModel->getAllReviews();
 
-    try {
+  try {
 
-      $courseID = $_POST['courseID'];
-      $professorID = $_POST['professorID'];
+    $courseID = $_POST['courseID'];
+    $professorID = $_POST['professorID'];
 
-      echo "<ul>\n";
-      //$reviewRowCount = $reviewList->rowCount();
-      //$questionID = '';
-      // $reviewList as $reviewRow;
+    echo "<ul>\n";
+    //$reviewRowCount = $reviewList->rowCount();
+    //$questionID = '';
+    // $reviewList as $reviewRow;
 
-      foreach( $questionList as $questionRow ) {
+    foreach( $choiceQuestionList as $choiceQuestionRow ) {
 
-        echo "<li> " . $questionRow['questionText'] ." </li>\n";
-        echo "<ul>\n";
+      echo "<li> " . $choiceQuestionRow['questionText'] ." </li>\n";
+      // echo "<ul>\n";
 
-        $reviewModel = new ReviewModel($dbh);
-        $reviewList = $reviewModel->getAllReviews();
+      $answerModel = new ReviewModel($dbh);
+      $answerList = $answerModel->getPossibleAnswers();
 
-        foreach( $reviewList as $reviewRow ){
-          // echo "<li> " . $reviewRow['answerText'] . " </li> \n";
-          if($reviewRow['questionID'] == $questionRow['questionID'])
-          {
-            echo "<li> " . $reviewRow['answerText'] . " </li> \n";
-          }
+      echo "<table>";
+      foreach( $answerList as $answerRow ){
+        if($answerRow['questionID'] == $choiceQuestionRow['questionID'])
+        {
+          echo "<tr> <td>" . $answerRow['answerText'] . " </td><td> " .
+          $answerRow['statistics'] . "</td></tr> \n";
         }
-        echo "</ul>\n";
-        unset($reviewModel);
-        unset($reviewRow);
       }
-      echo "</ul>\n";
+      echo "</table>";
+    }
+    foreach( $textQuestionList as $textQuestionRow) {
+      echo "<li> " . $textQuestionRow['questionText'] . "</li>"
+        . "<textarea name=" . $textQuestionRow['questionID'] . " style='height=65 width=450'> </textarea>";
+    }
+    echo "</ul>\n";
 
-      //   else {
-      //     echo "<p>There aren't any reviews for this course by this professor yet...</p>\n";
-      //     if(isset($_SESSION['userID']))
-      //     {
-      //       echo "<p>Taking this course this semester? <a href='#'> Enroll and add a review!</a></p>\n";
-      //     }
-      //   }
-      $dbh = null;
-      //
-    }
-    catch(PDOException $e) {
-      $dbh = null;
-      header("Location: error.php?err=" . $e->getMessage());
-    }
+    //   else {
+    //     echo "<p>There aren't any reviews for this course by this professor yet...</p>\n";
+    //     if(isset($_SESSION['userID']))
+    //     {
+    //       echo "<p>Taking this course this semester? <a href='#'> Enroll and add a review!</a></p>\n";
+    //     }
+    //   }
+    $dbh = null;
+    //
+  }
+  catch(PDOException $e) {
+    $dbh = null;
+    header("Location: error.php?err=" . $e->getMessage());
+  }

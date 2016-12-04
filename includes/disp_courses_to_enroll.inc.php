@@ -3,36 +3,36 @@
 // disp_reviews.inc.php
 //
 
-class ReviewModel
+class EnrollModel
 {
     protected $dbh;
 
-    public function __construct(PDO $dbh)
-    {
+    public function __construct(PDO $dbh){
         $this->db = $dbh;
     }
 
-    public function getAllReviews() {
-        return $this->db->query('SELECT questionID, offeredAnswerID FROM Question_Answer_Statistics_By_Section');
+    public function getCoursesToEnroll() {
+        return $this->db->query("SELECT courseID, courseName, sectionNum
+                FROM Course NATURAL JOIN Section
+                WHERE semester = 'Fall 2016';");
     }
 }
 
 // Connect to database server
 include 'db_connect.php';
-$reviewModel = new ReviewModel($dbh);
-$reviewList = $reviewModel->getAllReviews();
+
+echo "<h3>Enroll in More Classes </h3>";
+$enrollModel = new EnrollModel($dbh);
+$enrollList = $enrollModel->getCoursesToEnroll();
 
 try {
   $courseID = $_POST['courseID'];
   $professorID = $_POST['professorID'];
 
-  // $statement = $dbh->query("SELECT questionID FROM Question_Answer_Statistics_By_Section");
-  // $statement->bindParam(':courseID', $courseID);
-  // $row = $statement->fetch(PDO::FETCH_ASSOC);
-  echo "test";
   echo "<ul>";
-  foreach ($reviewList as $row) {
-    echo "<li>".$row['questionID'].' - '.$row['offeredAnswerID']."</li>";
+  foreach ($enrollList as $enrollRow) {
+    echo "<li>" . $enrollRow['courseID'] . " - " . $enrollRow['courseName'] .
+    "<button type='submit'>Enroll</button>"."</li>";
   }
   echo "</ul>";
   $dbh = null;
