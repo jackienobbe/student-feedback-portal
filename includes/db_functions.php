@@ -577,10 +577,50 @@ function read_course_section_prof_info($professorID, $courseID, $sectionNum, $se
        return 0;
      }
    }
-   catch(PDOException $e)
+     catch(PDOException $e)
    {
      $dbh = null;
      header("Location: error.php?err=" . $e->getMessage());
      exit();
    }
+}
+
+function survey_for_enrollment($userID, $courseID, $semester)
+{
+  try {
+    $sql = "SELECT surveyID
+            FROM Enroll NATURAL JOIN Survey
+            WHERE userID = :userID AND courseID = :courseID
+            AND semester = :semester;";
+
+    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    $sth->bindParam(':userID', $userID);
+    $sth->bindParam(':courseID', $courseID);
+    $sth->bindParam(':semester', $semester);
+
+    // Execute the prepared query.
+    $sth->execute();
+    $array = $sth->fetchAll(PDO::FETCH_ASSOC);
+    $dbh = null;
+
+    // Check whether the submitted product already exists
+    if (count($array) == 0)
+    {
+      // no product found
+      $error_msg = "This enrollment does not have a survey yet";
+      return -1;
+    }
+    else
+    {
+      $record = $array[0];
+      $surveyID = $record['surveyID'];
+      return 0;
+    }
+
+  } catch (PDOException $e) {
+    $dbh = null;
+    header("Location: error.php?err=" . $e->getMessage());
+    exit();
+  }
+
 }
