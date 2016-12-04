@@ -22,9 +22,9 @@
     FROM Answer_Choice NATURAL JOIN Survey
 			NATURAL JOIN Enroll
       NATURAL JOIN Section
-	WHERE surveyID = 2
+	WHERE surveyID = 3
 	AND questionID = 1
-	AND offeredAnswerID = 2;
+	AND offeredAnswerID = 1;
 
 # 2) declare cursor for this query
 SELECT offeredAnswerID, count(offeredAnswerID)
@@ -33,7 +33,7 @@ SELECT offeredAnswerID, count(offeredAnswerID)
 			AND surveyID IN (SELECT surveyID FROM Section
 			NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
 			WHERE sectionNum = 1
-					AND courseID = 'CSC 3326'
+					AND courseID = 'CSC 3309'
 					AND semester = 'Fall 2016')
 		GROUP BY offeredAnswerID;
 
@@ -118,7 +118,7 @@ SELECT * FROM Question_Answer_Statistics_By_Course_And_Professor
 # For trigger trig_Update_Course_Professor_Stats_Before_INSERT
 
 # 1)
-# Store data about what section the answer is about, and the answer given
+# Store data about what course and professor the answer is about, and the answer given
   SELECT DISTINCT courseID, professorID, questionID, offeredAnswerID
     FROM Answer_Choice NATURAL JOIN Survey
 			NATURAL JOIN Enroll
@@ -137,16 +137,41 @@ WHERE questionID = 1
   NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice)
 GROUP BY offeredAnswerID;
 
-SELECT * FROM Section
-  NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice;
+SELECT DISTINCT surveyID FROM Section
+			NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
+			WHERE courseID = 'CSC 3309'
+					AND professorID = 4;
 
-DECLARE answer_choice_cursor CURSOR FOR
-		SELECT offeredAnswerID, count(offeredAnswerID)
+SELECT offeredAnswerID, count(offeredAnswerID)
 		FROM Answer_Choice
 		WHERE questionID = 1
 			AND surveyID IN (SELECT surveyID FROM Section
 			NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
-			WHERE sectionNum = 1
-					AND courseID = 'CSC 3326'
-					AND semester = 'Fall 2016')
+			WHERE courseID = 'CSC 3309'
+					AND professorID = 4)
 		GROUP BY offeredAnswerID;
+
+
+# 3)
+# Calculate the number of answers for the question about the course and professor
+	SELECT count(questionID)
+   FROM Answer_Choice
+   WHERE questionID = 1
+         AND surveyID IN (SELECT DISTINCT surveyID FROM Section
+     NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
+   WHERE professorID = 4
+         AND courseID = 'CSC 3309'));
+
+SELECT DISTINCT surveyID FROM Section
+     NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
+   WHERE professorID = 4
+         AND courseID = 'CSC 3309';
+
+# 4)
+# Update the percentages
+UPDATE Question_Answer_Statistics_By_Course_And_Professor
+			SET percent = ((1/3) * 100.0)
+			WHERE courseID = 'CSC 3309'
+				AND professorID = 4
+				AND questionID = 1
+				AND offeredAnswerID = 1;

@@ -144,101 +144,91 @@ DELIMITER ;
 
 
 
-
-/* Trigger on table answer_choice that updates Question_Answer_Statistics_By_Section  */
-DELIMITER $$
-CREATE TRIGGER trig_Update_Section_Stats_After_INSERT AFTER INSERT ON Answer_Choice
-FOR EACH ROW
-BEGIN
-
-	DECLARE $totalAnswerCount int;
-	DECLARE $currentOfferedAnswerCount int;
-	DECLARE $currentOfferedAnswer int;
-	DECLARE $offeredAnswerID int;
-	DECLARE $questionID int;
-	DECLARE $sectionNum int;
-	DECLARE $courseID varchar(10);
-	DECLARE $semester varchar(20);
-	DECLARE $Finished int DEFAULT 0;
-
-  # Cursor will be used to calculate the percentages for the answered question.
-	# This means only considering the surveys about that section.
-	DECLARE answer_choice_cursor CURSOR FOR
-		SELECT offeredAnswerID, count(offeredAnswerID)
-		FROM Answer_Choice
-		WHERE questionID = NEW.questionID
-			AND surveyID IN (SELECT surveyID FROM Section
-			NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
-			WHERE sectionNum = $sectionNum
-					AND courseID = $courseID
-					AND semester = $semester)
-		GROUP BY offeredAnswerID;
-
-
-	DECLARE CONTINUE HANDLER
-	FOR NOT FOUND SET $Finished = 1;
-
-	# Store data about what section the answer is about, and the answer given
-  SELECT DISTINCT sectionNum, courseID, semester, questionID, offeredAnswerID
-		INTO $sectionNum, $courseID, $semester, $questionID, $offeredAnswerID
-    FROM Answer_Choice NATURAL JOIN Survey
-			NATURAL JOIN Enroll
-      NATURAL JOIN Section
-	WHERE surveyID = NEW.surveyID
-	AND questionID = NEW.questionID
-	AND offeredAnswerID = NEW.offeredAnswerID;
-
-
-	# Calculate the number of answers for the question about the section
-	SET $totalAnswerCount =
-  (SELECT count(questionID)
-   FROM Answer_Choice
-   WHERE questionID = NEW.questionID
-         AND surveyID IN (SELECT surveyID FROM Section
-     NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
-   WHERE sectionNum = $sectionNum
-         AND courseID = $courseID
-         AND semester = $semester));
-
-
-	OPEN answer_choice_cursor;
-
-	AnswerStat: LOOP
-
-		FETCH answer_choice_cursor INTO $currentOfferedAnswer, $currentOfferedAnswerCount;
-
-		IF $Finished = 1 THEN
-			LEAVE AnswerStat;
-		END IF;
-
-		UPDATE Question_Answer_Statistics_By_Section
-			SET percent = (($currentOfferedAnswerCount/$totalAnswerCount) * 100.0)
-			WHERE sectionNum = $sectionNum
-				AND courseID = $courseID
-				AND semester = $semester
-				AND questionID = $questionID
-				AND offeredAnswerID = $currentOfferedAnswer;
-
-		END LOOP AnswerStat;
-
-		CLOSE answer_choice_cursor;
-
-END;
-$$
-DELIMITER ;
-
-
-
-
-
-
-
 SHOW TRIGGERS;
-DROP TRIGGER IF EXISTS trig_Create_Stats_For_Course_Professor;
+DROP TRIGGER IF EXISTS trig_Update_Stats_After_INSERT;
+
 DELIMITER $$
-CREATE TRIGGER trig_Update_Course_Professor_Stats_Before_INSERT BEFORE INSERT ON Answer_Choice
+CREATE TRIGGER trig_Update_Stats_After_INSERT AFTER INSERT ON Answer_Choice
 FOR EACH ROW
 BEGIN
+
+
+  # For Section
+  BLOCK1: BEGIN
+
+    DECLARE $totalAnswerCount1 int;
+    DECLARE $currentOfferedAnswerCount1 int;
+    DECLARE $currentOfferedAnswer1 int;
+    DECLARE $offeredAnswerID1 int;
+    DECLARE $questionID1 int;
+    DECLARE $sectionNum1 int;
+    DECLARE $courseID1 varchar(10);
+    DECLARE $semester1 varchar(20);
+    DECLARE $Finished1 int DEFAULT 0;
+
+    # Cursor will be used to calculate the percentages for the answered question.
+    # This means only considering the surveys about that section.
+    DECLARE answer_choice_cursor1 CURSOR FOR
+      SELECT offeredAnswerID, count(offeredAnswerID)
+      FROM Answer_Choice
+      WHERE questionID = NEW.questionID
+            AND surveyID IN (SELECT surveyID FROM Section
+        NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
+      WHERE sectionNum = $sectionNum1
+            AND courseID = $courseID1
+            AND semester = $semester1)
+      GROUP BY offeredAnswerID;
+
+    DECLARE CONTINUE HANDLER
+    FOR NOT FOUND SET $Finished1 = 1;
+
+    # Store data about what section the answer is about, and the answer given
+    SELECT DISTINCT sectionNum, courseID, semester, questionID, offeredAnswerID
+    INTO $sectionNum1, $courseID1, $semester1, $questionID1, $offeredAnswerID1
+    FROM Answer_Choice NATURAL JOIN Survey
+      NATURAL JOIN Enroll
+      NATURAL JOIN Section
+    WHERE surveyID = NEW.surveyID
+          AND questionID = NEW.questionID
+          AND offeredAnswerID = NEW.offeredAnswerID;
+
+
+    # Calculate the number of answers for the question about the section
+    SET $totalAnswerCount1 =
+    (SELECT count(questionID)
+     FROM Answer_Choice
+     WHERE questionID = NEW.questionID
+           AND surveyID IN (SELECT surveyID FROM Section
+       NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
+     WHERE sectionNum = $sectionNum1
+           AND courseID = $courseID1
+           AND semester = $semester1));
+
+    OPEN answer_choice_cursor1;
+    AnswerStat: LOOP
+
+      FETCH answer_choice_cursor1 INTO $currentOfferedAnswer1, $currentOfferedAnswerCount1;
+
+      IF $Finished1 = 1 THEN
+        LEAVE AnswerStat;
+      END IF;
+
+      UPDATE Question_Answer_Statistics_By_Section
+      SET percent = (($currentOfferedAnswerCount1/$totalAnswerCount1) * 100.0)
+      WHERE sectionNum = $sectionNum1
+            AND courseID = $courseID1
+            AND semester = $semester1
+            AND questionID = $questionID1
+            AND offeredAnswerID = $currentOfferedAnswer1;
+
+    END LOOP AnswerStat;
+    CLOSE answer_choice_cursor1;
+
+  END BLOCK1;
+
+  # For Class and Professor
+  BLOCK2: BEGIN
+
 
 	DECLARE $totalAnswerCount int;
 	DECLARE $currentOfferedAnswerCount int;
@@ -256,11 +246,10 @@ BEGIN
 		SELECT offeredAnswerID, count(offeredAnswerID)
 		FROM Answer_Choice
 		WHERE questionID = NEW.questionID
-			AND surveyID IN (SELECT surveyID FROM Section
+					AND surveyID IN (SELECT surveyID FROM Section
 			NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
-			WHERE sectionNum = $sectionNum
-					AND courseID = $courseID
-					AND semester = $semester)
+		WHERE courseID = $courseID
+					AND professorID = $professorID)
 		GROUP BY offeredAnswerID;
 
 
@@ -278,19 +267,15 @@ BEGIN
         AND offeredAnswerID = NEW.offeredAnswerID;
 
 
-	# Calculate the number of answers for the question about the section
+	# Calculate the number of answers for the question about the course and professor
 	SET $totalAnswerCount =
   (SELECT count(questionID)
    FROM Answer_Choice
    WHERE questionID = NEW.questionID
-         AND surveyID IN (SELECT surveyID FROM Section
+         AND surveyID IN (SELECT DISTINCT surveyID FROM Section
      NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Choice
-   WHERE sectionNum = $sectionNum
-         AND courseID = $courseID
-         AND semester = $semester));
-  # Add one, because this is before insert
-  SET $totalAnswerCount = $totalAnswerCount + 1;
-
+   WHERE professorID = $professorID
+         AND courseID = $courseID ));
 
 	OPEN answer_choice_cursor;
 
@@ -302,25 +287,24 @@ BEGIN
 			LEAVE AnswerStat;
 		END IF;
 
-    # If current offered =  offeredAnswer, then add one to the count, because this is before insert
-		UPDATE Question_Answer_Statistics_By_Section
+      UPDATE Question_Answer_Statistics_By_Course_And_Professor
 			SET percent = (($currentOfferedAnswerCount/$totalAnswerCount) * 100.0)
-			WHERE sectionNum = $sectionNum
-				AND courseID = $courseID
-				AND semester = $semester
+			WHERE courseID = $courseID
+				AND professorID = $professorID
 				AND questionID = $questionID
 				AND offeredAnswerID = $currentOfferedAnswer;
 
 		END LOOP AnswerStat;
-
 		CLOSE answer_choice_cursor;
+
+  END BLOCK2;
 
 END;
 $$
 DELIMITER ;
 
 
-
+SHOW TRIGGERS;
 
 # Show Triggers;
 # DROP TRIGGER IF EXISTS trig_Validate_Course_ID;

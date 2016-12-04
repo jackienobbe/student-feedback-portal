@@ -94,6 +94,9 @@ INSERT INTO Section VALUES (01,'CSC 3309','Fall 2016',4);
 INSERT INTO Section VALUES (01,'CSC 3351','Fall 2016',2);
 INSERT INTO Section VALUES (01,'CSC 3325','Fall 2016',12);
 
+INSERT INTO Section VALUES (01,'CSC 3309','Fall 2015',4);
+
+
 INSERT INTO Section VALUES (01,'CSC 3326','Spring 2015',3);
 INSERT INTO Section VALUES (01,'CSC 2302','Fall 2016',5);
 
@@ -266,6 +269,8 @@ INSERT INTO Enroll VALUES (71007,'CSC 3309','Fall 2016',01);
 # Imane
 INSERT INTO Enroll VALUES (59609,'CSC 3325','Fall 2016',01);
 INSERT INTO Enroll VALUES (59609,'CSC 3326','Fall 2016',01);
+# Fake
+INSERT INTO Enroll VALUES (59609,'CSC 3309','Fall 2015',01);
 
 
 /* insert into Survey */
@@ -310,3 +315,37 @@ INSERT INTO Answer_Choice VALUES (3,11,17);
 INSERT INTO Answer_Choice VALUES (3,12,17);
 INSERT INTO Answer_Choice VALUES (3,13,20);
 INSERT INTO Answer_Choice VALUES (3,14,20);
+
+# Jackie, Artificial Intelligence
+INSERT INTO Answer_Choice VALUES (6,1,2);
+INSERT INTO Answer_Choice VALUES (6,2,2);
+INSERT INTO Answer_Choice VALUES (6,3,2);
+INSERT INTO Answer_Choice VALUES (6,4,2);
+INSERT INTO Answer_Choice VALUES (6,5,2);
+INSERT INTO Answer_Choice VALUES (6,6,2);
+INSERT INTO Answer_Choice VALUES (6,7,2);
+
+INSERT INTO Answer_Choice VALUES (6,8,6);
+INSERT INTO Answer_Choice VALUES (6,9,11);
+INSERT INTO Answer_Choice VALUES (6,10,11);
+INSERT INTO Answer_Choice VALUES (6,11,17);
+INSERT INTO Answer_Choice VALUES (6,12,17);
+INSERT INTO Answer_Choice VALUES (6,13,20);
+INSERT INTO Answer_Choice VALUES (6,14,20);
+
+# Imane, Fake AI class in the past
+INSERT INTO Answer_Choice VALUES (9,1,3);
+INSERT INTO Answer_Choice VALUES (9,2,3);
+INSERT INTO Answer_Choice VALUES (9,3,3);
+INSERT INTO Answer_Choice VALUES (9,4,3);
+INSERT INTO Answer_Choice VALUES (9,5,3);
+INSERT INTO Answer_Choice VALUES (9,6,3);
+INSERT INTO Answer_Choice VALUES (9,7,3);
+
+INSERT INTO Answer_Choice VALUES (9,8,6);
+INSERT INTO Answer_Choice VALUES (9,9,11);
+INSERT INTO Answer_Choice VALUES (9,10,11);
+INSERT INTO Answer_Choice VALUES (9,11,17);
+INSERT INTO Answer_Choice VALUES (9,12,17);
+INSERT INTO Answer_Choice VALUES (9,13,20);
+INSERT INTO Answer_Choice VALUES (9,14,20);
