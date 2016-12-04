@@ -175,3 +175,5 @@ UPDATE Question_Answer_Statistics_By_Course_And_Professor
 				AND professorID = 4
 				AND questionID = 1
 				AND offeredAnswerID = 1;
+
+DELETE FROM Professor WHERE professorFName = 'your';
