@@ -24,18 +24,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   if ($rc == 0)
   {
     // Product successfully created; reset fields
-    //echo "<script type='text/javascript'>alert('Account successfully created!');</script>";
-    //$userID = $userPassword =  $userFName = $userFName = $major = $currentYear = "";
-    header("Location: ../login.php");
+    $newUserID = $userPassword =  $userFName = $userLName = $major = $currentYear = "";
+    header('Location: ../login.php');
+
   }
   else
   {
-    echo $rc . "HAHAHA NOPE"; // "<script type='text/javascript'>alert('Account was not successfully created.');</script>";
+    $userPassword = "";
+    //echo $rc; // "<script type='text/javascript'>alert('Account was not successfully created.');</script>";
   }
 }
 else
 {
   // Set the following variables to initialize
   // the form fields (when the page is visited).
-  $newUserID = $userPassword =  $userFName = $userLName = $major = "";
+  $userPassword =  "";
 }

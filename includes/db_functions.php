@@ -478,8 +478,8 @@ function login($userID, $userPassword, &$error_msg)
     }
     else
     {
-       $record = $array[0];
-       return 0;
+      $userID = $record['userID'];
+      return 0;
     }
   }
   catch(PDOException $e)

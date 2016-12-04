@@ -10,16 +10,15 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-  <style>.error {color: #FF0000;}</style>
 </head>
 <body>
   <?php include("header.php"); ?>
 
 <div class="container-fluid">
-  <form action="includes/login.inc.php" method="POST">
-    <?php if(isset($_SESSION['userID'])){ echo $_SESSION['userID'];} ?>
-    <?php include 'includes/db_functions.php'; ?>
+  <form method="POST">
+    <!-- php if(isset($_SESSION['userID'])){ echo $_SESSION['userID'];} ?> -->
+    <?php include 'includes/db_functions.php';
+          include 'includes/login.inc.php'; ?>
 
     <h2>Login</h2>
     <p><span class="error"><?php echo $error_msg;?></span></p>
