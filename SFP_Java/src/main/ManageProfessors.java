@@ -378,34 +378,79 @@ public class ManageProfessors extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            
+
             Connection conn = DriverManager.getConnection(url, uid, pw);
-            
+
             // the mysql delete statement
-            String qry = "DELETE FROM professor "
-            + "WHERE professorLName = ?; ";
-           
-            // create the mysql insert preparedstatement
+            String qry ="SELECT professorID AS \"Professor ID\" ,professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
+                    + "FROM professor NATURAL JOIN professortodepartment "
+                    + "NATURAL JOIN department "
+                     + "WHERE professorLName = ?;";
+
+            // create the prepared statement
+            
             PreparedStatement prepStmt = conn.prepareStatement(qry);
             prepStmt.setString(1, jTextField1.getText());
-            
+            ResultSet rs = prepStmt.executeQuery();
+
             // execute the preparedstatement
-            prepStmt.execute();
+            if (rs.next()) {
+                 qry = "DELETE FROM professor "
+                    + "WHERE professorLName = ?; ";
+                prepStmt = conn.prepareStatement(qry);
+                prepStmt.setString(1, jTextField1.getText());
+                prepStmt.execute();
+                jLabel2.setText("Professor deleted! ");
+                jTextField1.setText("");
+               try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            conn = DriverManager.getConnection(url, uid, pw);
+            Statement stmt = conn.createStatement();
+
+            qry = "SELECT professorID AS \"Professor ID\" ,professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
+                    + "FROM professor NATURAL JOIN professortodepartment "
+                    + "NATURAL JOIN department";
+
+            // Result set get the result of the SQL query 
+            rs = stmt.executeQuery(qry);
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int c = rsmd.getColumnCount();
+            DefaultTableModel dtm = new DefaultTableModel();
+            for (int i = 1; i <= c; i++) {
+                dtm.addColumn(rsmd.getColumnName(i));
+            }
             
-            jLabel2.setText("Professor deleted! ");
-            jTextField1.setText("");
-           
-        } catch (SQLException ex) {
+            Object[] row;
+            while (rs.next()) {
+                row = new Object[c];
+                for (int i = 0; i < c; i++) {
+                    row[i] = rs.getString(i + 1);
+                }
+                dtm.addRow(row);
+            }
+            jTable1.setModel(dtm);
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.err.println("SQLException: " + ex);
+        }
+            }
+            
+            else
+                jLabel2.setText("Invalid last name!");
+        
+        }catch (SQLException ex) {
             System.err.println("SQLException: " + ex);
             jLabel2.setText("SQLException: " + ex);
-        } catch (Exception e) {
+        }catch (Exception e) {
             System.err.println("Exception: " + e);
             jLabel2.setText("Exception: " + e);
         }           
-         try {
+        
+        /* try {
             Class.forName("com.mysql.jdbc.Driver");
 
             Connection conn = DriverManager.getConnection(url, uid, pw);
@@ -436,7 +481,7 @@ public class ManageProfessors extends javax.swing.JFrame {
             jTable1.setModel(dtm);
         } catch (SQLException | ClassNotFoundException ex) {
             System.err.println("SQLException: " + ex);
-        }
+        }*/
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

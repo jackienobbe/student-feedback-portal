@@ -118,6 +118,12 @@ public class ManageCourses extends javax.swing.JFrame {
 
         jLabel1.setText("Course ID");
 
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -387,7 +393,8 @@ public class ManageCourses extends javax.swing.JFrame {
             String qry = "SELECT * FROM course "
                     + "WHERE courseID = ?; ";
 
-            // create the mysql insert preparedstatement
+            // create the mysql delete preparedstatement
+            
             PreparedStatement prepStmt = conn.prepareStatement(qry);
             prepStmt.setString(1, jTextField1.getText());
             ResultSet rs = prepStmt.executeQuery();
@@ -418,8 +425,7 @@ public class ManageCourses extends javax.swing.JFrame {
             for (int i = 1; i <= c; i++) {
                 dtm.addColumn(rsmd.getColumnName(i));
             }
-            // dtm.addColumn("Edit");
-            // dtm.addColumn("Delete");
+            
             Object[] row;
             while (rs.next()) {
                 row = new Object[c];
@@ -433,8 +439,10 @@ public class ManageCourses extends javax.swing.JFrame {
             System.err.println("SQLException: " + ex);
         }
             }
+            
             else
-                jLabel2.setText("Wrong course ID");
+                jLabel2.setText("Invalid course ID!");
+            
         } catch (SQLException ex) {
             System.err.println("SQLException: " + ex);
             jLabel2.setText("SQLException: " + ex);
@@ -455,6 +463,10 @@ public class ManageCourses extends javax.swing.JFrame {
         dispose();
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
