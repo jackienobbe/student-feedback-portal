@@ -322,7 +322,7 @@ public class SFP extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ManageDepartments frm = new ManageDepartments();
+        NewDepartment frm = new NewDepartment();
         frm.setLocation(getLocation());
         frm.setSize(getSize());
         setVisible(false);

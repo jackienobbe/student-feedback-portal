@@ -5,10 +5,11 @@
  */
 package main;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,11 +22,40 @@ public class NewProfessor extends javax.swing.JFrame {
      */
     public NewProfessor() {
         initComponents();
+        
+     
+     try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection conn = DriverManager.getConnection(url, uid, pw);
+            Statement stmt = conn.createStatement();
+
+            String qry = "SELECT departmentID "
+                  
+                    + "FROM Department;";
+
+            // Result set get the result of the SQL query 
+            ResultSet rs = stmt.executeQuery(qry);
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int c = rsmd.getColumnCount();
+            DefaultListModel<String> dtm = new DefaultListModel();
+            
+            while (rs.next()) {
+                String s = rs.getString("departmentID");
+                dtm.addElement(s);
+            }
+            jList1.setModel(dtm);
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.err.println("SQLException: " + ex);
+        }                    
+        
     }
 
     String url = "jdbc:mysql://127.0.0.1:3306/studentFeedbackPortal";
     String uid = "SFP";
     String pw = "SFP";
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -252,20 +282,37 @@ public class NewProfessor extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection(url, uid, pw);
 
             // the mysql insert statement
-            String qry = "INSERT INTO Professor "
-                    + " (ProfessorFName, ProfessorLName)"
+            String qry = "INSERT INTO professor "
+                    + " (professorFName, professorLName)"
                     + " VALUES (?, ?); ";
-            //+ "INSERT INTO ProfessorToDepartment "
-            //+ "(ProfessorID, DepartmentID);";
 
             // create the mysql insert preparedstatement
             PreparedStatement prepStmt = conn.prepareStatement(qry);
             prepStmt.setString(1, jTextField1.getText());
             prepStmt.setString(2, jTextField2.getText());
-
             // execute the preparedstatement
             prepStmt.execute();
 
+            qry = "SELECT professorID "
+                    + "from professor "
+                    + "order by professorID DESC LIMIT 1;";
+
+            prepStmt = conn.prepareStatement(qry);
+            ResultSet rs = prepStmt.executeQuery();
+            rs.next();
+            String profID = rs.getString("professorID");
+            List<String> values = jList1.getSelectedValuesList();
+            Iterator<String> it = values.iterator();
+            while (it.hasNext()) {
+                qry = "INSERT INTO professortodepartment "
+                        + " (departmentID, professorID)"
+                        + " VALUES (?, ?); ";
+                String str = it.next();
+                prepStmt = conn.prepareStatement(qry);
+                prepStmt.setString(1, str);
+                prepStmt.setString(2, profID);
+                prepStmt.execute();
+            }
             jLabel4.setText("Success! ");
             jTextField1.setText("");
             jTextField2.setText("");
