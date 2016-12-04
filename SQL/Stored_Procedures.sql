@@ -180,3 +180,20 @@ BEGIN
 END;
 $$
 DELIMITER ;
+
+-- ---------------------------------------------------------------
+DROP PROCEDURE IF EXISTS sp_course_sections_taught_by_professor;
+
+DELIMITER $$
+CREATE PROCEDURE sp_course_sections_taught_by_professor(IN $professorID int, $courseID varchar(10))
+BEGIN
+
+	SELECT courseID, sectionNum, courseName, semester
+    FROM Section NATURAL JOIN Course
+	WHERE professorID = $professorID && courseID = $courseID;
+
+END;
+$$
+DELIMITER ;
+
+CALL sp_courses_taught_by_professor(1);

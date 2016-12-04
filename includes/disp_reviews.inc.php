@@ -5,70 +5,84 @@
 
 class ReviewModel
 {
-    protected $dbh;
+  protected $dbh;
 
-    public function __construct(PDO $dbh)
-    {
-        $this->db = $dbh;
-    }
-
-    public function getAllReviews() {
-        return $this->db->query('SELECT questionID, offeredAnswerID FROM Question_Answer_Statistics_By_Section');
-    }
-}
-
-
-// Connect to database server
-include 'db_connect.php';
-$reviewModel = new ReviewModel($dbh);
-$reviewList = $reviewModel->getAllReviews();
-
-try {
-  $courseID = $_POST['courseID'];
-  $professorID = $_POST['professorID'];
-
-  // $statement = $dbh->query("SELECT questionID FROM Question_Answer_Statistics_By_Section");
-  // $statement->bindParam(':courseID', $courseID);
-  // $row = $statement->fetch(PDO::FETCH_ASSOC);
-  echo "test";
-  echo "<ul>";
-  foreach ($reviewList as $row) {
-    echo "<li>".$row['questionID'].' - '.$row['offeredAnswerID']."</li>";
+  public function __construct(PDO $dbh)
+  {
+    $this->db = $dbh;
   }
-  echo "</ul>";
 
+  public function getChoiceQuestions() {
+    return $this->db->query('SELECT questionID, questionText FROM Question WHERE answerTypeID = 2');
+  }
 
+  public function getTextQuestions() {
+    return $this->db->query('SELECT questionID, questionText FROM Question WHERE answerTypeID = 1');
+  }
 
+  public function getPossibleAnswers() {
+    return $this->db->query('SELECT questionID, offeredAnswerID, answerText
+      FROM OfferedAnswer NATURAL JOIN Question_Answer
+      ORDER BY questionID ASC, offeredAnswerID ASC ');
+    }
+  }
+  // Connect to database server
+  include 'db_connect.php';
 
+  $choiceQuestionModel = new ReviewModel($dbh);
+  $choiceQuestionList = $choiceQuestionModel->getChoiceQuestions();
 
-  // $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  // $sql = "SELECT question, courseName FROM Course WHERE courseID = :courseID;";
-  // $sth = $dbh->prepare($sql);
-  // $sth->bindParam(':courseID', $courseID);
-  // $sth->execute();
-  // $result = $sth->setFetchMode(PDO::FETCH_ASSOC);
+  $textQuestionModel = new ReviewModel($dbh);
+  $textQuestionList = $textQuestionModel->getTextQuestions();
 
-//   if(count($result) > 1)
-//   {
-//     echo "<table>\n";
-//
-//     // set the resulting array to associative
-//     foreach(new ListItems(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
-//       echo $v . " ";
-//     }
-//     echo "</table>\n";
-//   }
-//   else {
-//     echo "<p>There aren't any reviews for this course by this professor yet...</p>\n";
-//     if(isset($_SESSION['userID']))
-//     {
-//       echo "<p>Taking this course this semester? <a href='#'> Enroll and add a review!</a></p>\n";
-//     }
-//   }
-  $dbh = null;
-//
-}
-catch(PDOException $e) {
-  $dbh = null;
-  header("Location: error.php?err=" . $e->getMessage());
-}
+  // $reviewModel = new ReviewModel($dbh);
+  // $reviewList = $reviewModel->getAllReviews();
+
+  try {
+
+    $courseID = $_POST['courseID'];
+    $professorID = $_POST['professorID'];
+
+    echo "<ul>\n";
+    //$reviewRowCount = $reviewList->rowCount();
+    //$questionID = '';
+    // $reviewList as $reviewRow;
+
+    foreach( $choiceQuestionList as $choiceQuestionRow ) {
+
+      echo "<li> " . $choiceQuestionRow['questionText'] ." </li>\n";
+      // echo "<ul>\n";
+
+      $answerModel = new ReviewModel($dbh);
+      $answerList = $answerModel->getPossibleAnswers();
+
+      echo "<table>";
+      foreach( $answerList as $answerRow ){
+        if($answerRow['questionID'] == $choiceQuestionRow['questionID'])
+        {
+          echo "<tr> <td>" . $answerRow['answerText'] . " </td><td> " .
+          $answerRow['statistics'] . "</td></tr> \n";
+        }
+      }
+      echo "</table>";
+    }
+    foreach( $textQuestionList as $textQuestionRow) {
+      echo "<li> " . $textQuestionRow['questionText'] . "</li>"
+        . "<textarea name=" . $textQuestionRow['questionID'] . " style='height=65 width=450'> </textarea>";
+    }
+    echo "</ul>\n";
+
+    //   else {
+    //     echo "<p>There aren't any reviews for this course by this professor yet...</p>\n";
+    //     if(isset($_SESSION['userID']))
+    //     {
+    //       echo "<p>Taking this course this semester? <a href='#'> Enroll and add a review!</a></p>\n";
+    //     }
+    //   }
+    $dbh = null;
+    //
+  }
+  catch(PDOException $e) {
+    $dbh = null;
+    header("Location: error.php?err=" . $e->getMessage());
+  }
