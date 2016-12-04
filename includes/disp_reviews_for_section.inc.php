@@ -68,7 +68,7 @@ class ReviewModel
     }
     foreach( $textQuestionList as $textQuestionRow) {
       echo "<li> " . $textQuestionRow['questionText'] . "</li>"
-        . "<textarea name=" . $textQuestionRow['questionID'] . "> </textarea>";
+        . "<textarea name=" . $textQuestionRow['questionID'] . " style='height=65 width=450'> </textarea>";
     }
     echo "</ul>\n";
 

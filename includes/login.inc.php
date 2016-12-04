@@ -20,36 +20,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $currSemester = "Fall 2016";
     //$ref = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
 
-    //echo $userID . "\n";
-    //echo $userPassword . "\n";
-
-    //$rc = login($userID, $userPassword, $error_msg);
     try {
-      $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $userID = $_POST["userID"];
+      $userPassword = $_POST["userPassword"];
 
-      $sql = "SELECT userID FROM System_User
-      WHERE userID = :userID && userPassword = :userPassword;";
+      // run sql query
+      $rc = login($userID, $userPassword, $error_msg);
 
-      $sth = $dbh->prepare($sql); //, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-
-      $sth->bindParam(':userID', $userID);
-      $sth->bindParam(':userPassword', $userPassword);
-
-      // Execute the prepared query.
-      $sth->execute();
-      //$array =
-      $sth->fetchAll(PDO::FETCH_ASSOC);
-
-      if (count($sth) != 1)
+      if ($rc == 0)
       {
-        // error
-        header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
-      }
-      else {
+        // Product successfully created; reset fields
         $_SESSION['userID'] = $userID;
         $_SESSION['currentSemester'] = $currSemester;
-        echo $_SESSION['userID'];
-        header("Location: ../welcome.php");
+        header("Location: error.php");
+      }
+      else
+      {
+        $userPassword = "";
       }
     }
     catch(PDOException $e)

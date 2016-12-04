@@ -23,7 +23,6 @@ class ReviewModel
 		}
 	}
 
-
 	// Connect to database server
 	include 'db_connect.php';
 
