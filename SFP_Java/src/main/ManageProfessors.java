@@ -403,6 +403,7 @@ public class ManageProfessors extends javax.swing.JFrame {
                 prepStmt = conn.prepareStatement(qry);
                 prepStmt.setString(1, jTextField1.getText());
                 prepStmt.execute();
+                
                 jLabel2.setText("Professor deleted! ");
                 jTextField1.setText("");
                try {
@@ -450,38 +451,7 @@ public class ManageProfessors extends javax.swing.JFrame {
             jLabel2.setText("Exception: " + e);
         }           
         
-        /* try {
-            Class.forName("com.mysql.jdbc.Driver");
-
-            Connection conn = DriverManager.getConnection(url, uid, pw);
-            Statement stmt = conn.createStatement();
-
-            String qry = "SELECT professorFName AS \"First Name\", professorLName as \"Last Name\", departmentName AS \"Department\""
-                    + "FROM professor NATURAL JOIN professortodepartment "
-                    + "NATURAL JOIN department";
-
-            // Result set get the result of the SQL query 
-            ResultSet rs = stmt.executeQuery(qry);
-
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int c = rsmd.getColumnCount();
-            DefaultTableModel dtm = new DefaultTableModel();
-            for (int i = 1; i <= c; i++) {
-                dtm.addColumn(rsmd.getColumnName(i));
-            }
-            
-            Object[] row;
-            while (rs.next()) {
-                row = new Object[c];
-                for (int i = 0; i < c; i++) {
-                    row[i] = rs.getString(i + 1);
-                }
-                dtm.addRow(row);
-            }
-            jTable1.setModel(dtm);
-        } catch (SQLException | ClassNotFoundException ex) {
-            System.err.println("SQLException: " + ex);
-        }*/
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

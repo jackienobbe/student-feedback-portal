@@ -391,42 +391,36 @@ public class ManageDepartments extends javax.swing.JFrame {
             Class.forName("com.mysql.jdbc.Driver");
             
             Connection conn = DriverManager.getConnection(url, uid, pw);
-            
-            // the mysql delete statement
-            String qry = "DELETE FROM department "
-            + "WHERE departmentID = ?; ";
-           
-            // create the mysql insert preparedstatement
+             String qry = "SELECT departmentID AS DeptID, "
+                    + "departmentName AS \"Department Name\" "
+                    + "FROM department"
+                    +" WHERE departmentID = ?;";
+             
             PreparedStatement prepStmt = conn.prepareStatement(qry);
             prepStmt.setString(1, jTextField1.getText());
+            ResultSet rs = prepStmt.executeQuery();
             
-            // execute the preparedstatement
-            prepStmt.execute();
-            
-            
-            //jTextField1.setText("");
-            jLabel2.setText("Department deleted! ");
-           
-        } catch (SQLException ex) {
-            System.err.println("SQLException: " + ex);
-            jLabel2.setText("SQLException: " + ex);
-        } catch (Exception e) {
-            System.err.println("Exception: " + e);
-            jLabel2.setText("Exception: " + e);
-        }     
-        //TO DISPLAY THE UPDATED TABLE AFTER DELETION, WE INCLUDE THE QUERY FROM THE TABLE ABOVE AGAIN
-       try {
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Connection conn = DriverManager.getConnection(url, uid, pw);
-            Statement stmt = conn.createStatement();
+            // the mysql delete statement
+            if (rs.next()) {
+                    qry = "DELETE FROM department "
+                    + "WHERE departmentID = ?; ";
+                prepStmt = conn.prepareStatement(qry);
+                prepStmt.setString(1, jTextField1.getText());
+                prepStmt.execute();
+                
+                jLabel2.setText("Department deleted! ");
+                jTextField1.setText("");
+                //to display the updated table after delete 
+               try {
+                   Class.forName("com.mysql.jdbc.Driver");
 
-            String qry = "SELECT departmentID AS DeptID, "
-                    + "departmentName AS \"Department Name\" "
-                    + "FROM Department;";
-
-            // Result set get the result of the SQL query 
-            ResultSet rs = stmt.executeQuery(qry);
+                    conn = DriverManager.getConnection(url, uid, pw);
+                    Statement stmt = conn.createStatement();
+                    qry = "SELECT departmentID AS DeptID, "
+                        + "departmentName AS \"Department Name\" "
+                        + "FROM department " ;
+                        
+                    rs = stmt.executeQuery(qry);
 
             ResultSetMetaData rsmd = rs.getMetaData();
             int c = rsmd.getColumnCount();
@@ -447,6 +441,19 @@ public class ManageDepartments extends javax.swing.JFrame {
         } catch (SQLException | ClassNotFoundException ex) {
             System.err.println("SQLException: " + ex);
         }
+            }
+            
+            else
+                jLabel2.setText("Invalid department ID !");
+             
+        } catch (SQLException ex) {
+            System.err.println("SQLException: " + ex);
+            jLabel2.setText("SQLException: " + ex);
+        } catch (Exception e) {
+            System.err.println("Exception: " + e);
+            jLabel2.setText("Exception: " + e);
+        }     
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
