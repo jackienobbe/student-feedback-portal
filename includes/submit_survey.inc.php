@@ -43,7 +43,8 @@ foreach($choiceQuestionList as $choiceQuestionRow)
   $rc = submit_survey_choice($surveyID, $questionID, $offeredAnswerID, $error_msg);
   if($rc != 0)
   {
-    echo "not good";
+    $error_msg = "Please answer all of the questions.";
+    header("Location:" . $ref . "?surveyID=" . $surveyID . "&err=" . $error_msg);
   }
 }
 

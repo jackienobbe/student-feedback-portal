@@ -12,8 +12,8 @@ class EnrollModel
     }
 
     public function getCoursesToEnroll() {
-        return $this->db->query("SELECT courseID, courseName, sectionNum
-                FROM Course NATURAL JOIN Section
+        return $this->db->query("SELECT courseID, courseName, sectionNum, professorFName, professorLName
+                FROM Course NATURAL JOIN Section NATURAL JOIN Professor
                 WHERE semester = 'Fall 2016';");
     }
 }
@@ -26,14 +26,19 @@ $enrollModel = new EnrollModel($dbh);
 $enrollList = $enrollModel->getCoursesToEnroll();
 
 try {
-  $courseID = $_POST['courseID'];
-  $professorID = $_POST['professorID'];
 
   echo "<ul>";
   foreach ($enrollList as $enrollRow) {
-    echo "<li>" . $enrollRow['courseID'] . " - " . $enrollRow['courseName'] .
-    "<button type='submit'>Enroll</button>"."</li>";
-  }
+    echo "<li>" . $enrollRow['courseID'] . "   " . $enrollRow['courseName'] .
+    " with " . $enrollRow['professorFName'] . "  " . $enrollRow['professorLName'] .
+    " <button type='submit' name='courseID' value='" . $enrollRow['courseID'] .
+    "' formaction='includes/enroll.inc.php' formmethod='POST'> Enroll </button></li>";
+
+
+      // $courseID = $enrollRow['courseID'];
+      // $_POST['section'.$courseID] = $enrollRow['sectionNum'];
+      // echo $_POST['section'.$courseID];
+    }
   echo "</ul>";
   $dbh = null;
 //

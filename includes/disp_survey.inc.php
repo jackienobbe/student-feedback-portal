@@ -42,7 +42,7 @@ class ReviewModel
 		echo "<ul>\n";
 		foreach( $choiceQuestionList as $choiceQuestionRow ) {
 
-			echo "<li> " . $choiceQuestionRow['questionText'] ." </li>\n";
+			echo "<li class='question'> " . $choiceQuestionRow['questionText'] ." </li>\n";
 
 			$reviewModel = new ReviewModel($dbh);
 			$reviewList = $reviewModel->getPossibleAnswers();
@@ -52,14 +52,14 @@ class ReviewModel
 				if($reviewRow['questionID'] == $choiceQuestionRow['questionID'])
 				{
 					echo "<tr><td><input type='radio' name=" . $reviewRow['questionID'] .
-					" value='" . $reviewRow['offeredAnswerID'] . "'/> </td><td> " .
+					" value='" . $reviewRow['offeredAnswerID'] . "' required> </td><td> " .
 					$reviewRow['answerText'] . " </td></tr> \n";
 				}
 			}
 			echo "</table>";
 		}
 		foreach( $textQuestionList as $textQuestionRow) {
-echo "<br/>";
+			echo "<br/>";
 			echo "<li> " . $textQuestionRow['questionText'] . "</li>"
 			. "<textarea name=" . $textQuestionRow['questionID'] . "> </textarea>";
 		}

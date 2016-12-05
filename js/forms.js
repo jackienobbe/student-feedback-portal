@@ -73,3 +73,18 @@ function checkform_professorLName(form, professorLName)
   form.submit();
   return true;
 }
+
+function checkform_survey_fill(form, userID, userPassword)
+{
+  // Check each field has a value
+  if (userID.value == ''	||
+      userPassword.value == '' ||)
+      {
+        alert('All fields are required. Please try again');
+        return false;
+      }
+
+  // Finally submit the form.
+  form.submit();
+  return true;
+}

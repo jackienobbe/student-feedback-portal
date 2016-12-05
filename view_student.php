@@ -29,6 +29,8 @@ view_student.php
 
       <? include 'includes/disp_courses_to_enroll.inc.php'; ?>
       <input type="hidden" name="ref" value="<?php echo $ref;?>" />
+      <input type="hidden" name="sectionNum" value="<?php echo $sectionNum;?>" />
+      <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
       <?include 'includes/view_student_prev_courses.inc.php' ?>
 

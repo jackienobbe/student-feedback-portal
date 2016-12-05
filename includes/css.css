@@ -25,6 +25,9 @@ textarea {
   list-style-type: none;
 
 }
+.reviewList .question {
+  padding-top: 10px;
+}
 
 .reviewList table td {
   padding-left: 20px;
