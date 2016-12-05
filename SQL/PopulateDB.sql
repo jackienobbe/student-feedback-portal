@@ -119,7 +119,7 @@ INSERT INTO Question VALUES ( 5, 'Student participation is encouraged.', 2);
 INSERT INTO Question VALUES ( 6, 'Grading was fair.', 2);
 INSERT INTO Question VALUES ( 7, 'I learned a lot in this course.', 2);
 INSERT INTO Question VALUES ( 8, 'On average, the number of hours I spent on coursework outside of class, per week:', 2);
-INSERT INTO Question VALUES ( 9, 'The concepts in this class were predominantly presented in... (check up to two):', 2);
+INSERT INTO Question VALUES ( 9, 'The concepts in this class were predominantly presented in:', 2);
 INSERT INTO Question VALUES ( 10, 'Most of the test material in this class came from... (check up to two)', 2);
 INSERT INTO Question VALUES ( 11, 'How many group projects were assigned?', 2);
 INSERT INTO Question VALUES ( 12, 'How many papers were assigned?', 2);
@@ -219,10 +219,10 @@ INSERT INTO Question_Answer VALUES (8, 10);
 INSERT INTO Question_Answer VALUES (8, 11);
 INSERT INTO Question_Answer VALUES (8, 12);
 
-INSERT INTO Question_Answer VALUES (9, 8);
-INSERT INTO Question_Answer VALUES (9, 9);
-INSERT INTO Question_Answer VALUES (9, 10);
-INSERT INTO Question_Answer VALUES (9, 11);
+INSERT INTO Question_Answer VALUES (9, 13);
+INSERT INTO Question_Answer VALUES (9, 14);
+INSERT INTO Question_Answer VALUES (9, 15);
+INSERT INTO Question_Answer VALUES (9, 16);
 INSERT INTO Question_Answer VALUES (9, 17);
 
 INSERT INTO Question_Answer VALUES (10, 13);
@@ -315,12 +315,16 @@ INSERT INTO Answer_Choice VALUES (3,6,1);
 INSERT INTO Answer_Choice VALUES (3,7,1);
 
 INSERT INTO Answer_Choice VALUES (3,8,8);
-INSERT INTO Answer_Choice VALUES (3,9,11);
+INSERT INTO Answer_Choice VALUES (3,9,13);
 INSERT INTO Answer_Choice VALUES (3,10,13);
 INSERT INTO Answer_Choice VALUES (3,11,6);
 INSERT INTO Answer_Choice VALUES (3,12,19);
 INSERT INTO Answer_Choice VALUES (3,13,20);
 INSERT INTO Answer_Choice VALUES (3,14,20);
+INSERT INTO Answer_Text (surveyID, questionId, answer) VALUES
+  (3, 15, 'Professor really knows what she is talking about');
+INSERT INTO Answer_Text (surveyID, questionId, answer) VALUES
+  (3, 16, 'Course is challenging, but you learn a lot');
 
 # Jackie, Artificial Intelligence
 INSERT INTO Answer_Choice VALUES (6,1,2);
@@ -332,12 +336,17 @@ INSERT INTO Answer_Choice VALUES (6,6,2);
 INSERT INTO Answer_Choice VALUES (6,7,2);
 
 INSERT INTO Answer_Choice VALUES (6,8,9);
-INSERT INTO Answer_Choice VALUES (6,9,10);
+INSERT INTO Answer_Choice VALUES (6,9,14);
 INSERT INTO Answer_Choice VALUES (6,10,14);
 INSERT INTO Answer_Choice VALUES (6,11,10);
 INSERT INTO Answer_Choice VALUES (6,12,9);
 INSERT INTO Answer_Choice VALUES (6,13,27);
 INSERT INTO Answer_Choice VALUES (6,14,23);
+INSERT INTO Answer_Text (surveyID, questionId, answer) VALUES
+  (6, 15, 'I love this professor');
+INSERT INTO Answer_Text (surveyID, questionId, answer) VALUES
+  (6, 16, 'I learned so much from this course!!');
+
 
 # Imane, Fake AI class in the past
 INSERT INTO Answer_Choice VALUES (9,1,3);
@@ -349,12 +358,16 @@ INSERT INTO Answer_Choice VALUES (9,6,3);
 INSERT INTO Answer_Choice VALUES (9,7,3);
 
 INSERT INTO Answer_Choice VALUES (9,8,8);
-INSERT INTO Answer_Choice VALUES (9,9,11);
+INSERT INTO Answer_Choice VALUES (9,9,13);
 INSERT INTO Answer_Choice VALUES (9,10,13);
 INSERT INTO Answer_Choice VALUES (9,11,6);
 INSERT INTO Answer_Choice VALUES (9,12,19);
 INSERT INTO Answer_Choice VALUES (9,13,20);
 INSERT INTO Answer_Choice VALUES (9,14,20);
+INSERT INTO Answer_Text (surveyID, questionId, answer) VALUES
+  (9, 15, 'Great professor');
+INSERT INTO Answer_Text (surveyID, questionId, answer) VALUES
+  (9, 16, 'Lots of work');
 
 # Brandon, Operating Systems
 INSERT INTO Answer_Choice VALUES (2,1,3);
@@ -366,9 +379,13 @@ INSERT INTO Answer_Choice VALUES (2,6,3);
 INSERT INTO Answer_Choice VALUES (2,7,3);
 
 INSERT INTO Answer_Choice VALUES (2,8,8);
-INSERT INTO Answer_Choice VALUES (2,9,11);
+INSERT INTO Answer_Choice VALUES (2,9,15);
 INSERT INTO Answer_Choice VALUES (2,10,13);
 INSERT INTO Answer_Choice VALUES (2,11,6);
 INSERT INTO Answer_Choice VALUES (2,12,19);
 INSERT INTO Answer_Choice VALUES (2,13,20);
 INSERT INTO Answer_Choice VALUES (2,14,20);
+INSERT INTO Answer_Text (surveyID, questionId, answer) VALUES
+  (2, 15, 'Professor knows a lot about this subject. However, he did not know what an SSD was');
+INSERT INTO Answer_Text (surveyID, questionId, answer) VALUES
+  (2, 16, 'great course. really. it was grand. ');

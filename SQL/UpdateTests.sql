@@ -182,3 +182,6 @@ SELECT  courseID, professorID, questionID, offeredAnswerID, answerText, percent
            FROM Question_Answer
   	       NATURAL JOIN OfferedAnswer NATURAL JOIN  Question_Answer_Statistics_By_Course_And_Professor
 ORDER BY courseID, professorID, questionID, offeredAnswerID;
+
+SELECT surveyID, questionID, answer
+    FROM Answer_Text;
