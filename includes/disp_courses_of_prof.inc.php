@@ -19,6 +19,7 @@ class ListItems2 extends RecursiveIteratorIterator {
   }
 }
 
+
 // Connect to database server
 include 'db_connect.php';
 
@@ -28,7 +29,8 @@ try {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $sql = "SELECT DISTINCT courseID, courseName
           FROM Section NATURAL JOIN Course
-	        WHERE professorID = :professorID";
+	        WHERE professorID = :professorID;";
+
 
   $sth = $dbh->prepare($sql);
   $sth->bindParam(':professorID', $professorID);
@@ -41,7 +43,7 @@ try {
   echo "<ul>\n";
   //
   // set the resulting array to associative
-  foreach(new ListItems(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
+  foreach(new ListItems2(new RecursiveArrayIterator($sth->fetchAll())) as $k=>$v) {
     echo $v . " ";
   }
   echo "</ul>\n";

@@ -21,46 +21,27 @@ class ReviewModel
     return $this->db->query('SELECT questionID, questionText FROM Question WHERE answerTypeID = 1');
   }
 
-  // public function getPossibleAnswers($courseID, $professorID) {
-  //   $sth = $this->db->prepare('SELECT questionID, offeredAnswerID, answerText, percent
-  //          FROM Question_Answer
-  // 	       NATURAL JOIN OfferedAnswer NATURAL JOIN  Question_Answer_Statistics_By_Course_And_Professor
-  //            WHERE courseID = :courseID
-  //            AND professorID = :professorID
-  //            GROUP BY questionID ASC, offeredAnswerID ASC');
-  //
-  //   $sth->bindParam(':courseID', $courseID);
-  //   $sth->bindParam(':professorID', $professorID);
-  //
-  //   return $sth->execute();
-  //
-  // }
-
-  public function getAllReviews() {
-    $sth = $this->db->query('SELECT questionID, offeredAnswerID, answerText, percent
+  public function getAllChoiceReviews() {
+    return $this->db->query('SELECT  courseID, professorID, questionID, offeredAnswerID, answerText, percent
            FROM Question_Answer
   	       NATURAL JOIN OfferedAnswer NATURAL JOIN  Question_Answer_Statistics_By_Course_And_Professor
-             GROUP BY questionID ASC, offeredAnswerID ASC');
-
-    return $sth;
-
-    }
-
-  // public function getPossibleAnswers() {
-  //   $stmt = $dbh->prepare("SELECT questionID, offeredAnswerID, answerText, percent
-  //       FROM Question_Answer
-	//       NATURAL JOIN OfferedAnswer NATURAL JOIN  Question_Answer_Statistics_By_Course_And_Professor
-  //         WHERE courseID = ?
-  //         GROUP BY questionID ASC, offeredAnswerID ASC");
-  //
-  //     if ($stmt->execute(array($_POST['courseID']))) {
-  //       while ($row = $stmt->fetch()) {
-  //         print_r($row);
-  //       }
-  //     }
-  //   }
-
+              ORDER BY courseID, professorID, questionID, offeredAnswerID;');
   }
+
+  public function getAllTextReviews(){
+    return $this->db->query('SELECT courseID, professorID, questionID, answer
+          FROM Section NATURAL JOIN Enroll NATURAL JOIN Survey NATURAL JOIN Answer_Text
+          ORDER BY courseID, professorID, questionID;');
+  }
+
+  public function testChoiceReviews(){
+    return $this->db->query('SELECT  courseID, professorID
+           FROM Question_Answer_Statistics_By_Course_And_Professor
+              ORDER BY courseID, professorID, questionID, offeredAnswerID;');
+  }
+
+}
+
   // Connect to database server
   include 'db_connect.php';
 
@@ -70,54 +51,76 @@ class ReviewModel
   $textQuestionModel = new ReviewModel($dbh);
   $textQuestionList = $textQuestionModel->getTextQuestions();
 
-  // $reviewModel = new ReviewModel($dbh);
-  // $reviewList = $reviewModel->getAllReviews();
 
   try {
-
     $courseID = $_POST['courseID'];
     $professorID = $_POST['professorID'];
+    echo "<div class='reviewList'>";
+    echo "<ul>\n";
 
-    echo "<ul class='reviewList' >\n";
-    //$reviewRowCount = $reviewList->rowCount();
-    //$questionID = '';
-    // $reviewList as $reviewRow;
 
-    foreach( $choiceQuestionList as $choiceQuestionRow ) {
+    $newReviewModel = new ReviewModel($dbh);
+    $testIfReviews = $newReviewModel->testChoiceReviews();
 
-      echo "<li class='reviewList'> " . $choiceQuestionRow['questionText'] ." </li>\n";
-      // echo "<ul>\n";
-
-      $answerModel = new ReviewModel($dbh);
-      $answerList = $answerModel->getAllReviews();
-
-      // TODO: TEST FOR COURSE AND PROFESSOR TOO
-      echo "<table>";
-      foreach( $answerList as $answerRow ){
-        if($answerRow['questionID'] == $choiceQuestionRow['questionID'])
+    foreach($testIfReviews as $testRow)
+    {
+      if($testRow['courseID'] == $courseID &&
+        $testRow['professorID'] == $professorID)
         {
-          echo "<tr> <td>" . $answerRow['answerText'] . " </td><td> " .
-          $answerRow['percent'] . "</td></tr> \n";
+          $thereAreReviews = TRUE;
         }
-      }
-      echo "</table>";
-      echo "</br>";
     }
-    foreach( $textQuestionList as $textQuestionRow) {
-      echo "<li> " . $textQuestionRow['questionText'] . "</li>";
 
+    if($thereAreReviews == TRUE){
+
+      foreach( $choiceQuestionList as $choiceQuestionRow ) {
+
+        echo "<li> " . $choiceQuestionRow['questionText'] ." </li>\n";
+
+        $answerModel = new ReviewModel($dbh);
+        $choiceAnswerList = $answerModel->getAllChoiceReviews();
+
+
+        echo "<table>";
+        foreach( $choiceAnswerList as $choiceAnswerRow ){
+          if($choiceAnswerRow['courseID'] == $courseID &&
+            $choiceAnswerRow['professorID'] == $professorID &&
+            $choiceAnswerRow['questionID'] == $choiceQuestionRow['questionID'])
+          {
+            echo "<tr> <td>" . $choiceAnswerRow['answerText'] . " </td><td> " .
+            $choiceAnswerRow['percent'] . "</td></tr> \n";
+          }
+        }
+        echo "</table>";
+        echo "</br>";
+
+      }
+
+
+      foreach( $textQuestionList as $textQuestionRow) {
+        $answerModel = new ReviewModel($dbh);
+        $textAnswerList = $answerModel->getAllTextReviews();
+
+        echo "<li> " . $textQuestionRow['questionText'] . "<ul style='list-style-type: square' >";
+
+        foreach($textAnswerList as $textAnswerRow){
+            if($textAnswerRow['courseID'] == $courseID &&
+              $textAnswerRow['professorID'] == $professorID &&
+              $textAnswerRow['questionID'] == $textQuestionRow['questionID']){
+                echo "<li> \"" . $textAnswerRow['answer'] . "\"</li>";
+          }
+        }
+        echo "</ul></li>";
+        echo "</br>";
+      }
+
+      echo "</div>";
+      $dbh = null;
+    }
+    else{
+      echo "There are no reviews for this course yet.";
     }
     echo "</ul>\n";
-
-    //   else {
-    //     echo "<p>There aren't any reviews for this course by this professor yet...</p>\n";
-    //     if(isset($_SESSION['userID']))
-    //     {
-    //       echo "<p>Taking this course this semester? <a href='#'> Enroll and add a review!</a></p>\n";
-    //     }
-    //   }
-    $dbh = null;
-    //
   }
   catch(PDOException $e) {
     $dbh = null;

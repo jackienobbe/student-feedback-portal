@@ -23,9 +23,15 @@ include 'db_connect.php';
 
 try {
 
-  //$professorID = $_POST['professorID'];
+  $professorID = $_POST['professorID'];
+  $courseID = $_POST['courseID'];
+
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "CALL sp_course_sections_taught_by_professor( :professorID, :courseID );";
+  // try a querry, not a procedure
+  $sql = "SELECT courseID, sectionNum, courseName, semester
+      FROM Section NATURAL JOIN Course
+  	WHERE professorID = :professorID
+    AND courseID = :courseID;";
 
   $sth = $dbh->prepare($sql);
   $sth->bindParam(':professorID', $professorID);
