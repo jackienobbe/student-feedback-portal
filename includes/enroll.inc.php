@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
   // run sql query
   $rc = enroll_student($userID, $courseID, $sectionNum, $semester, $error_msg);
-  echo "after rc";
   if ($rc == 0)
   {
     // Product successfully created; reset fields
