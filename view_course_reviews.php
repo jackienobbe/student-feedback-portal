@@ -30,9 +30,9 @@
     <h3>Course Reviews</h3>
     <?php include 'includes/disp_reviews_for_course.inc.php'; ?>
 
-    <h3>View Reviews by Section</h3>
+    <!-- <h3>View Reviews by Section</h3>
     <?php include 'includes/disp_course_sections_for_prof.inc.php'; ?>
-
+ -->
     <h3>Other Courses by this Professor</h3>
     <?php include 'includes/disp_courses_of_prof.inc.php'; ?>
     

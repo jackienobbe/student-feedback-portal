@@ -185,3 +185,7 @@ ORDER BY courseID, professorID, questionID, offeredAnswerID;
 
 SELECT surveyID, questionID, answer
     FROM Answer_Text;
+
+SELECT sectionNum, courseID, semester
+             FROM Question_Answer_Statistics_By_Section
+                ORDER BY sectionNum, courseID, semester;
