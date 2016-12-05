@@ -314,11 +314,11 @@ INSERT INTO Answer_Choice VALUES (3,5,1);
 INSERT INTO Answer_Choice VALUES (3,6,1);
 INSERT INTO Answer_Choice VALUES (3,7,1);
 
-INSERT INTO Answer_Choice VALUES (3,8,6);
+INSERT INTO Answer_Choice VALUES (3,8,8);
 INSERT INTO Answer_Choice VALUES (3,9,11);
-INSERT INTO Answer_Choice VALUES (3,10,11);
-INSERT INTO Answer_Choice VALUES (3,11,17);
-INSERT INTO Answer_Choice VALUES (3,12,17);
+INSERT INTO Answer_Choice VALUES (3,10,13);
+INSERT INTO Answer_Choice VALUES (3,11,6);
+INSERT INTO Answer_Choice VALUES (3,12,19);
 INSERT INTO Answer_Choice VALUES (3,13,20);
 INSERT INTO Answer_Choice VALUES (3,14,20);
 
@@ -331,13 +331,13 @@ INSERT INTO Answer_Choice VALUES (6,5,2);
 INSERT INTO Answer_Choice VALUES (6,6,2);
 INSERT INTO Answer_Choice VALUES (6,7,2);
 
-INSERT INTO Answer_Choice VALUES (6,8,6);
-INSERT INTO Answer_Choice VALUES (6,9,11);
-INSERT INTO Answer_Choice VALUES (6,10,11);
-INSERT INTO Answer_Choice VALUES (6,11,17);
-INSERT INTO Answer_Choice VALUES (6,12,17);
-INSERT INTO Answer_Choice VALUES (6,13,20);
-INSERT INTO Answer_Choice VALUES (6,14,20);
+INSERT INTO Answer_Choice VALUES (6,8,9);
+INSERT INTO Answer_Choice VALUES (6,9,10);
+INSERT INTO Answer_Choice VALUES (6,10,14);
+INSERT INTO Answer_Choice VALUES (6,11,10);
+INSERT INTO Answer_Choice VALUES (6,12,9);
+INSERT INTO Answer_Choice VALUES (6,13,27);
+INSERT INTO Answer_Choice VALUES (6,14,23);
 
 # Imane, Fake AI class in the past
 INSERT INTO Answer_Choice VALUES (9,1,3);
@@ -348,10 +348,27 @@ INSERT INTO Answer_Choice VALUES (9,5,3);
 INSERT INTO Answer_Choice VALUES (9,6,3);
 INSERT INTO Answer_Choice VALUES (9,7,3);
 
-INSERT INTO Answer_Choice VALUES (9,8,6);
+INSERT INTO Answer_Choice VALUES (9,8,8);
 INSERT INTO Answer_Choice VALUES (9,9,11);
-INSERT INTO Answer_Choice VALUES (9,10,11);
-INSERT INTO Answer_Choice VALUES (9,11,17);
-INSERT INTO Answer_Choice VALUES (9,12,17);
+INSERT INTO Answer_Choice VALUES (9,10,13);
+INSERT INTO Answer_Choice VALUES (9,11,6);
+INSERT INTO Answer_Choice VALUES (9,12,19);
 INSERT INTO Answer_Choice VALUES (9,13,20);
 INSERT INTO Answer_Choice VALUES (9,14,20);
+
+# Brandon, Operating Systems
+INSERT INTO Answer_Choice VALUES (2,1,3);
+INSERT INTO Answer_Choice VALUES (2,2,3);
+INSERT INTO Answer_Choice VALUES (2,3,3);
+INSERT INTO Answer_Choice VALUES (2,4,3);
+INSERT INTO Answer_Choice VALUES (2,5,3);
+INSERT INTO Answer_Choice VALUES (2,6,3);
+INSERT INTO Answer_Choice VALUES (2,7,3);
+
+INSERT INTO Answer_Choice VALUES (2,8,8);
+INSERT INTO Answer_Choice VALUES (2,9,11);
+INSERT INTO Answer_Choice VALUES (2,10,13);
+INSERT INTO Answer_Choice VALUES (2,11,6);
+INSERT INTO Answer_Choice VALUES (2,12,19);
+INSERT INTO Answer_Choice VALUES (2,13,20);
+INSERT INTO Answer_Choice VALUES (2,14,20);

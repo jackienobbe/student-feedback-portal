@@ -177,3 +177,8 @@ UPDATE Question_Answer_Statistics_By_Course_And_Professor
 				AND offeredAnswerID = 1;
 
 DELETE FROM Professor WHERE professorFName = 'your';
+
+SELECT  courseID, professorID, questionID, offeredAnswerID, answerText, percent
+           FROM Question_Answer
+  	       NATURAL JOIN OfferedAnswer NATURAL JOIN  Question_Answer_Statistics_By_Course_And_Professor
+ORDER BY courseID, professorID, questionID, offeredAnswerID;
