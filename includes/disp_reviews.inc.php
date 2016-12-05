@@ -24,8 +24,9 @@ class ReviewModel
     return $this->db->query('SELECT questionID, offeredAnswerID, answerText
       FROM OfferedAnswer NATURAL JOIN Question_Answer
       ORDER BY questionID ASC, offeredAnswerID ASC ');
-    }
   }
+}
+
   // Connect to database server
   include 'db_connect.php';
 
@@ -35,18 +36,11 @@ class ReviewModel
   $textQuestionModel = new ReviewModel($dbh);
   $textQuestionList = $textQuestionModel->getTextQuestions();
 
-  // $reviewModel = new ReviewModel($dbh);
-  // $reviewList = $reviewModel->getAllReviews();
-
   try {
-
     $courseID = $_POST['courseID'];
     $professorID = $_POST['professorID'];
 
     echo "<ul>\n";
-    //$reviewRowCount = $reviewList->rowCount();
-    //$questionID = '';
-    // $reviewList as $reviewRow;
 
     foreach( $choiceQuestionList as $choiceQuestionRow ) {
 
@@ -67,8 +61,7 @@ class ReviewModel
       echo "</table>";
     }
     foreach( $textQuestionList as $textQuestionRow) {
-      echo "<li> " . $textQuestionRow['questionText'] . "</li>"
-        . "<textarea name=" . $textQuestionRow['questionID'] . "> </textarea>";
+      echo "<li> " . $textQuestionRow['questionText'] . "</li>";
     }
     echo "</ul>\n";
 
@@ -80,7 +73,6 @@ class ReviewModel
     //     }
     //   }
     $dbh = null;
-    //
   }
   catch(PDOException $e) {
     $dbh = null;

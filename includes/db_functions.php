@@ -585,7 +585,7 @@ function read_course_section_prof_info($professorID, $courseID, $sectionNum, $se
   }
 }
 
-function submit_servey($surveyID, $questionID, $offeredAnswerID, &$error_msg)
+function submit_survey($surveyID, $questionID, $offeredAnswerID, &$error_msg)
 {
   // Connect to database server
   include 'db_connect.php';

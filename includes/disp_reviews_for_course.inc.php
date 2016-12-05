@@ -91,7 +91,7 @@ class ReviewModel
       $answerModel = new ReviewModel($dbh);
       $answerList = $answerModel->getAllReviews();
 
-      // TODO: TEST FOR COURSE AND PROFESOR TOO
+      // TODO: TEST FOR COURSE AND PROFESSOR TOO
       echo "<table>";
       foreach( $answerList as $answerRow ){
         if($answerRow['questionID'] == $choiceQuestionRow['questionID'])
@@ -104,8 +104,8 @@ class ReviewModel
       echo "</br>";
     }
     foreach( $textQuestionList as $textQuestionRow) {
-      echo "<li> " . $textQuestionRow['questionText'] . "</li>"
-        . "<textarea name=" . $textQuestionRow['questionID'] . " style='height=65 width=450'> </textarea>";
+      echo "<li> " . $textQuestionRow['questionText'] . "</li>";
+
     }
     echo "</ul>\n";
 

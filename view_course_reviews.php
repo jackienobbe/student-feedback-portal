@@ -28,7 +28,7 @@
     <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
     <h3>Course Reviews</h3>
-    <?php include 'includes/disp_reviews_for_section.inc.php'; ?>
+    <?php include 'includes/disp_reviews_for_course.inc.php'; ?>
 
     <h3>View Reviews by Section</h3>
     <?php include 'includes/disp_course_sections_for_prof.inc.php'; ?>

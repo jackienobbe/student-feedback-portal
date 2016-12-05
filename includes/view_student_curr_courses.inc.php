@@ -54,7 +54,7 @@ try {
   if($counter == 0) {
     echo "<p>Hmm... you don't appear to be in any courses this semester.</p>";
   }
-  
+
   header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
   // Product read successfully; proceed to display form fields
 

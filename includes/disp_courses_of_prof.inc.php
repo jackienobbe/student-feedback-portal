@@ -22,10 +22,11 @@ class ListItems extends RecursiveIteratorIterator {
 include 'db_connect.php';
 
 try {
-
   //$professorID = $_POST['professorID'];
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "CALL sp_courses_taught_by_professor( :professorID );";
+  $sql = "SELECT DISTINCT courseID, courseName
+          FROM Section NATURAL JOIN Course
+	        WHERE professorID = :professorID";
 
   $sth = $dbh->prepare($sql);
   $sth->bindParam(':professorID', $professorID);
