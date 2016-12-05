@@ -11,32 +11,55 @@ class ReviewModel
   }
 
   public function getAllQuestions() {
-    return $this->db->query('SELECT questionID FROM Question');
+    return $this->db->query('SELECT questionID FROM Question ORDER BY questionID');
   }
+
+  public function getChoiceQuestions() {
+		return $this->db->query('SELECT questionID, questionText FROM Question WHERE answerTypeID = 2');
+	}
+
+	public function getTextQuestions() {
+		return $this->db->query('SELECT questionID, questionText FROM Question WHERE answerTypeID = 1');
+	}
 }
 
 include 'db_connect.php';
 
-$error_msg = ' ';
+$error_msg = "";
 
-$questionModel = new ReviewModel($dbh);
-$questionList = $questionModel->getAllQuestions();
+$choiceQuestionModel = new ReviewModel($dbh);
+$choiceQuestionList = $choiceQuestionModel->getChoiceQuestions();
 
-foreach($questionList as $questionRow)
+foreach($choiceQuestionList as $choiceQuestionRow)
 {
-  echo $questionRow['questionID'];
-
+  // echo $choiceQuestionRow['questionID'] . "\n";
   $surveyID = $_POST['surveyID'];
-  $questionID = $_POST['questionID'];
-  $offeredAnswerID = $_POST['offeredAnswerID'];
+  echo "sid: " . $surveyID . "\n";
 
-  echo "before rc";
-  $rc = submit_survey($surveyID, $questionID, $offeredAnswerID, $error_msg);
-  echo "after rc";
+  $questionID = $choiceQuestionRow['questionID'] . "\n";
+  echo "qid: " . $questionID;
+  // echo $choiceQuestionRow['questionID'] . "\n";
+  $offeredAnswerID = $_POST[$questionID];
+  echo "oaid: " . $offeredAnswerID . "\n";
+  echo "b4 rc";
+
+  $rc = submit_survey_choice($surveyID, $questionID, $offeredAnswerID, $error_msg);
+  echo "after rc" . $rc;
   if($rc == 0)
   {
-    echo "good werk";
-
+    echo "good werk" . $questionID;
   }
   else echo "oops";
+}
+
+$textQuestionModel = new ReviewModel($dbh);
+$textQuestionList = $textQuestionModel->getTextQuestions();
+
+foreach($textQuestionList as $textQuestionRow)
+{
+  $surveyID = $_POST['surveyID'];
+  $questionID = $textQuestionRow['questionID'];
+  $offeredAnswerID = $_POST[$questionID];
+
+  $rc = submit_survey_text($surveyID, $questionID, $offeredAnswerID, $error_msg);
 }

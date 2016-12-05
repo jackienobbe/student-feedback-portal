@@ -31,16 +31,12 @@ class ReviewModel
 	// Connect to database server
 	include 'db_connect.php';
 
-	$choiceQuestionModel = new ReviewModel($dbh);
-	$choiceQuestionList = $choiceQuestionModel->getChoiceQuestions();
-
-	$textQuestionModel = new ReviewModel($dbh);
-	$textQuestionList = $textQuestionModel->getTextQuestions();
-
 	try {
+		$choiceQuestionModel = new ReviewModel($dbh);
+		$choiceQuestionList = $choiceQuestionModel->getChoiceQuestions();
 
-		// $courseID = $_POST['courseID'];
-		// $professorID = $_POST['professorID'];
+		$textQuestionModel = new ReviewModel($dbh);
+		$textQuestionList = $textQuestionModel->getTextQuestions();
 
 		echo "<ul>\n";
 		foreach( $choiceQuestionList as $choiceQuestionRow ) {

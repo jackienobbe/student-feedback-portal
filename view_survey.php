@@ -16,14 +16,14 @@ view_survey.php
   <div class="container-fluid">
     <form>
       <?php include 'includes/db_functions.php';
-            include 'includes/view_course_for_survey.inc.php';
-            ?>
+            include 'includes/view_course_for_survey.inc.php';?>
 
       <h2><?php echo $courseID . " // " . $courseName;?> </h2>
       <!-- <label>Department</label>  <?php echo $departmentName;?><br/> -->
       <input type="hidden" name="courseID" value="<?php echo $courseID;?>" />
       <input type="hidden" name="courseName" value="<?php echo $courseName;?>" />
 
+      <input type="hidden" name="surveyID" value="<?php echo $surveyID;?>" />
       <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
       <label>Course Survey</label>
