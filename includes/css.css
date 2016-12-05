@@ -32,3 +32,8 @@ textarea {
 .reviewList table td {
   padding-left: 20px;
 }
+
+.disclaimer {
+  color: grey;
+  font-size: 10pt; 
+}

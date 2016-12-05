@@ -51,7 +51,10 @@ class ReviewModel
   $textQuestionModel = new ReviewModel($dbh);
   $textQuestionList = $textQuestionModel->getTextQuestions();
 
-
+  echo "<p class='disclaimer'> DISCLAIMER: Results for instructor ratings refer to past implementations
+        of the course. Teachers, methods, and policies may evolve and change for a
+        particular course from semester to semester.</p>";
+        
   try {
     $courseID = $_POST['courseID'];
     $professorID = $_POST['professorID'];

@@ -35,6 +35,7 @@
 
     <h3>Other Courses by this Professor</h3>
     <?php include 'includes/disp_courses_of_prof.inc.php'; ?>
+    
   </form>
 
 </div>
