@@ -585,6 +585,45 @@ function read_course_section_prof_info($professorID, $courseID, $sectionNum, $se
    }
 }
 
+function submit_servey($surveyID, $questionID, $offeredAnswerID, &$error_msg)
+{
+  // Connect to database server
+  include 'db_connect.php';
+
+  try
+  {
+    // Set the PDO error mode to exception
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Insert the new product into the the system and  table
+    $sql = "INSERT INTO Answer_Choice (surveyID, questionID, offeredAnswerID)
+            VALUES (:surveyID, :questionID, :offeredAnswerID);";
+
+    $sth = $dbh->prepare($sql);
+    $sth->bindParam(':surveyID', $surveyID);
+    $sth->bindParam(':questionID', $questionID);
+    $sth->bindParam(':offeredAnswerID', $offeredAnswerID);
+
+    $sth->execute();
+    $dbh = null;
+    if ($sth->rowCount() > 0)
+      return 0;  //student successfully created
+    else
+      return -1;  //student not created; this case may not be possible
+  }
+  catch(PDOException $e)
+  {
+    $dbh = null;
+    if ($e->errorInfo[1] == 1062)
+      $error_msg = "You already took this survey... stay tuned to be able to resubmit your answers!";
+    else
+    {
+      header("Location: error.php?err=" . $e->getMessage());
+      exit();
+    }
+    return $e->errorInfo[1];
+  }
+}
+
 function survey_for_enrollment($userID, $courseID, $semester)
 {
   try {
@@ -622,5 +661,4 @@ function survey_for_enrollment($userID, $courseID, $semester)
     header("Location: error.php?err=" . $e->getMessage());
     exit();
   }
-
 }
