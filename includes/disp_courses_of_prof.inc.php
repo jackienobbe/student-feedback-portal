@@ -2,6 +2,8 @@
 //
 // disp_profs.inc.php
 //
+echo "b4 errythang";
+
 class ListItems extends RecursiveIteratorIterator {
   function __construct($it) {
     parent::__construct($it, self::LEAVES_ONLY);
@@ -17,12 +19,14 @@ class ListItems extends RecursiveIteratorIterator {
     echo "</button></li>\n";
   }
 }
+echo "b4 include connect";
 
 // Connect to database server
 include 'db_connect.php';
 
 try {
-  //$professorID = $_POST['professorID'];
+  $professorID = $_POST['professorID'];
+echo "here";
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $sql = "SELECT DISTINCT courseID, courseName
           FROM Section NATURAL JOIN Course

@@ -4,10 +4,10 @@ DELIMITER $$
 CREATE PROCEDURE sp_surveys_about_professor(IN $professorID int)
 BEGIN
 
-	SELECT userID, courseID, semester, surveyID
-    FROM Section NATURAL JOIN Enroll
-		NATURAL JOIN Survey
-	WHERE professorID = $professorID;
+SELECT userID, courseID, semester, surveyID
+FROM Section NATURAL JOIN Enroll
+NATURAL JOIN Survey
+WHERE professorID = $professorID;
 
 END;
 $$
@@ -20,9 +20,9 @@ DELIMITER $$
 CREATE PROCEDURE sp_courses_taught_by_professor(IN $professorID int)
 BEGIN
 
-	SELECT DISTINCT courseID, courseName
-    FROM Section NATURAL JOIN Course
-	WHERE professorID = $professorID;
+SELECT DISTINCT courseID, courseName
+FROM Section NATURAL JOIN Course
+WHERE professorID = $professorID;
 
 END;
 $$
@@ -32,16 +32,15 @@ CALL sp_courses_taught_by_professor(1);
 
 
 -- ------------------------------------------------------------------
--- TODO: add professor Name? join professor
 DROP PROCEDURE IF EXISTS sp_professors_for_a_course;
 
 DELIMITER $$
 CREATE PROCEDURE sp_professors_for_a_course(IN $courseID varchar(10))
 BEGIN
 
-	SELECT DISTINCT professorID
-    FROM Course NATURAL JOIN Section
-	WHERE courseID = $courseID;
+		SELECT DISTINCT professorID, professorFName, professorLName
+		FROM Course NATURAL JOIN Section NATURAL JOIN Professor
+		WHERE courseID = $courseID;
 
 END;
 $$
@@ -57,9 +56,9 @@ DELIMITER $$
 CREATE PROCEDURE sp_display_question_answer_choices(IN $questionID int)
 BEGIN
 
-    SELECT offeredAnswerID, answerText
-    FROM Question_Answer NATURAL JOIN OfferedAnswer
-    WHERE questionID = $questionID;
+SELECT offeredAnswerID, answerText
+FROM Question_Answer NATURAL JOIN OfferedAnswer
+WHERE questionID = $questionID;
 
 END;
 $$
@@ -75,7 +74,7 @@ DELIMITER $$
 CREATE PROCEDURE sp_answer_question_choice(IN $surveyID int, IN $questionID int, IN $offeredAnswerID int)
 BEGIN
 
-    INSERT INTO Answer_Choice VALUES ($surveyID, $questionID, $offeredAnswerID);
+INSERT INTO Answer_Choice VALUES ($surveyID, $questionID, $offeredAnswerID);
 
 END;
 $$
@@ -91,8 +90,8 @@ DELIMITER $$
 CREATE PROCEDURE sp_answer_question_text(IN $surveyID int, IN $questionID int, IN $textAnswer varchar(500))
 BEGIN
 
-    INSERT INTO Answer_Text (surveyID, questionId, answer)
-    VALUES ($surveyID, $questionID, $textAnswer);
+INSERT INTO Answer_Text (surveyID, questionId, answer)
+VALUES ($surveyID, $questionID, $textAnswer);
 
 END;
 $$
@@ -108,10 +107,10 @@ DELIMITER $$
 CREATE PROCEDURE sp_display_text_answers_for_question(IN $questionID int)
 BEGIN
 
-    SELECT answer, voteCount
-    FROM Question
-		NATURAL JOIN Answer_Text
-    WHERE questionID = $questionID;
+SELECT answer, voteCount
+FROM Question
+NATURAL JOIN Answer_Text
+WHERE questionID = $questionID;
 
 END;
 $$
@@ -133,15 +132,15 @@ DELIMITER $$
 CREATE PROCEDURE sp_display_statistics_by_section(IN $questionID int)
 BEGIN
 
-    -- SELECT offeredAnswerID, answerText, percent
-    -- FROM Question_Answer
-	-- 	NATURAL JOIN OfferedAnswer
-	-- 	NATURAL JOIN Question_Answer_Statistics
-    -- WHERE questionID = $questionID;
+-- SELECT offeredAnswerID, answerText, percent
+-- FROM Question_Answer
+-- 	NATURAL JOIN OfferedAnswer
+-- 	NATURAL JOIN Question_Answer_Statistics
+-- WHERE questionID = $questionID;
 
-  SELECT * FROM Question_Answer_Statistics_By_Section;
-    -- WHERE
-    -- PK from section
+SELECT * FROM Question_Answer_Statistics_By_Section;
+-- WHERE
+-- PK from section
 
 END;
 $$
@@ -164,36 +163,36 @@ DROP PROCEDURE IF EXISTS pCreateProfGetIDInsertDept;
 DELIMITER $$
 CREATE PROCEDURE pCreateProfGetIDInsertDept($professorFName VARCHAR(50), $professorLName VARCHAR(50), $deptCode VARCHAR(5))
 BEGIN
-	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-	START TRANSACTION;
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+START TRANSACTION;
 
-	INSERT INTO Professor(professorFName, professorLName)
-    VALUES($professorFName, $professorLName);
+INSERT INTO Professor(professorFName, professorLName)
+VALUES($professorFName, $professorLName);
 
-    SET @professorID := (SELECT professorID FROM Professor
-    WHERE professorFName = $professorFName && professorLName = $professorLName);
+SET @professorID := (SELECT professorID FROM Professor
+	WHERE professorFName = $professorFName && professorLName = $professorLName);
 
-    SELECT @professorID;
+	SELECT @professorID;
 
-    INSERT INTO ProfessorToDepartment(professorID, departmentID)
-    VALUES(@professorID, $deptCode);
-END;
-$$
-DELIMITER ;
+	INSERT INTO ProfessorToDepartment(professorID, departmentID)
+	VALUES(@professorID, $deptCode);
+	END;
+	$$
+	DELIMITER ;
 
--- ---------------------------------------------------------------
-DROP PROCEDURE IF EXISTS sp_course_sections_taught_by_professor;
+	-- ---------------------------------------------------------------
+	DROP PROCEDURE IF EXISTS sp_course_sections_taught_by_professor;
 
-DELIMITER $$
-CREATE PROCEDURE sp_course_sections_taught_by_professor(IN $professorID int, $courseID varchar(10))
-BEGIN
+	DELIMITER $$
+	CREATE PROCEDURE sp_course_sections_taught_by_professor(IN $professorID int, $courseID varchar(10))
+	BEGIN
 
 	SELECT courseID, sectionNum, courseName, semester
-    FROM Section NATURAL JOIN Course
+	FROM Section NATURAL JOIN Course
 	WHERE professorID = $professorID && courseID = $courseID;
 
-END;
-$$
-DELIMITER ;
+	END;
+	$$
+	DELIMITER ;
 
-CALL sp_courses_taught_by_professor(1);
+	CALL sp_courses_taught_by_professor(1);
