@@ -24,6 +24,7 @@ class ReviewModel
 }
 
 include 'db_connect.php';
+include 'db_functions.php';
 
 $error_msg = "";
 
@@ -34,22 +35,16 @@ foreach($choiceQuestionList as $choiceQuestionRow)
 {
   // echo $choiceQuestionRow['questionID'] . "\n";
   $surveyID = $_POST['surveyID'];
-  echo "sid: " . $surveyID . "\n";
+  $questionID = $choiceQuestionRow['questionID'];
+  $offeredAnswerID = $_POST[$questionID] . '';
 
-  $questionID = $choiceQuestionRow['questionID'] . "\n";
-  echo "qid: " . $questionID;
-  // echo $choiceQuestionRow['questionID'] . "\n";
-  $offeredAnswerID = $_POST[$questionID];
-  echo "oaid: " . $offeredAnswerID . "\n";
-  echo "b4 rc";
+  $offeredAnswerID = rtrim( $offeredAnswerID, '/' );
 
   $rc = submit_survey_choice($surveyID, $questionID, $offeredAnswerID, $error_msg);
-  echo "after rc" . $rc;
-  if($rc == 0)
+  if($rc != 0)
   {
-    echo "good werk" . $questionID;
+    echo "not good";
   }
-  else echo "oops";
 }
 
 $textQuestionModel = new ReviewModel($dbh);
@@ -62,4 +57,8 @@ foreach($textQuestionList as $textQuestionRow)
   $offeredAnswerID = $_POST[$questionID];
 
   $rc = submit_survey_text($surveyID, $questionID, $offeredAnswerID, $error_msg);
+  if($rc == 0)
+  {
+    header('Location: ../view_student.php');
+  }
 }

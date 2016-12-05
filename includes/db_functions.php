@@ -587,16 +587,16 @@ function read_course_section_prof_info($professorID, $courseID, $sectionNum, $se
 
 function submit_survey_choice($surveyID, $questionID, $offeredAnswerID, &$error_msg)
 {
+
   // Connect to database server
   include 'db_connect.php';
-
   try
   {
     // Set the PDO error mode to exception
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Insert the new product into the the system and  table
-    $sql = "INSERT INTO Answer_Choice (surveyID, questionID, offeredAnswerID)
+    $sql = "INSERT INTO Answer_Choice
             VALUES (:surveyID, :questionID, :offeredAnswerID);";
 
     $sth = $dbh->prepare($sql);
@@ -608,12 +608,10 @@ function submit_survey_choice($surveyID, $questionID, $offeredAnswerID, &$error_
     $dbh = null;
 
     if ($sth->rowCount() > 0){
-      echo "neato";
-      return 0;  //student successfully created
+      return 0;
     }
     else{
-      return -1; //student not created; this case may not be possible
-
+      return -1;
     }
   }
   catch(PDOException $e)
@@ -629,6 +627,7 @@ function submit_survey_choice($surveyID, $questionID, $offeredAnswerID, &$error_
     return $e->errorInfo[1];
   }
 }
+
 function submit_survey_text($surveyID, $questionID, $answer, &$error_msg)
 {
   // Connect to database server
@@ -672,6 +671,7 @@ function submit_survey_text($surveyID, $questionID, $answer, &$error_msg)
     return $e->errorInfo[1];
   }
 }
+
 function survey_for_enrollment($userID, $courseID, $semester, &$error_msg)
 {
   // Connect to database server

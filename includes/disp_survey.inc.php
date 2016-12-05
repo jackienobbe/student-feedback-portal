@@ -51,7 +51,7 @@ class ReviewModel
 				if($reviewRow['questionID'] == $choiceQuestionRow['questionID'])
 				{
 					echo "<tr><td><input type='radio' name=" . $reviewRow['questionID'] .
-					" value=" . $reviewRow['offeredAnswerID'] . "/> </td><td> " .
+					" value='" . $reviewRow['offeredAnswerID'] . "'/> </td><td> " .
 					$reviewRow['answerText'] . " </td></tr> \n";
 				}
 			}
