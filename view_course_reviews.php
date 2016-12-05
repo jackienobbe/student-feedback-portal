@@ -15,8 +15,8 @@
   <?php include("header.php"); ?>
   <div class="container-fluid">
   <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
-    <?php include_once 'includes/db_functions.php';
-          include_once 'includes/view_course_reviews.inc.php';?>
+    <?php include 'includes/db_functions.php';
+          include 'includes/view_course_reviews.inc.php';?>
 
     <h2><?php echo $courseID . " // " . $courseName; ?></h2>
     <label>Taught by</label>  <?php echo $professorFName . " " . $professorLName;?><br/>

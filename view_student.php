@@ -16,7 +16,7 @@ view_student.php
   <div class="container-fluid">
     <form>
       <?php include 'includes/db_functions.php';
-      include 'includes/view_student.inc.php'; ?>
+            include 'includes/view_student.inc.php'; ?>
 
       <h2><?php echo $userFName . " " . $userLName; ?></h2>
       <label>Major  </label> <?php echo $major;?></br>
@@ -24,15 +24,15 @@ view_student.php
       <label>Year  </label> <?php echo $currentYear;?></br>
 
       <h3>Current Courses</h3>
-      <?include 'includes/view_student_curr_courses.inc.php';?>
+      <?php include 'includes/view_student_curr_courses.inc.php';?>
       <!-- <button name="addCourses" type="submit" formaction="">add more courses</button> -->
 
-      <? include 'includes/disp_courses_to_enroll.inc.php'; ?>
+      <?php include 'includes/disp_courses_to_enroll.inc.php'; ?>
       <input type="hidden" name="ref" value="<?php echo $ref;?>" />
       <input type="hidden" name="sectionNum" value="<?php echo $sectionNum;?>" />
       <input type="hidden" name="ref" value="<?php echo $ref;?>" />
 
-      <?include 'includes/view_student_prev_courses.inc.php' ?>
+      <?php include 'includes/view_student_prev_courses.inc.php' ?>
 
     </form>
   </div>
