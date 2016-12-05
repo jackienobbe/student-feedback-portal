@@ -29,7 +29,7 @@ try {
 
   if ($courseID != "_all")
   {
-    $sql .= " WHERE courseID = :courseID";
+    $sql .= " WHERE courseID LIKE :courseID";
     $sth = $dbh->prepare($sql);
     $sth->bindParam(':courseID', $courseID);
   }

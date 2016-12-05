@@ -38,6 +38,7 @@ class ReviewModel
 		$textQuestionModel = new ReviewModel($dbh);
 		$textQuestionList = $textQuestionModel->getTextQuestions();
 
+		echo "<div class='reviewList'>";
 		echo "<ul>\n";
 		foreach( $choiceQuestionList as $choiceQuestionRow ) {
 
@@ -58,11 +59,13 @@ class ReviewModel
 			echo "</table>";
 		}
 		foreach( $textQuestionList as $textQuestionRow) {
+echo "<br/>";
 			echo "<li> " . $textQuestionRow['questionText'] . "</li>"
 			. "<textarea name=" . $textQuestionRow['questionID'] . "> </textarea>";
 		}
 		echo "</ul>\n";
 		echo "<input type='submit' formaction='includes/submit_survey.inc.php' formmethod='POST'>";
+		echo "</div>";
 
 		$dbh = null;
 	}

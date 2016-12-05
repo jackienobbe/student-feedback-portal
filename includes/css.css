@@ -21,6 +21,11 @@ textarea {
   width: 600px;
 }
 
-.reviewList ul li {
-   list-style-type: none;
+.reviewList ul {
+  list-style-type: none;
+
+}
+
+.reviewList table td {
+  padding-left: 20px;
 }
