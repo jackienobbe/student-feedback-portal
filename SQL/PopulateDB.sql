@@ -46,10 +46,9 @@ INSERT INTO Department VALUES ('LC', 'Language Center');
 
 /* insert into ProfessorToDepartment */
 INSERT INTO ProfessorToDepartment VALUES (1,'CSC');
-INSERT INTO ProfessorToDepartment VALUES (4,'GE');
-INSERT INTO ProfessorToDepartment VALUES (2,'BA');
-INSERT INTO ProfessorToDepartment VALUES (2,'CS');
-INSERT INTO ProfessorToDepartment VALUES (3,'LC');
+INSERT INTO ProfessorToDepartment VALUES (4,'CSC');
+INSERT INTO ProfessorToDepartment VALUES (2,'CSC');
+INSERT INTO ProfessorToDepartment VALUES (3,'CSC');
 INSERT INTO ProfessorToDepartment VALUES (5,'CSC');
 INSERT INTO ProfessorToDepartment VALUES (6,'BA');
 INSERT INTO ProfessorToDepartment VALUES (7,'CSC');
