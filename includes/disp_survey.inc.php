@@ -31,8 +31,8 @@ class ReviewModel
 
 	try {
 
-		$courseID = $_POST['courseID'];
-		$professorID = $_POST['professorID'];
+		// $courseID = $_POST['courseID'];
+		// $professorID = $_POST['professorID'];
 
 		echo "<ul>\n";
 		foreach( $questionList as $questionRow ) {
@@ -50,11 +50,11 @@ class ReviewModel
 					" value=" . $reviewRow['offeredAnswerID'] . "/> </td><td> " .
 					$reviewRow['answerText'] . " </td></tr> \n";
 				}
-				echo "</table>";
 			}
+			echo "</table>";
 		}
 		echo "</ul>\n";
-		echo "<input type='submit'>";
+		echo "<input type='submit' formaction='submit_servey.inc.php' method='POST'>";
 
 		$dbh = null;
 	}

@@ -6,16 +6,17 @@ class ListItems extends RecursiveIteratorIterator {
     parent::__construct($it, self::LEAVES_ONLY);
   }
   function current() {
+    $courseID = parent::current();
     return parent::current();
   }
   function beginChildren() {
-    //echo "<li> <button name='courseID' type='submit' formaction='view_course.php'
-    //      value='" . parent::current() . "' formmethod='POST'>" . parent::current() . "</button>\n";
-    echo "<li>";
+    echo "<li> <button name='surveyID' type='submit' formaction='view_survey.php'
+    value='" . parent::current() . "' formmethod='POST'>\n";
+    // echo "<li> ";
 
   }
   function endChildren() {
-    echo "</li>\n";
+    echo "</button></li>\n";
   }
 }
 
@@ -28,8 +29,8 @@ try {
 
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   // needs surveyID shtuff (add it to the front of the query)
-  $sql = "SELECT courseID, courseName
-  FROM Enroll NATURAL JOIN Course NATURAL JOIN System_User
+  $sql = "SELECT surveyID, courseID, courseName
+  FROM Enroll NATURAL JOIN Course NATURAL JOIN Survey
   WHERE userID = :userID && semester = :currSemester;";
 
   $sth = $dbh->prepare($sql);
@@ -53,13 +54,8 @@ try {
   if($counter == 0) {
     echo "<p>Hmm... you don't appear to be in any courses this semester.</p>";
   }
-
-  $rc = survey_for_enrollment($userID, $courseID, $semester);
-  if ($rc == 0)
-    echo ' ';
-  else if($rc != 0)
-    // error
-    header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
+  
+  header("Location:" . $ref . "?userID=" . $userID . "&err=" . $error_msg);
   // Product read successfully; proceed to display form fields
 
 }

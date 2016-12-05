@@ -26,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     // Product successfully created; reset fields
     $newUserID = $userPassword =  $userFName = $userLName = $major = $currentYear = "";
     header('Location: ../login.php');
-
   }
   else
   {

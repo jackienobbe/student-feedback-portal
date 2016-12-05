@@ -7,11 +7,11 @@
 //
 
 /* CREATE STUDENT
- * create_student(): inserts a new student into student table
- * returns 0 if product successfully created
- *         1062 if student already exists
- *         error code if other db/sql error
- */
+* create_student(): inserts a new student into student table
+* returns 0 if product successfully created
+*         1062 if student already exists
+*         error code if other db/sql error
+*/
 function create_account($newUserID, $userPassword, $userFName, $userLName, $major, $currentYear, &$error_msg)
 {
   // Connect to database server
@@ -23,10 +23,10 @@ function create_account($newUserID, $userPassword, $userFName, $userLName, $majo
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // Insert the new product into the the system and  table
     $sql = "INSERT INTO System_User (userID, userPassword, userFName, userLName, userTypeID)
-            VALUES (:newUserID, :userPassword, :userFName, :userLName, 1);
+    VALUES (:newUserID, :userPassword, :userFName, :userLName, 1);
 
-            INSERT INTO Student (userID, currentYear, major)
-            VALUES (:newUserID, :currentYear, :major);";
+    INSERT INTO Student (userID, currentYear, major)
+    VALUES (:newUserID, :currentYear, :major);";
 
     $sth = $dbh->prepare($sql);
     $sth->bindParam(':newUserID', $newUserID);
@@ -39,15 +39,15 @@ function create_account($newUserID, $userPassword, $userFName, $userLName, $majo
     $sth->execute();
     $dbh = null;
     if ($sth->rowCount() > 0)
-      return 0;  //student successfully created
+    return 0;  //student successfully created
     else
-      return -1;  //student not created; this case may not be possible
+    return -1;  //student not created; this case may not be possible
   }
   catch(PDOException $e)
   {
     $dbh = null;
     if ($e->errorInfo[1] == 1062)
-      $error_msg = "A student with this id already exists in the database.";
+    $error_msg = "A student with this id already exists in the database.";
     else
     {
       header("Location: error.php?err=" . $e->getMessage());
@@ -59,11 +59,11 @@ function create_account($newUserID, $userPassword, $userFName, $userLName, $majo
 
 
 /* READ STUDENT
- * read_student(): reads a dtudent profile from student and user tables
- * returns 0 if product successfully deleted
- *         -1 if product does not exist
- *         error code if other db/sql error
- */
+* read_student(): reads a dtudent profile from student and user tables
+* returns 0 if product successfully deleted
+*         -1 if product does not exist
+*         error code if other db/sql error
+*/
 function read_student($userID, &$userFName, &$userLName, &$currentYear, &$major, &$error_msg)
 {
   // Connect to database server
@@ -74,8 +74,8 @@ function read_student($userID, &$userFName, &$userLName, &$currentYear, &$major,
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "SELECT userID, userFName, userLName, currentYear, major
-            FROM System_User NATURAL JOIN Student
-            WHERE userID = :userID;";
+    FROM System_User NATURAL JOIN Student
+    WHERE userID = :userID;";
 
     $sth = $dbh->prepare($sql);//, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':userID', $userID);
@@ -110,8 +110,8 @@ function read_student($userID, &$userFName, &$userLName, &$currentYear, &$major,
 }
 
 /* READ STUDENT'S COURSES
- *
- */
+*
+*/
 function get_curr_student_courses($userID, &$courseID, &$sectionNum, &$semester, &$courseName, &$error_msg)
 {
   // Connect to database server
@@ -122,8 +122,8 @@ function get_curr_student_courses($userID, &$courseID, &$sectionNum, &$semester,
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "SELECT courseID, sectionNum, semester, courseName
-            FROM Enroll NATURAL JOIN Course
-            WHERE userID = :userID && semester = :currSemester";
+    FROM Enroll NATURAL JOIN Course
+    WHERE userID = :userID && semester = :currSemester";
 
     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':userID', $userID);
@@ -158,8 +158,8 @@ function get_curr_student_courses($userID, &$courseID, &$sectionNum, &$semester,
 }
 
 /* READ STUDENT'S COURSES
- *
- */
+*
+*/
 function get_prev_student_courses($userID, &$courseID, &$sectionNum, &$semester, &$courseName, &$error_msg)
 {
   // Connect to database server
@@ -170,8 +170,8 @@ function get_prev_student_courses($userID, &$courseID, &$sectionNum, &$semester,
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "SELECT courseID, sectionNum, semester, courseName
-            FROM Enroll NATURAL JOIN Course
-            WHERE userID = :userID && semester != :currSemester";
+    FROM Enroll NATURAL JOIN Course
+    WHERE userID = :userID && semester != :currSemester";
 
     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':userID', $userID);
@@ -206,8 +206,8 @@ function get_prev_student_courses($userID, &$courseID, &$sectionNum, &$semester,
 }
 
 /* ENROLL STUDENT
- *
- */
+*
+*/
 function enroll_student($userID, $courseID, $sectionNum, $semester, &$error_msg)
 {
   // Connect to database server
@@ -219,9 +219,9 @@ function enroll_student($userID, $courseID, $sectionNum, $semester, &$error_msg)
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // Insert the new product into the the Product table
     $sql = "INSERT INTO Enroll
-              (userID, courseID, sectionNum, semester)
-            VALUES
-              (:userID, :courseID, :sectionNum, :semester);";
+    (userID, courseID, sectionNum, semester)
+    VALUES
+    (:userID, :courseID, :sectionNum, :semester);";
 
     $sth = $dbh->prepare($sql);
     $sth->bindParam(':userID', $userID);
@@ -232,15 +232,15 @@ function enroll_student($userID, $courseID, $sectionNum, $semester, &$error_msg)
     $sth->execute();
     $dbh = null;
     if ($sth->rowCount() > 0)
-      return 0;  // student successfully enrolled
+    return 0;  // student successfully enrolled
     else
-      return -1;  // student not enrolled; this case may not be possible
+    return -1;  // student not enrolled; this case may not be possible
   }
   catch(PDOException $e)
   {
     $dbh = null;
     if ($e->errorInfo[1] == 1062)
-      $error_msg = "A student is already enrolled in this course and section.";
+    $error_msg = "A student is already enrolled in this course and section.";
     else
     {
       header("Location: error.php?err=" . $e->getMessage());
@@ -251,11 +251,11 @@ function enroll_student($userID, $courseID, $sectionNum, $semester, &$error_msg)
 }
 
 /* READ PROFESSOR
- * read_prof(): reads a professor profile from professor table
- * returns 0 if product successfully deleted
- *         -1 if product does not exist
- *         error code if other db/sql error
- */
+* read_prof(): reads a professor profile from professor table
+* returns 0 if product successfully deleted
+*         -1 if product does not exist
+*         error code if other db/sql error
+*/
 function read_prof($professorID, &$professorFName, &$professorLName, &$departmentName, &$error_msg)
 {
   // Connect to database server
@@ -266,9 +266,9 @@ function read_prof($professorID, &$professorFName, &$professorLName, &$departmen
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "SELECT P.professorID, professorFName, professorLName, departmentName
-            FROM Professor P LEFT JOIN ProfessorToDepartment PD ON P.professorID = PD.professorID
-            LEFT JOIN Department D ON D.departmentID = PD.departmentID
-            WHERE P.professorID = :professorID;" ;
+    FROM Professor P LEFT JOIN ProfessorToDepartment PD ON P.professorID = PD.professorID
+    LEFT JOIN Department D ON D.departmentID = PD.departmentID
+    WHERE P.professorID = :professorID;" ;
 
     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':professorID', $professorID);
@@ -303,8 +303,8 @@ function read_prof($professorID, &$professorFName, &$professorLName, &$departmen
 }
 
 /* READ PROF'S COURSES
- *
- */
+*
+*/
 function get_prof_courses($userID, &$courseID, &$sectionNum, &$semester, &$courseName, &$error_msg)
 {
   // Connect to database server
@@ -315,8 +315,8 @@ function get_prof_courses($userID, &$courseID, &$sectionNum, &$semester, &$cours
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "SELECT courseID, sectionNum, semester, courseName
-            FROM Section NATURAL JOIN Course
-            WHERE professorID = :professorID; ";
+    FROM Section NATURAL JOIN Course
+    WHERE professorID = :professorID; ";
 
     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':professorID', $professorID);
@@ -362,8 +362,8 @@ function get_course_profs($courseID, &$professorFName, &$professorLName, &$semes
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "SELECT professorFName, professorLName, semester
-            FROM Section NATURAL JOIN Professor
-            WHERE courseID = :courseID; ";
+    FROM Section NATURAL JOIN Professor
+    WHERE courseID = :courseID; ";
 
     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':courseID', $courseID);
@@ -398,11 +398,11 @@ function get_course_profs($courseID, &$professorFName, &$professorLName, &$semes
 
 
 /* READ COURSE
- * read_course(): reads a course profile from course table
- * returns 0 if product successfully deleted
- *         -1 if product does not exist
- *         error code if other db/sql error
- */
+* read_course(): reads a course profile from course table
+* returns 0 if product successfully deleted
+*         -1 if product does not exist
+*         error code if other db/sql error
+*/
 function read_course($courseID, &$courseName, &$departmentName, &$error_msg)
 {
   // Connect to database server
@@ -413,8 +413,8 @@ function read_course($courseID, &$courseName, &$departmentName, &$error_msg)
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "SELECT courseID, courseName, departmentName
-            FROM Course NATURAL JOIN Department
-            WHERE courseID = :courseID;";
+    FROM Course NATURAL JOIN Department
+    WHERE courseID = :courseID;";
 
     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':courseID', $courseID);
@@ -457,7 +457,7 @@ function login($userID, $userPassword, &$error_msg)
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "SELECT userID FROM System_User
-            WHERE userID = :userID && userPassword = :userPassword;";
+    WHERE userID = :userID && userPassword = :userPassword;";
 
     $sth = $dbh->prepare($sql); //, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':userID', $userID);
@@ -493,96 +493,96 @@ function login($userID, $userPassword, &$error_msg)
 function read_course_prof_info($professorID, $courseID, &$professorFName, &$professorLName, &$courseName, &$error_msg)
 {
   // Connect to database server
-   include 'db_connect.php';
+  include 'db_connect.php';
 
-   try
-   {
-     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  try
+  {
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-     $sql = "SELECT professorFName, professorLName, courseName
-             FROM Professor NATURAL JOIN Section NATURAL JOIN Course
-             WHERE professorID = :professorID && courseID = :courseID;";
+    $sql = "SELECT professorFName, professorLName, courseName
+    FROM Professor NATURAL JOIN Section NATURAL JOIN Course
+    WHERE professorID = :professorID && courseID = :courseID;";
 
-     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-     $sth->bindParam(':professorID', $professorID);
-     $sth->bindParam(':courseID', $courseID);
-     // Execute the prepared query.
-     $sth->execute();
-     $array = $sth->fetchAll(PDO::FETCH_ASSOC);
-     $dbh = null;
+    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    $sth->bindParam(':professorID', $professorID);
+    $sth->bindParam(':courseID', $courseID);
+    // Execute the prepared query.
+    $sth->execute();
+    $array = $sth->fetchAll(PDO::FETCH_ASSOC);
+    $dbh = null;
 
-     // Check whether the submitted product already exists
-     if (count($array) == 0)
-     {
-       // no product found
-       $error_msg = "This course doesn't exist.";
-       return -1;
-     }
-     else
-     {
-       $record = $array[0];
-       $courseName = $record['courseName'];
-       $professorFName =  $record['professorFName'];
-       $professorLName =  $record['professorLName'];
-       return 0;
-     }
-   }
-   catch(PDOException $e)
-   {
-     $dbh = null;
-     header("Location: error.php?err=" . $e->getMessage());
-     exit();
-   }
+    // Check whether the submitted product already exists
+    if (count($array) == 0)
+    {
+      // no product found
+      $error_msg = "This course doesn't exist.";
+      return -1;
+    }
+    else
+    {
+      $record = $array[0];
+      $courseName = $record['courseName'];
+      $professorFName =  $record['professorFName'];
+      $professorLName =  $record['professorLName'];
+      return 0;
+    }
   }
+  catch(PDOException $e)
+  {
+    $dbh = null;
+    header("Location: error.php?err=" . $e->getMessage());
+    exit();
+  }
+}
 
 function read_course_section_prof_info($professorID, $courseID, $sectionNum, $semester, &$professorFName, &$professorLName, &$courseName, &$error_msg)
 {
   // Connect to database server
-   include 'db_connect.php';
+  include 'db_connect.php';
 
-   try
-   {
-     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  try
+  {
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-     $sql = "SELECT professorFName, professorLName, courseName, semester
-             FROM Professor NATURAL JOIN Section NATURAL JOIN Course
-             WHERE professorID = :professorID AND courseID = :courseID
-             AND sectionNum = :sectionNum AND semester = :semester;";
+    $sql = "SELECT professorFName, professorLName, courseName, semester
+    FROM Professor NATURAL JOIN Section NATURAL JOIN Course
+    WHERE professorID = :professorID AND courseID = :courseID
+    AND sectionNum = :sectionNum AND semester = :semester;";
 
-     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-     $sth->bindParam(':professorID', $professorID);
-     $sth->bindParam(':courseID', $courseID);
-     $sth->bindParam(':sectionNum', $sectionNum);
-     $sth->bindParam(':semester', $semester);
+    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    $sth->bindParam(':professorID', $professorID);
+    $sth->bindParam(':courseID', $courseID);
+    $sth->bindParam(':sectionNum', $sectionNum);
+    $sth->bindParam(':semester', $semester);
 
-     // Execute the prepared query.
-     $sth->execute();
-     $array = $sth->fetchAll(PDO::FETCH_ASSOC);
-     $dbh = null;
+    // Execute the prepared query.
+    $sth->execute();
+    $array = $sth->fetchAll(PDO::FETCH_ASSOC);
+    $dbh = null;
 
-     // Check whether the submitted product already exists
-     if (count($array) == 0)
-     {
-       // no product found
-       $error_msg = "This course doesn't exist.";
-       return -1;
-     }
-     else
-     {
-       $record = $array[0];
-       $semester = $record['semester'];
-       $courseName = $record['courseName'];
-       $professorFName =  $record['professorFName'];
-       $professorLName =  $record['professorLName'];
-       return 0;
-     }
-   }
-     catch(PDOException $e)
-   {
-     $dbh = null;
-     header("Location: error.php?err=" . $e->getMessage());
-     exit();
-   }
+    // Check whether the submitted product already exists
+    if (count($array) == 0)
+    {
+      // no product found
+      $error_msg = "This course doesn't exist.";
+      return -1;
+    }
+    else
+    {
+      $record = $array[0];
+      $semester = $record['semester'];
+      $courseName = $record['courseName'];
+      $professorFName =  $record['professorFName'];
+      $professorLName =  $record['professorLName'];
+      return 0;
+    }
+  }
+  catch(PDOException $e)
+  {
+    $dbh = null;
+    header("Location: error.php?err=" . $e->getMessage());
+    exit();
+  }
 }
 
 function submit_servey($surveyID, $questionID, $offeredAnswerID, &$error_msg)
@@ -594,9 +594,10 @@ function submit_servey($surveyID, $questionID, $offeredAnswerID, &$error_msg)
   {
     // Set the PDO error mode to exception
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
     // Insert the new product into the the system and  table
     $sql = "INSERT INTO Answer_Choice (surveyID, questionID, offeredAnswerID)
-            VALUES (:surveyID, :questionID, :offeredAnswerID);";
+    VALUES (:surveyID, :questionID, :offeredAnswerID);";
 
     $sth = $dbh->prepare($sql);
     $sth->bindParam(':surveyID', $surveyID);
@@ -606,15 +607,15 @@ function submit_servey($surveyID, $questionID, $offeredAnswerID, &$error_msg)
     $sth->execute();
     $dbh = null;
     if ($sth->rowCount() > 0)
-      return 0;  //student successfully created
+    return 0;  //student successfully created
     else
-      return -1;  //student not created; this case may not be possible
+    return -1;  //student not created; this case may not be possible
   }
   catch(PDOException $e)
   {
     $dbh = null;
     if ($e->errorInfo[1] == 1062)
-      $error_msg = "You already took this survey... stay tuned to be able to resubmit your answers!";
+    $error_msg = "You already took this survey... stay tuned to be able to resubmit your answers!";
     else
     {
       header("Location: error.php?err=" . $e->getMessage());
@@ -624,13 +625,18 @@ function submit_servey($surveyID, $questionID, $offeredAnswerID, &$error_msg)
   }
 }
 
-function survey_for_enrollment($userID, $courseID, $semester)
+function survey_for_enrollment($userID, $courseID, $semester, &$error_msg)
 {
+  // Connect to database server
+  include 'db_connect.php';
+
   try {
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
     $sql = "SELECT surveyID
-            FROM Enroll NATURAL JOIN Survey
-            WHERE userID = :userID AND courseID = :courseID
-            AND semester = :semester;";
+    FROM Enroll NATURAL JOIN Survey
+    WHERE userID = :userID AND courseID = :courseID
+    AND semester = :semester;";
 
     $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $sth->bindParam(':userID', $userID);
@@ -653,6 +659,50 @@ function survey_for_enrollment($userID, $courseID, $semester)
     {
       $record = $array[0];
       $surveyID = $record['surveyID'];
+      return 0;
+    }
+
+  } catch (PDOException $e) {
+    $dbh = null;
+    header("Location: error.php?err=" . $e->getMessage());
+    exit();
+  }
+}
+
+function read_survey_details($surveyID, &$courseID, &$courseName, &$error_msg)
+{
+  // Connect to database server
+  include 'db_connect.php';
+
+  try{
+
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql = "SELECT courseID, courseName
+    FROM Survey NATURAL JOIN Course
+    WHERE surveyID = :surveyID;";
+
+    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+
+    $sth->bindParam(':surveyID', $surveyID);
+
+    // Execute the prepared query.
+    $sth->execute();
+    $array = $sth->fetchAll(PDO::FETCH_ASSOC);
+    $dbh = null;
+
+    // Check whether the submitted product already exists
+    if (count($array) == 0)
+    {
+      // no product found
+      $error_msg = "This enrollment does not have a survey yet";
+      return -1;
+    }
+    else
+    {
+      $record = $array[0];
+      $courseID = $record['courseID'];
+      $courseName = $record['courseName'];
       return 0;
     }
 
