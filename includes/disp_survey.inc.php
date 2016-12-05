@@ -42,7 +42,7 @@ class ReviewModel
 			$reviewModel = new ReviewModel($dbh);
 			$reviewList = $reviewModel->getAllAnswers();
 
-			echo "<table>";
+			echo "<table class='survey'>";
 			foreach( $reviewList as $reviewRow ){
 				if($reviewRow['questionID'] == $questionRow['questionID'])
 				{

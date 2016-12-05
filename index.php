@@ -16,12 +16,8 @@
   <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
     <h2> Welcome to the Student Feedback Portal!</h2>
     <ul>
-	  <li><a href = "login.php"> Login </a></li>
-	  <!-- <li><a href = "logout.php">Logout</a></li> -->
-	  <!-- <li><a href = "view_course.php">View course</a></li> -->
 	  <li><a href = "search_course.php">Search course</a></li>
     <li><a href = "search_prof.php">Search professors</a></li>
-    <li><a href = "create_account.php">Create a New account</a></li>
 
     </ul>
   </form>

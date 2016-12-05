@@ -17,14 +17,12 @@ index.html
     <form action="<?php echo $_SERVER["PHP_SELF"];?>" method="POST">
       <h2> You are logged in!</h2>
       <ul>
-        <li><a href = "index.html">Go the index.</a></li>
         <li><a href = "view_student.php">View my profile.</a></li>
-        <!-- <li><? echo $_SESSION['userID']; ?></li> -->
         <li><a href = "includes/logout.inc.php">Logout</a></li>
 
         <?php include 'includes/db_functions.php'; ?>
         <!-- //include_once 'includes/view_student.inc.php';?> -->
-        <!-- <input type="hidden" name="userID" value="<?php echo $_SESSION['userID'];?>" /> -->
+        <input type="hidden" name="userID" value="<?php echo $_SESSION['userID'];?>" />
         <input type="hidden" name="ref" value="<?php echo $ref;?>" />
       </form>
     </ul>
