@@ -61,7 +61,7 @@ class ReviewModel
 		foreach( $textQuestionList as $textQuestionRow) {
 			echo "<br/>";
 			echo "<li> " . $textQuestionRow['questionText'] . "</li>"
-			. "<textarea name=" . $textQuestionRow['questionID'] . "> </textarea>";
+			. "<textarea name=" . $textQuestionRow['questionID'] . "></textarea>";
 		}
 		echo "</ul>\n";
 		echo "<input type='submit' formaction='includes/submit_survey.inc.php' formmethod='POST'>";
